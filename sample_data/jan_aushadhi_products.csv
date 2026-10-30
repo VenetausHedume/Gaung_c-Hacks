@@ -1,0 +1,4 @@
+ja_product_code,generic_name,salt_normalized,strength,dosage_form,pack_size,pack_unit,mrp,price_per_unit,source_url,source_date,notes
+S1,Paracetamol Tablets IP 500 mg,paracetamol,500 mg,tablet,10,tablets,5.00,0.50,https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA
+S2,Metformin Tablets IP 500 mg,metformin,500 mg,tablet,10,tablets,8.00,0.80,https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA
+S3,Pantoprazole Tablets IP 40 mg,pantoprazole,40 mg,tablet,10,tablets,25.00,2.50,https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA

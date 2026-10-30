@@ -1,0 +1,8 @@
+brand_name,manufacturer,salt_normalized,strength,dosage_form,pack_size,pack_unit,printed_mrp,price_per_unit,mrp_source,mrp_date,schedule_status,notes
+TestFever 500,Sample Labs,paracetamol,500 mg,tablet,15,tablets,30.00,2.00,sample,2026-10-01,scheduled,SAMPLE - NOT REAL DATA
+CoolPara 500,Demo Pharma,paracetamol,500 mg,tablet,10,tablets,15.00,1.50,sample,2026-10-01,scheduled,SAMPLE - NOT REAL DATA
+SugarEase 500,Sample Labs,metformin,500 mg,tablet,10,tablets,22.00,2.20,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA
+GlucoTest 500,Demo Pharma,metformin,500 mg,tablet,10,tablets,12.00,1.20,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA
+AcidAway 40,Sample Labs,pantoprazole,40 mg,tablet,10,tablets,120.00,12.00,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA
+ClavoTest 625,Demo Pharma,amoxicillin + clavulanic acid,500 mg + 125 mg,tablet,10,tablets,190.00,19.00,sample,2026-10-01,scheduled,SAMPLE - NOT REAL DATA
+AllerClear 10,Sample Labs,cetirizine,10 mg,tablet,10,tablets,35.00,3.50,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA

@@ -1,0 +1,10 @@
+MediCheck demo seed validation
+================================
+ceiling_prices.csv: 17 data rows; exact headers OK
+nsq_alerts.csv: 15 data rows; exact headers OK
+jan_aushadhi_products.csv: 17 data rows; exact headers OK
+brand_products.csv: 9 data rows; exact headers OK
+barcodes.csv: 0 data rows; exact headers OK
+authorities.csv: 3 data rows; exact headers OK
+Brand products matching Jan Aushadhi by exact key: 8 (Dolo 650, Telma 40, Amlong 5, Glycomet 500, Pan 40, Atorva 10, Azithral 500, Thyronorm 100)
+Brand products matching NPPA ceiling prices by exact key: 7 (Dolo 650, Telma 40, Amlong 5, Glycomet 500, Atorva 10, Azithral 500, Thyronorm 100)

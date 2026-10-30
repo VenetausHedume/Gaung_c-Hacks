@@ -1,0 +1,2 @@
+alert_month,category,drug_name,salt_normalized,brand_name,batch_number,manufacturer,manufacturing_date,expiry_date,failure_reason,testing_lab,source_url,source_date,notes
+2026-09,NSQ,Paracetamol Tablets IP 500 mg,paracetamol,TestFever 500,TST1234,Sample Labs,,,Dissolution,,https://example.com/sample,2026-09-30,SAMPLE - NOT REAL DATA

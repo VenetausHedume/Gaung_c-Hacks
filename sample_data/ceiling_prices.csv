@@ -1,0 +1,3 @@
+salt_normalized,strength,dosage_form,pack_unit,ceiling_price,gst_note,effective_date,notification_ref,source_url,source_date,notes
+paracetamol,500 mg,tablet,per tablet,1.80,excl. GST,2026-04-01,SAMPLE-REF-1,https://example.com/sample,2026-04-01,SAMPLE - NOT REAL DATA
+amoxicillin + clavulanic acid,500 mg + 125 mg,tablet,per tablet,21.00,excl. GST,2026-04-01,SAMPLE-REF-2,https://example.com/sample,2026-04-01,SAMPLE - NOT REAL DATA

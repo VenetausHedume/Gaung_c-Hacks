@@ -1,0 +1,4 @@
+authority_name,authority_type,state,complaint_url,email,phone,handles,source_url,source_date,notes
+SAMPLE Pricing Authority,central_pricing,,https://example.com/sample,,,"price,shortage",https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA
+SAMPLE Quality Authority,central_quality,,https://example.com/sample,,,quality,https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA
+SAMPLE Telangana Drug Control,state_drug_controller,Telangana,https://example.com/sample,,,"quality,bill_refusal",https://example.com/sample,2026-10-01,SAMPLE - NOT REAL DATA

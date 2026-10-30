@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCheck · Scan & Check Studio — GS1 Barcode, NPPA Ceiling & CDSCO Batch</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="field" aria-hidden="true"></div>
+  <h2 class="wordmark" aria-hidden="true">MediCheck</h2>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/index.html" class="brand-logo" title="Back to Landing Page">
+        <span class="cross-box" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#F2562B"/></svg>
+        </span>
+        <span>Medi<em>Check</em></span>
+        <span class="brand-tag">SDG 3 · India</span>
+      </a>
+
+      <div class="d-search" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Jump to medicine, area, or portal…" aria-label="Global MediCheck search" />
+        <div class="d-results"></div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="/index.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          Landing Page
+        </a>
+        <a href="/dashboard.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          App Home
+        </a>
+        <a href="/scan.html" class="nav-link active">
+          <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+          1. Scan &amp; Check
+        </a>
+        <a href="/community.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          2. Community &amp; Map
+        </a>
+        <a href="/government.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M12 3l9 5H3l9-5z"/></svg>
+          3. Government Portal
+        </a>
+        <a href="/pharmacy.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.2-3.4 8.9-8 10-4.6-1.1-8-4.8-8-10V7l8-4z"/></svg>
+          4. Pharmacy Verify
+        </a>
+        <a href="/security.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          5. Security &amp; Log
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero reveal" style="--i:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1.2rem;flex-wrap:wrap;">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>MediCheck · Scan, Verify &amp; Report Studio</span>
+          </div>
+          <h1>Don’t guess, <em>just scan.</em></h1>
+          <p>
+            Scan any medicine barcode or search by brand name to instantly verify <strong>NPPA DPCO ceiling prices (+5% GST)</strong>, screen batch numbers against <strong>CDSCO Not-of-Standard-Quality (NSQ)</strong> alerts, compare <strong>PMBI Jan Aushadhi</strong> generic equivalents, and generate neutral regulatory complaints.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a href="/dashboard.html" class="btn btn-outline">← Back to App Homepage</a>
+          <a href="/index.html" class="btn btn-outline">Landing Page</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid-2 reveal" style="--i:1">
+      <div class="card sky-card">
+        <div class="card-title">
+          <span>Scan Barcode or <em>Search Brand</em></span>
+          <span class="badge badge-blue">GS1 / EAN / Trigram RPC</span>
+        </div>
+
+        <form id="checkForm" onsubmit="runCheck(event)">
+          <div class="form-group">
+            <label for="queryInput">Brand Name, Salt, EAN-13, or Raw GS1 Scan String</label>
+            <input
+              type="text"
+              id="queryInput"
+              value="SampleMol 650"
+              placeholder="e.g. SampleMol 650, 9900000000024, or (01)0990000000024(17)271200(10)TST1234"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="batchInput">Batch / Lot Number (Optional — auto-extracted from GS1 scan)</label>
+            <input
+              type="text"
+              id="batchInput"
+              value="TST1234"
+              placeholder="e.g. TST1234 or BATCH-OK-01"
+            />
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Run Live Medicine Check →</button>
+            <button type="button" class="btn btn-orange" onclick="toggleCameraScanner()">📷 Open Camera Scanner</button>
+          </div>
+        </form>
+
+        <div id="cameraBox" style="display:none;margin-top:1rem;padding:1rem;border-radius:1.1rem;border:2px solid var(--navy);background:var(--paper);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <strong style="font-size:0.86rem;">Live Camera Barcode / DataMatrix / QR Scanner</strong>
+            <button type="button" class="btn btn-outline" style="padding:0.28rem 0.7rem;font-size:0.76rem;" onclick="stopCameraScanner()">Close Camera</button>
+          </div>
+          <div id="qrReader" style="width:100%;max-width:400px;margin:0 auto;"></div>
+        </div>
+
+        <div style="margin-top:1.15rem;padding-top:0.9rem;border-top:1.5px dashed rgba(11,37,64,0.2);">
+          <label style="margin-bottom:0.4rem;">One-Click Presentation Scenarios (Live DB):</label>
+          <div class="chip-row">
+            <button type="button" class="chip" style="--c:#C93A12" onclick="loadPreset('SampleMol 650', 'TST1234')">
+              1. Overpriced + Flagged Batch (SampleMol 650)
+            </button>
+            <button type="button" class="chip" style="--c:#0A7D5D" onclick="loadPreset('TestFever 500', 'BATCH-OK-01')">
+              2. Above Ceiling + Flagged Batch (TestFever 500)
+            </button>
+            <button type="button" class="chip" style="--c:#0A7D5D" onclick="loadPreset('CoolPara 500', 'BATCH-OK-01')">
+              3. Within Ceiling + Safe Batch (CoolPara 500)
+            </button>
+            <button type="button" class="chip" style="--c:#2A6FB5" onclick="loadPreset('(01)09900000000011(17)271200(10)TST1234(21)SN900', '')">
+              4. Full GS1 DataMatrix Scan
+            </button>
+            <button type="button" class="chip" style="--c:#F2562B" onclick="loadPreset('(01)09900000000011(17)230500(10)OLD99', '')">
+              5. Expired Pack GS1 Scan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>GS1 / Barcode <em>Parser Telemetry</em></span>
+          <span class="badge badge-purple" id="scanModeBadge">Ready</span>
+        </div>
+        <div id="gs1Output">
+          <p style="color:var(--navy-muted);font-size:0.9rem;">Run a check or click any preset chip to inspect parsed GS1 Application Identifiers and database lookup candidates.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="resultsContainer" style="margin-top:1.35rem;"></div>
+
+    <div class="grid-2 reveal" style="--i:2;margin-top:1.35rem;">
+      <div class="card">
+        <div class="card-title">
+          <span>Regulatory Authority <em>Routing</em></span>
+          <span class="badge badge-blue">National + State Portals</span>
+        </div>
+        <div style="display:flex;gap:0.75rem;margin-bottom:0.95rem;flex-wrap:wrap;">
+          <div style="flex:1;min-width:150px;">
+            <label for="authStateSelect">Filter by State</label>
+            <select id="authStateSelect" onchange="loadAuthorities()">
+              <option value="">All India (National Only)</option>
+              <option value="Maharashtra" selected>Maharashtra + National</option>
+              <option value="Delhi">Delhi + National</option>
+              <option value="Karnataka">Karnataka + National</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:170px;">
+            <label for="authTypeSelect">Issue Category</label>
+            <select id="authTypeSelect" onchange="loadAuthorities()">
+              <option value="price_above_ceiling" selected>Price Above Ceiling (NPPA)</option>
+              <option value="suspect_batch_or_pack">Suspected NSQ Quality (CDSCO)</option>
+              <option value="sold_above_mrp">Sold Above Printed MRP</option>
+              <option value="bill_refused">GST Bill / Cash Memo Refused</option>
+            </select>
+          </div>
+        </div>
+        <div id="authoritiesList"></div>
+      </div>
+
+      <div class="card orange-card">
+        <div class="card-title">
+          <span>Neutral Complaint <em>Draft Builder</em></span>
+          <span class="badge badge-amber">src/lib/reportText.ts</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.75rem;">
+          <div>
+            <label for="repPharmacy">Pharmacy Name</label>
+            <input type="text" id="repPharmacy" value="Sample Chemist, Andheri West" oninput="updateReportDraft()" />
+          </div>
+          <div>
+            <label for="repLicence">Pharmacy Licence No</label>
+            <input type="text" id="repLicence" value="MH-MUM-123456" oninput="updateReportDraft()" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="repDesc">Patient Observation (Kept Private via RLS — Never in Public Log)</label>
+          <input type="text" id="repDesc" value="Billed ₹27.00 for a strip of 10 tablets; batch TST1234 printed on foil." oninput="updateReportDraft()" />
+        </div>
+        <div class="code-block" id="reportDraftBox">Loading complaint draft...</div>
+        <div class="btn-row" style="margin-top:0.85rem;">
+          <button type="button" class="btn btn-primary" onclick="copyReportDraft()">📋 Copy Complaint Text</button>
+          <a href="/security.html" class="btn btn-outline">Inspect Sealed Public Log &amp; Receipts →</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span><strong>MediCheck India</strong> · SDG 3 Patient Empowerment, Community Advocacy &amp; Regulatory Transparency</span>
+      <span><a href="/dashboard.html">← App Homepage</a> · <a href="/index.html">Landing Page</a></span>
+    </footer>
+  </main>
+
+  <script>
+    let currentCheckData = null;
+    let html5QrScanner = null;
+
+    function loadPreset(query, batch) {
+      document.getElementById('queryInput').value = query;
+      document.getElementById('batchInput').value = batch;
+      runCheck();
+      if (window.neoToast) window.neoToast('Loaded scenario: ' + query);
+    }
+
+    async function runCheck(e) {
+      if (e) e.preventDefault();
+      const q = document.getElementById('queryInput').value.trim();
+      const batch = document.getElementById('batchInput').value.trim();
+      const resBox = document.getElementById('resultsContainer');
+      resBox.innerHTML = '<div class="card"><p style="margin:0;font-weight:700;">Querying live Supabase RPC <code>medicine_check</code>…</p></div>';
+
+      try {
+        const params = new URLSearchParams({ q });
+        if (batch) params.set('batch', batch);
+        const resp = await fetch('/api/check?' + params.toString());
+        const data = await resp.json();
+        currentCheckData = data;
+        renderGs1Box(data);
+        renderCheckResults(data);
+        await updateReportDraft();
+      } catch (err) {
+        resBox.innerHTML = '<div class="alert-banner danger">Error checking medicine: ' + err.message + '</div>';
+      }
+    }
+
+    function renderGs1Box(data) {
+      const p = data.parsed || {};
+      const badge = document.getElementById('scanModeBadge');
+      badge.textContent = 'Mode: ' + (data.mode || 'search').toUpperCase() + ' (' + (p.kind || 'text') + ')';
+
+      const expiryHtml = p.expiry
+        ? '<span class="badge ' + (p.expiry.expired ? 'badge-red' : 'badge-green') + '">' +
+          p.expiry.iso + (p.expiry.expired ? ' — PACK PAST EXPIRY DATE' : ' (Valid Pack)') + '</span>'
+        : '<span style="color:var(--navy-muted);">Not encoded in input</span>';
+
+      document.getElementById('gs1Output').innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><th>Input Classification</th><td><span class="badge badge-blue">${p.kind || 'search_query'}</span></td></tr>
+              <tr><th>GTIN / Barcode (01)</th><td class="mono">${p.gtin || '— (Trigram Brand Search)'}</td></tr>
+              <tr><th>Extracted Batch (10)</th><td class="mono">${p.batch || document.getElementById('batchInput').value || '—'}</td></tr>
+              <tr><th>Pack Expiry (17)</th><td>${expiryHtml}</td></tr>
+              <tr><th>Serial Number (21)</th><td class="mono">${p.serial || '—'}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderCheckResults(data) {
+      const resBox = document.getElementById('resultsContainer');
+      const check = data.check;
+      const p = data.parsed || {};
+
+      if (!check || !check.product) {
+        resBox.innerHTML = `<div class="alert-banner danger"><strong>Product not found in database.</strong> Try searching by brand name.</div>`;
+        return;
+      }
+
+      const prod = check.product;
+      const pc = check.price || check.price_check || {};
+      const bc = check.batch || check.batch_check || {};
+      const alts = check.equivalents || check.cheaper_alternatives || [];
+
+      const unitPrice = Number(prod.price_per_unit ?? prod.unit_price ?? 0);
+      const printedMrp = Number(prod.printed_mrp ?? prod.mrp ?? 0);
+      const packUnit = prod.pack_unit || prod.unit_label || 'unit';
+      const baseCeiling = pc.ceiling_row ? Number(pc.ceiling_row.ceiling_price) : (pc.ceiling_price_per_unit ? Number(pc.ceiling_price_per_unit) : null);
+      const effCeiling = Number(pc.effective_ceiling_per_unit_with_gst ?? pc.effective_ceiling_per_unit ?? 0) || null;
+      const isAbove = pc.ceiling_status === 'above' || pc.status === 'above_ceiling';
+      const isWithin = pc.ceiling_status === 'within' || pc.status === 'at_or_below_ceiling';
+      const overPct = effCeiling && isAbove ? (((unitPrice - effCeiling) / effCeiling) * 100).toFixed(1) : (pc.over_ceiling_pct || '0.0');
+
+      let priceBadge = '<span class="badge badge-slate">No DPCO Ceiling Scheduled</span>';
+      if (isAbove) priceBadge = `<span class="badge badge-red">⚠ ABOVE NPPA CEILING (+${overPct}%)</span>`;
+      else if (isWithin) priceBadge = `<span class="badge badge-green">✓ AT OR BELOW NPPA CEILING</span>`;
+
+      let batchBanner = '';
+      if ((bc.flagged || bc.status === 'flagged_nsq') && bc.alert) {
+        batchBanner = `
+          <div class="alert-banner danger">
+            <strong>🚨 CDSCO NSQ BATCH ALERT (Batch <code>${bc.alert.batch_number}</code>):</strong>
+            Flagged in CDSCO monthly alert (${bc.alert.alert_month || '2026'}) — <em>${bc.alert.failure_reason}</em>.
+          </div>
+        `;
+      } else if (bc.checked || bc.status === 'no_match_in_cdsco_alerts') {
+        batchBanner = `
+          <div class="alert-banner success">
+            <strong>✓ Batch Checked (${bc.batch_queried || '—'}):</strong> Batch is not listed in CDSCO NSQ alerts. ${bc.manufacturer_salt_note || ''}
+          </div>
+        `;
+      }
+
+      let expiryBanner = '';
+      if (p.expiry && p.expiry.expired) {
+        expiryBanner = `
+          <div class="alert-banner danger">
+            <strong>🚨 PACK PAST EXPIRY DATE:</strong> GS1 barcode indicates pack expired on <strong>${p.expiry.iso}</strong>.
+          </div>
+        `;
+      }
+
+      const ratioPct = effCeiling ? Math.min(100, Math.round((effCeiling / Math.max(unitPrice, effCeiling)) * 100)) : 65;
+
+      const altRows = alts.length
+        ? alts.map(a => {
+            const aUnit = Number(a.price_per_unit ?? a.unit_price ?? 0);
+            const aSavings = a.savings_percent != null ? Math.round(a.savings_percent) : Math.max(0, Math.round((1 - aUnit / unitPrice) * 100));
+            const isJa = Boolean(a.is_jan_aushadhi || a.kind === 'jan_aushadhi');
+            return `
+            <tr>
+              <td><strong>${a.name}</strong></td>
+              <td><span class="badge ${isJa ? 'badge-green' : 'badge-blue'}">${isJa ? 'PMBI Jan Aushadhi' : 'Verified Brand'}</span></td>
+              <td>${a.ja_product_code ? 'Code ' + a.ja_product_code : (a.manufacturer || a.manufacturer_or_code || '—')}</td>
+              <td class="mono"><strong>₹${aUnit.toFixed(2)}</strong> / ${a.pack_unit || packUnit}</td>
+              <td>₹${Number(a.mrp).toFixed(2)} (${a.pack_size} ${a.pack_unit || packUnit}s)</td>
+              <td><span class="badge badge-green">Save ${aSavings}%</span></td>
+            </tr>
+          `;
+          }).join('')
+        : '<tr><td colspan="6" style="color:var(--navy-muted);">No cheaper alternatives listed — this product is already the lowest-priced option for its salt.</td></tr>';
+
+      resBox.innerHTML = `
+        ${expiryBanner}
+        ${batchBanner}
+        <div class="grid-2">
+          <div class="card interactive">
+            <div class="card-title">
+              <span>1. Product &amp; <em>Salt Profile</em></span>
+              <span class="badge badge-blue">${prod.schedule_status || prod.schedule || 'Scheduled'}</span>
+            </div>
+            <div class="grid-2" style="gap:0.75rem;margin-bottom:0.8rem;">
+              <div class="stat-box">
+                <div class="label">Brand Name</div>
+                <div class="value" style="font-size:1.75rem;">${prod.brand_name}</div>
+                <div class="sub">${prod.manufacturer}</div>
+              </div>
+              <div class="stat-box">
+                <div class="label">Generic Salt Composition</div>
+                <div class="value" style="font-size:1.45rem;color:var(--blue7);">${prod.salt_normalized}</div>
+                <div class="sub">${prod.strength} · ${prod.dosage_form}</div>
+              </div>
+            </div>
+            <p style="margin:0;font-size:0.84rem;color:var(--navy-muted);">
+              <strong>Pack Specification:</strong> ${prod.pack_size} ${packUnit}s per pack · Printed Pack MRP: <strong>₹${printedMrp.toFixed(2)}</strong>
+            </p>
+          </div>
+
+          <div class="card interactive">
+            <div class="card-title">
+              <span>2. NPPA Ceiling &amp; <em>5% GST Check</em></span>
+              ${priceBadge}
+            </div>
+            <div class="grid-3" style="gap:0.7rem;">
+              <div class="stat-box">
+                <div class="label">Brand Unit Price</div>
+                <div class="value" style="font-size:1.85rem;color:${isAbove ? 'var(--orange7)' : 'var(--teal)'};">₹${unitPrice.toFixed(2)}</div>
+                <div class="sub">MRP ÷ ${prod.pack_size} ${packUnit}s</div>
+              </div>
+              <div class="stat-box">
+                <div class="label">NPPA Base Ceiling</div>
+                <div class="value" style="font-size:1.85rem;">${baseCeiling != null ? '₹' + baseCeiling.toFixed(2) : 'N/A'}</div>
+                <div class="sub">DPCO Ex-GST</div>
+              </div>
+              <div class="stat-box">
+                <div class="label">Max Legal (+5% GST)</div>
+                <div class="value" style="font-size:1.85rem;color:var(--blue7);">${effCeiling != null ? '₹' + effCeiling.toFixed(2) : 'N/A'}</div>
+                <div class="sub">Ceiling × 1.05</div>
+              </div>
+            </div>
+            <div class="pbar ${isAbove ? 'warn' : ''}" style="margin-top:0.9rem;">
+              <i data-w="${ratioPct}"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:1.2rem;">
+          <div class="card-title">
+            <span>3. Cheaper Same-Salt Substitutes &amp; <em>PMBI Jan Aushadhi</em></span>
+            <span class="badge badge-green">${alts.length} Lower-Priced Equivalents</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Substitute Name</th><th>Category</th><th>Manufacturer / Drug Code</th><th>Unit Price</th><th>Pack Price</th><th>Patient Savings</th></tr>
+              </thead>
+              <tbody>${altRows}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      if (window.animateBars) window.animateBars(resBox);
+    }
+
+    async function loadAuthorities() {
+      const state = document.getElementById('authStateSelect').value;
+      const reportType = document.getElementById('authTypeSelect').value;
+      const resp = await fetch(`/api/authorities?state=${encodeURIComponent(state)}&reportType=${encodeURIComponent(reportType)}`);
+      const data = await resp.json();
+      const rows = (data.authorities || []).map(a => `
+        <tr>
+          <td><strong>${a.authority_name || a.agency_name}</strong><br/><span style="font-size:0.75rem;color:var(--navy-muted);">${a.authority_type || a.portal_name || ''} · Handles: ${a.handles || 'all'}</span></td>
+          <td><span class="badge ${!a.state ? 'badge-purple' : 'badge-blue'}">${a.state || 'National (Central)'}</span></td>
+          <td class="mono">${a.phone || a.helpline || a.email || '—'}</td>
+          <td><a href="${a.complaint_url || a.portal_url || '#'}" target="_blank" rel="noopener" class="btn btn-outline" style="padding:0.3rem 0.68rem;font-size:0.75rem;">Open Portal ↗</a></td>
+        </tr>
+      `).join('');
+
+      document.getElementById('authoritiesList').innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Agency &amp; Scope</th><th>Jurisdiction</th><th>Contact</th><th>Official Link</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    async function updateReportDraft() {
+      if (!currentCheckData || !currentCheckData.check || !currentCheckData.check.product) return;
+      const prodId = currentCheckData.check.product.id;
+      const batch = document.getElementById('batchInput').value.trim();
+      const pharmacy_name = document.getElementById('repPharmacy').value.trim();
+      const pharmacy_licence_no = document.getElementById('repLicence').value.trim();
+      const description = document.getElementById('repDesc').value.trim();
+      const report_type = document.getElementById('authTypeSelect').value;
+
+      const resp = await fetch('/api/report-preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brand_product_id: prodId, batch_number: batch || null, pharmacy_name, pharmacy_licence_no, report_type, description }),
+      });
+      const data = await resp.json();
+      document.getElementById('reportDraftBox').textContent = data.text || '';
+    }
+
+    function copyReportDraft() {
+      navigator.clipboard.writeText(document.getElementById('reportDraftBox').textContent);
+      if (window.neoToast) window.neoToast('Neutral regulatory complaint copied to clipboard!');
+    }
+
+    function toggleCameraScanner() {
+      const box = document.getElementById('cameraBox');
+      if (box.style.display === 'block') { stopCameraScanner(); return; }
+      box.style.display = 'block';
+      if (!window.Html5Qrcode) return;
+      html5QrScanner = new Html5Qrcode('qrReader');
+      html5QrScanner.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 250, height: 150 } },
+        (decodedText) => {
+          document.getElementById('queryInput').value = decodedText;
+          stopCameraScanner();
+          runCheck();
+        },
+        () => {}
+      ).catch((err) => {
+        document.getElementById('qrReader').innerHTML = `<p style="font-size:0.84rem;color:var(--navy-muted);">Camera unavailable (${err}). Use the GS1 preset chips on the left.</p>`;
+      });
+    }
+
+    function stopCameraScanner() {
+      document.getElementById('cameraBox').style.display = 'none';
+      if (html5QrScanner) { html5QrScanner.stop().catch(() => {}); html5QrScanner = null; }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('q')) document.getElementById('queryInput').value = params.get('q');
+      if (params.get('batch')) document.getElementById('batchInput').value = params.get('batch');
+      runCheck();
+      loadAuthorities();
+    });
+  </script>
+</body>
+</html>

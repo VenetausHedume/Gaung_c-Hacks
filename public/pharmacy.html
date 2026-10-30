@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCheck · Phase 2 Pharmacy Verification — Stock & Fair-Billing Audit</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="field" aria-hidden="true"></div>
+  <h2 class="wordmark" aria-hidden="true">MediCheck</h2>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/index.html" class="brand-logo">
+        <span class="cross-box" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#F2562B"/></svg>
+        </span>
+        <span>Medi<em>Check</em></span>
+        <span class="brand-tag">SDG 3 · India</span>
+      </a>
+
+      <div class="d-search" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Jump to medicine, area, or portal…" aria-label="Global MediCheck search" />
+        <div class="d-results"></div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="/index.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          Landing Page
+        </a>
+        <a href="/dashboard.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          App Home
+        </a>
+        <a href="/scan.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+          1. Scan &amp; Check
+        </a>
+        <a href="/community.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          2. Community &amp; Map
+        </a>
+        <a href="/government.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M12 3l9 5H3l9-5z"/></svg>
+          3. Government Portal
+        </a>
+        <a href="/pharmacy.html" class="nav-link active">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.2-3.4 8.9-8 10-4.6-1.1-8-4.8-8-10V7l8-4z"/></svg>
+          4. Pharmacy Verify
+        </a>
+        <a href="/security.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          5. Security &amp; Log
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero reveal" style="--i:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1.2rem;flex-wrap:wrap;">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>Phase 2 · Pharmacy Stock &amp; Fair-Billing Verification Portal</span>
+          </div>
+          <h1>Verify stock &amp; fair billing, <em>earn community trust.</em></h1>
+          <p>
+            Pharmacies submit <strong>Stock Shelf Photographs</strong> and <strong>Sample GST Billing Invoices</strong>. MediCheck automatically cross-checks the billed medicine against <strong>NPPA DPCO ceiling rates (+5% GST)</strong> and <strong>CDSCO NSQ batch recalls</strong>. Stores that pass all criteria earn the <strong>Verified Pharmacy Badge</strong> and are suggested to patients searching their area.
+          </p>
+
+          <div class="neo-toast" aria-live="polite">
+            <span class="neo-dot"></span>
+            <span class="neo-msgs">
+              <span>Criterion 1 (25 pts): <b>Stock Shelf Proof</b> + ≥10 essential medicines</span>
+              <span>Criterion 2 (30 pts): <b>GST Invoice Proof</b> submitted for audit</span>
+              <span>Criterion 3 (25 pts): Billed unit rate <b>≤ NPPA Ceiling + 5% GST</b></span>
+              <span>Criterion 4 (10+10 pts): <b>Clean CDSCO Batch</b> + Jan Aushadhi counter</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="neo-journey" aria-label="Phase 2 Pharmacy Verification Pipeline">
+        <span class="nj-step" style="--i:0"><span class="nj-dot">1</span>Register Licence</span>
+        <span class="nj-line" style="--i:0"><i></i></span>
+        <span class="nj-step" style="--i:1"><span class="nj-dot">2</span>Upload Stock Proof</span>
+        <span class="nj-line" style="--i:1"><i></i></span>
+        <span class="nj-step" style="--i:2"><span class="nj-dot">3</span>Upload GST Bill</span>
+        <span class="nj-line" style="--i:2"><i></i></span>
+        <span class="nj-step" style="--i:3"><span class="nj-dot">4</span>Auto-Check NPPA &amp; NSQ</span>
+        <span class="nj-line" style="--i:3"><i></i></span>
+        <span class="nj-step nj-ace" style="--i:4"><span class="nj-dot">★</span>Earn Verified Badge</span>
+      </div>
+    </section>
+
+    <!-- 5-POINT AUTOMATED VERIFICATION SCORECARD -->
+    <div class="grid-4 reveal" style="--i:1;margin-bottom:1.3rem;">
+      <div class="stat-box">
+        <div class="label">1. Stock Proof + Essential Count</div>
+        <div class="value" style="color:var(--blue7);">25 pts</div>
+        <div class="sub">&ge;10 essential medicines + photo</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">2. GST Billing Proof</div>
+        <div class="value" style="color:var(--blue7);">30 pts</div>
+        <div class="sub">Verifiable bill / invoice photo</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">3. NPPA Ceiling &amp; MRP Match</div>
+        <div class="value" style="color:var(--teal);">25 pts</div>
+        <div class="sub">Billed unit price &le; max legal rate</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">4. Clean Batch + Jan Aushadhi</div>
+        <div class="value" style="color:var(--orange5);">10 + 10 pts</div>
+        <div class="sub">Not in CDSCO NSQ + Generic stock</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="--i:2">
+      <!-- PHARMACY REGISTRATION & PROOF SUBMISSION FORM -->
+      <div class="card sky-card">
+        <div class="card-title">
+          <span>Submit Pharmacy Stock &amp; <em>Billing Proofs</em></span>
+          <span class="badge badge-blue">Automated Audit Engine</span>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <label>Quick Presentation Test Presets:</label>
+          <div class="chip-row">
+            <button type="button" class="chip" style="--c:#0A7D5D" onclick="loadPassPreset()">
+              ✓ Load Compliant Store Preset (Passes 100/100 → Verified)
+            </button>
+            <button type="button" class="chip" style="--c:#C93A12" onclick="loadFailPreset()">
+              ✗ Load Overcharging / Flagged Batch Preset (Rejected 45/100)
+            </button>
+          </div>
+        </div>
+
+        <form onsubmit="submitPharmacyVerify(event)">
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="form-group">
+              <label for="phName">Pharmacy Name</label>
+              <input type="text" id="phName" value="Arogya Kendra Verified Chemist" required />
+            </div>
+            <div class="form-group">
+              <label for="phLicence">State Drug Licence No</label>
+              <input type="text" id="phLicence" value="MH-MZ4-550112" required />
+            </div>
+          </div>
+
+          <div class="grid-4" style="gap:0.65rem;">
+            <div class="form-group">
+              <label for="phArea">Locality / Area</label>
+              <input type="text" id="phArea" value="Andheri West" required />
+            </div>
+            <div class="form-group">
+              <label for="phCity">City</label>
+              <input type="text" id="phCity" value="Mumbai" required />
+            </div>
+            <div class="form-group">
+              <label for="phState">State</label>
+              <input type="text" id="phState" value="Maharashtra" required />
+            </div>
+            <div class="form-group">
+              <label for="phPincode">Pincode</label>
+              <input type="text" id="phPincode" value="400058" required />
+            </div>
+          </div>
+
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="form-group">
+              <label for="phStockCount">Essential Medicines Stocked Count (&ge;10 required)</label>
+              <input type="number" id="phStockCount" value="28" min="1" required />
+            </div>
+            <div class="form-group">
+              <label for="phProductSelect">Audited Medicine on Sample Bill</label>
+              <select id="phProductSelect"></select>
+            </div>
+          </div>
+
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="form-group">
+              <label for="phBilledPrice">Sample Billed Price per Unit (₹)</label>
+              <input type="number" step="0.01" id="phBilledPrice" value="1.50" required />
+            </div>
+            <div class="form-group">
+              <label for="phBatch">Dispensed Batch Number on Bill</label>
+              <input type="text" id="phBatch" value="BATCH-CLEAN-2026" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phStockUrls">Stock Shelf Proof Image URLs (comma-separated)</label>
+            <input
+              type="text"
+              id="phStockUrls"
+              value="https://placehold.co/640x400/064e3b/a7f3d0?text=Essential+Medicine+Stock+Shelf+1, https://placehold.co/640x400/064e3b/a7f3d0?text=Cold+Chain+Temperature+Log"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phBillUrls">Fair-Billing GST Invoice Proof Image URLs (comma-separated)</label>
+            <input
+              type="text"
+              id="phBillUrls"
+              value="https://placehold.co/640x400/1e3a8a/bfdbfe?text=GST+Bill+Paracetamol+500mg+@+Rs1.50/tab"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label style="display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;text-transform:none;font-size:0.86rem;">
+              <input type="checkbox" id="phJanCheck" checked style="width:1.05rem;height:1.05rem;" />
+              <span>Store maintains dedicated <strong>PMBI Jan Aushadhi</strong> generic medicine counter (+10 bonus score)</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;">
+            🛡 Run Automated Verification Review &amp; Publish Status
+          </button>
+        </form>
+
+        <div id="verifyResultBox" style="margin-top:1rem;"></div>
+      </div>
+
+      <!-- LIVE VERIFIED PHARMACIES DIRECTORY -->
+      <div class="card teal-card">
+        <div class="card-title">
+          <span>Verified Pharmacies <em>Suggested to Patients</em></span>
+          <span class="badge badge-green">Live Directory</span>
+        </div>
+        <p style="margin-top:0;font-size:0.85rem;color:var(--navy-soft);">
+          Stores below have passed the automated Stock &amp; Fair-Billing audit and appear immediately when patients search their locality on the <a href="/community.html" style="font-weight:800;color:var(--orange5);">Community Explorer page</a>.
+        </p>
+        <div id="verifiedListBox"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span><strong>MediCheck Phase 2 Pharmacy Verification</strong> · Incentivizing Fair Pricing &amp; Generic Availability</span>
+      <span><a href="/community.html">Test Store Discovery on Community Page →</a></span>
+    </footer>
+  </main>
+
+  <script>
+    let productsList = [];
+
+    async function initPharmacyPage() {
+      const resp = await fetch('/api/products');
+      const data = await resp.json();
+      productsList = data.products || [];
+
+      const sel = document.getElementById('phProductSelect');
+      sel.innerHTML = productsList.map(p => {
+        const mrp = Number(p.printed_mrp ?? p.mrp ?? 0);
+        const unit = Number(p.price_per_unit ?? p.unit_price ?? 0);
+        return `
+        <option value="${p.id}" ${p.brand_name === 'TestFever 500' ? 'selected' : ''}>
+          ${p.brand_name} (${p.salt_normalized} ${p.strength}) — MRP ₹${mrp.toFixed(2)} / ${p.pack_size}u (₹${unit.toFixed(2)}/u)
+        </option>
+      `;
+      }).join('');
+
+      await loadVerifiedStores();
+    }
+
+    function loadPassPreset() {
+      document.getElementById('phName').value = 'Swasthya Seva Verified Pharmacy';
+      document.getElementById('phLicence').value = 'MH-MUM-889900';
+      document.getElementById('phArea').value = 'Andheri West';
+      document.getElementById('phCity').value = 'Mumbai';
+      document.getElementById('phPincode').value = '400058';
+      document.getElementById('phStockCount').value = '30';
+      const tf = productsList.find(p => p.brand_name === 'TestFever 500');
+      if (tf) document.getElementById('phProductSelect').value = tf.id;
+      document.getElementById('phBilledPrice').value = '1.50';
+      document.getElementById('phBatch').value = 'BATCH-SAFE-2026';
+      document.getElementById('phJanCheck').checked = true;
+      if (window.neoToast) window.neoToast('Loaded Compliant Store Preset (100/100 score)');
+    }
+
+    function loadFailPreset() {
+      document.getElementById('phName').value = 'Unverified Overcharging Chemist';
+      document.getElementById('phLicence').value = 'MH-MUM-999999';
+      document.getElementById('phArea').value = 'Andheri West';
+      document.getElementById('phCity').value = 'Mumbai';
+      document.getElementById('phPincode').value = '400058';
+      document.getElementById('phStockCount').value = '5';
+      const sm = productsList.find(p => p.brand_name === 'SampleMol 650');
+      if (sm) document.getElementById('phProductSelect').value = sm.id;
+      document.getElementById('phBilledPrice').value = '3.50';
+      document.getElementById('phBatch').value = 'TST1234';
+      document.getElementById('phJanCheck').checked = false;
+      if (window.neoToast) window.neoToast('Loaded Non-Compliant Store Preset (Rejected)');
+    }
+
+    async function submitPharmacyVerify(e) {
+      e.preventDefault();
+      const box = document.getElementById('verifyResultBox');
+      box.innerHTML = '<div class="alert-banner info">Auditing stock photos, GST invoice rate against NPPA ceiling, and batch against CDSCO NSQ…</div>';
+
+      const payload = {
+        pharmacy_name: document.getElementById('phName').value.trim(),
+        licence_no: document.getElementById('phLicence').value.trim(),
+        area: document.getElementById('phArea').value.trim(),
+        city: document.getElementById('phCity').value.trim(),
+        state: document.getElementById('phState').value.trim(),
+        pincode: document.getElementById('phPincode').value.trim(),
+        essential_medicines_stocked: Number(document.getElementById('phStockCount').value),
+        sample_brand_product_id: document.getElementById('phProductSelect').value,
+        sample_billed_unit_price: Number(document.getElementById('phBilledPrice').value),
+        sample_batch_number: document.getElementById('phBatch').value.trim(),
+        stock_proof_urls: document.getElementById('phStockUrls').value.trim(),
+        billing_proof_urls: document.getElementById('phBillUrls').value.trim(),
+        jan_aushadhi_available: document.getElementById('phJanCheck').checked,
+      };
+
+      const resp = await fetch('/api/pharmacy/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await resp.json();
+      const v = data.verification || {};
+      const det = v.auto_check_details || {};
+
+      const statusText = v.verification_status || v.status || 'pending';
+      const isVerified = Boolean(v.is_verified || statusText === 'verified');
+      const priceOk = det.within_nppa_ceiling_with_gst ?? v.price_compliant ?? false;
+      const batchOk = det.batch_clean_in_cdsco ?? v.batch_clean ?? false;
+
+      box.innerHTML = `
+        <div class="alert-banner ${isVerified ? 'success' : 'danger'}">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+            <div>
+              <strong style="font-size:1rem;">${isVerified ? '✓ STORE VERIFIED & ADDED TO COMMUNITY SUGGESTIONS!' : '✗ VERIFICATION REJECTED — COMPLIANCE CHECKS FAILED'}</strong>
+              <div style="margin-top:0.35rem;font-size:0.84rem;">
+                Status: <strong>${statusText.toUpperCase()}</strong> ·
+                Price Compliant: <strong>${priceOk ? 'YES' : 'NO (Over Ceiling)'}</strong> ·
+                Batch Clean: <strong>${batchOk ? 'YES' : 'NO (CDSCO NSQ Alert!)'}</strong>
+              </div>
+            </div>
+            <div class="score-ring" style="--p:${v.verification_score || 0}">
+              <span>${v.verification_score || 0}</span>
+            </div>
+          </div>
+          <div style="margin-top:0.45rem;font-size:0.82rem;"><strong>Audit Notes:</strong> ${v.review_note || v.reviewer_notes || ''}</div>
+        </div>
+      `;
+
+      if (window.neoToast) {
+        window.neoToast(isVerified ? 'Store verified (Score ' + v.verification_score + '/100)!' : 'Store rejected (Score ' + v.verification_score + '/100)');
+      }
+      await loadVerifiedStores();
+    }
+
+    async function loadVerifiedStores() {
+      const resp = await fetch('/api/community');
+      const data = await resp.json();
+      const stores = data.verifiedPharmacies || [];
+      const box = document.getElementById('verifiedListBox');
+
+      box.innerHTML = stores.map(s => `
+        <div class="ccard" style="margin-bottom:0.95rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;">
+            <div>
+              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.3rem;">
+                <span class="badge badge-green">✓ VERIFIED</span>
+                ${s.jan_aushadhi_available ? '<span class="badge badge-blue">💊 Jan Aushadhi</span>' : ''}
+              </div>
+              <strong style="font-size:1.08rem;">${s.pharmacy_name}</strong>
+              <div style="font-size:0.82rem;color:var(--navy-muted);margin-top:0.2rem;">
+                📍 <strong>${s.area}, ${s.city}</strong> (${s.pincode}) · Licence: <code class="mono">${s.licence_no}</code>
+              </div>
+            </div>
+            <div class="score-ring" style="--p:${s.verification_score || 100}">
+              <span>${s.verification_score}</span>
+            </div>
+          </div>
+          <div style="font-size:0.78rem;color:#065F46;font-weight:700;margin-top:0.45rem;">${s.last_review_note || s.verification_notes || ''}</div>
+          <div class="proof-grid">
+            ${(s.stock_proof_urls || []).map((u, i) => `<button type="button" class="proof-thumb" onclick="window.openProofModal('Stock Proof #${i + 1} — ${s.pharmacy_name.replace(/'/g, "\\'")}', '${u}', '${s.area}, ${s.city}')">📦 Stock Proof #${i + 1}</button>`).join('')}
+            ${(s.billing_proof_urls || []).map((u, i) => `<button type="button" class="proof-thumb" onclick="window.openProofModal('GST Billing Proof #${i + 1} — ${s.pharmacy_name.replace(/'/g, "\\'")}', '${u}', 'Audited against NPPA ceiling')">🧾 Billing Proof #${i + 1}</button>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', initPharmacyPage);
+  </script>
+</body>
+</html>

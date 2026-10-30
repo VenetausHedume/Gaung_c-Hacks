@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCheck · Government Officer Portal — Post Regulatory Progress & Inspection Proofs</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="field" aria-hidden="true"></div>
+  <h2 class="wordmark" aria-hidden="true">MediCheck</h2>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/index.html" class="brand-logo">
+        <span class="cross-box" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#F2562B"/></svg>
+        </span>
+        <span>Medi<em>Check</em></span>
+        <span class="brand-tag">SDG 3 · India</span>
+      </a>
+
+      <div class="d-search" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Jump to medicine, area, or portal…" aria-label="Global MediCheck search" />
+        <div class="d-results"></div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="/index.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          Landing Page
+        </a>
+        <a href="/dashboard.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          App Home
+        </a>
+        <a href="/scan.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+          1. Scan &amp; Check
+        </a>
+        <a href="/community.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          2. Community &amp; Map
+        </a>
+        <a href="/government.html" class="nav-link active">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M12 3l9 5H3l9-5z"/></svg>
+          3. Government Portal
+        </a>
+        <a href="/pharmacy.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.2-3.4 8.9-8 10-4.6-1.1-8-4.8-8-10V7l8-4z"/></svg>
+          4. Pharmacy Verify
+        </a>
+        <a href="/security.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          5. Security &amp; Log
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero reveal" style="--i:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1.2rem;flex-wrap:wrap;">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>Government / Regulatory Officer Account &amp; Action Proof Portal</span>
+          </div>
+          <h1>Post regulatory progress, <em>seal inspection proofs.</em></h1>
+          <p>
+            Authorized State FDA Drug Inspectors, CDSCO Enforcement Officers, and NPPA Monitoring Cells use this portal to post <strong>official action updates</strong> and attach <strong>inspection proof images, seizure memos, and show-cause notices</strong>. Every update is cryptographically sealed into <code>public_log</code> as a <code>status_change</code> entry.
+          </p>
+
+          <div class="neo-toast" aria-live="polite">
+            <span class="neo-dot"></span>
+            <span class="neo-msgs">
+              <span>Role Security: Enforced via <b>government_officers</b> JWT + RLS</span>
+              <span>Tamper-Evident: Appends <b>status_change</b> block to public_log</span>
+              <span>Proof Storage: Links inspection photos to <b>proof-attachments</b> bucket</span>
+              <span>Patient Receipt: Automatically embeds officer updates in <b>get_receipt</b></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="neo-journey" aria-label="Government Officer Enforcement Pipeline">
+        <span class="nj-step" style="--i:0"><span class="nj-dot">1</span>Select Report</span>
+        <span class="nj-line" style="--i:0"><i></i></span>
+        <span class="nj-step" style="--i:1"><span class="nj-dot">2</span>Verify Officer Role</span>
+        <span class="nj-line" style="--i:1"><i></i></span>
+        <span class="nj-step" style="--i:2"><span class="nj-dot">3</span>Attach Proof Images</span>
+        <span class="nj-line" style="--i:2"><i></i></span>
+        <span class="nj-step" style="--i:3"><span class="nj-dot">4</span>Seal status_change Block</span>
+        <span class="nj-line" style="--i:3"><i></i></span>
+        <span class="nj-step nj-ace" style="--i:4"><span class="nj-dot">✓</span>Publish to Community</span>
+      </div>
+    </section>
+
+    <!-- OFFICER CREDENTIALS & ARCHITECTURE BANNER -->
+    <div class="grid-3 reveal" style="--i:1;margin-bottom:1.3rem;">
+      <div class="stat-box">
+        <div class="label">Authenticated Officer Role</div>
+        <div class="value" style="font-size:1.55rem;color:var(--blue7);">Maharashtra FDA</div>
+        <div class="sub">Drugs Inspector (Zone 4, Mumbai)</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Database Access Control</div>
+        <div class="value" style="font-size:1.55rem;color:var(--teal);">RLS + Security Definer</div>
+        <div class="sub"><code>post_government_progress</code> RPC</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Public Log Chain Action</div>
+        <div class="value" style="font-size:1.55rem;color:var(--orange5);"><code>status_change</code></div>
+        <div class="sub">Appends immutable SHA-256 block</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="--i:2">
+      <!-- FORM TO POST GOVERNMENT PROGRESS & PROOF IMAGES -->
+      <div class="card orange-card">
+        <div class="card-title">
+          <span>Post Official Progress &amp; <em>Proof Images</em></span>
+          <span class="badge badge-amber">Officer Action Form</span>
+        </div>
+
+        <form onsubmit="submitGovProgress(event)">
+          <div class="form-group">
+            <label for="govReportSelect">Select Filed Community Report</label>
+            <select id="govReportSelect" onchange="syncSelectedReport()"></select>
+          </div>
+
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="form-group">
+              <label for="govAgency">Enforcement Agency Name</label>
+              <input type="text" id="govAgency" value="Maharashtra FDA (Drugs Control Administration)" required />
+            </div>
+            <div class="form-group">
+              <label for="govOfficer">Officer Designation</label>
+              <input type="text" id="govOfficer" value="Drugs Inspector (Zone 4, Mumbai)" required />
+            </div>
+          </div>
+
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="form-group">
+              <label for="govStatus">New Enforcement Status</label>
+              <select id="govStatus">
+                <option value="acknowledged">Acknowledged (Notice Issued)</option>
+                <option value="investigating">Investigating (Sample Sent to Lab)</option>
+                <option value="action_taken" selected>Action Taken (Inspection / Seizure)</option>
+                <option value="resolved">Resolved (Compliance Restored)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="govActionTaken">Official Action Summary Headline</label>
+              <input type="text" id="govActionTaken" value="Show-Cause Notice Issued &amp; Batch Stock Frozen" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="govNote">Detailed Progress Note (Published to Community Page &amp; Patient Receipt)</label>
+            <textarea id="govNote" required>Inspected retail premises under Drugs & Cosmetics Act; verified purchase invoices and froze remaining strip inventory pending lab confirmation.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="govProofUrls">Proof Attachment URLs (Inspection Photos, Seizure Memos, Lab Reports — comma-separated)</label>
+            <input
+              type="text"
+              id="govProofUrls"
+              value="https://placehold.co/640x400/0f172a/38bdf8?text=FDA+Inspection+Memo+Signed, https://placehold.co/640x400/0f172a/22c55e?text=Batch+Stock+Seizure+Photo"
+              required
+            />
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">🏛 Publish Progress &amp; Seal Proof in Log</button>
+            <button type="button" class="btn btn-outline" onclick="fillResolvedPreset()">Load "Case Resolved" Preset</button>
+          </div>
+        </form>
+
+        <div id="govSubmitResult" style="margin-top:1rem;"></div>
+      </div>
+
+      <!-- LIVE FEED OF GOVERNMENT UPDATES & PROOF ATTACHMENTS -->
+      <div class="card">
+        <div class="card-title">
+          <span>Live Sealed Government <em>Progress Timeline</em></span>
+          <span class="badge badge-green">Synced with Community Page</span>
+        </div>
+        <div id="govLiveTimeline"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span><strong>MediCheck Government Enforcement Portal</strong> · Tamper-Evident Regulatory Accountability</span>
+      <span><a href="/community.html">View Public Community Feed →</a> · <a href="/security.html">Inspect SHA-256 Chain →</a></span>
+    </footer>
+  </main>
+
+  <script>
+    let allIssues = [];
+
+    async function loadIssuesForGov() {
+      const resp = await fetch('/api/community');
+      const data = await resp.json();
+      allIssues = Array.isArray(data.issues) ? data.issues : (data.issues && data.issues.items ? data.issues.items : []);
+
+      const sel = document.getElementById('govReportSelect');
+      const urlReportId = new URLSearchParams(window.location.search).get('reportId');
+
+      sel.innerHTML = allIssues.map(i => {
+        const loc = i.location || i;
+        const disp = i.pharmacy_name || i.pharmacy_display_name || 'Protected Pharmacy';
+        return `
+        <option value="${i.report_id}" ${urlReportId === i.report_id ? 'selected' : ''}>
+          Seq #${i.seq} · ${loc.area || 'Andheri West'}, ${loc.city || 'Mumbai'} · ${i.report_type} (${disp})
+        </option>
+      `;
+      }).join('');
+
+      renderGovTimeline();
+    }
+
+    function syncSelectedReport() {
+      renderGovTimeline();
+    }
+
+    function fillResolvedPreset() {
+      document.getElementById('govStatus').value = 'resolved';
+      document.getElementById('govActionTaken').value = 'Excess MRP Refunded & Compulsory DPCO Rate Display Enforced';
+      document.getElementById('govNote').value = 'Follow-up compliance audit completed. Pharmacy refunded overcharged amount and displayed NPPA ceiling price chart at billing counter.';
+      document.getElementById('govProofUrls').value = 'https://placehold.co/640x400/064e3b/a7f3d0?text=Compliance+Audit+Certificate+Signed';
+      if (window.neoToast) window.neoToast('Loaded "Case Resolved" officer preset');
+    }
+
+    async function submitGovProgress(e) {
+      e.preventDefault();
+      const report_id = document.getElementById('govReportSelect').value;
+      const agency_name = document.getElementById('govAgency').value.trim();
+      const officer_designation = document.getElementById('govOfficer').value.trim();
+      const status = document.getElementById('govStatus').value;
+      const action_taken = document.getElementById('govActionTaken').value.trim();
+      const progress_note = document.getElementById('govNote').value.trim();
+      const proof_urls = document.getElementById('govProofUrls').value.trim();
+
+      const resBox = document.getElementById('govSubmitResult');
+      resBox.innerHTML = '<div class="alert-banner info">Posting officer update &amp; sealing proof URLs…</div>';
+
+      try {
+        const resp = await fetch('/api/government/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            report_id,
+            agency_name,
+            officer_designation,
+            status,
+            action_taken,
+            progress_note,
+            proof_urls,
+          }),
+        });
+        const result = await resp.json();
+        resBox.innerHTML = `
+          <div class="alert-banner success">
+            <strong>✓ Government Progress Update Published!</strong><br/>
+            Update ID: <code class="mono">${result.update_id || result.id}</code> · Status: <strong>${(result.status || 'action_taken').toUpperCase()}</strong> ·
+            Proof Attachments: <strong>${(result.proof_urls || []).length}</strong>
+          </div>
+        `;
+        if (window.neoToast) window.neoToast('Officer progress & proof sealed to public timeline!');
+        await loadIssuesForGov();
+      } catch (err) {
+        resBox.innerHTML = `<div class="alert-banner danger">Error: ${err.message}</div>`;
+      }
+    }
+
+    function renderGovTimeline() {
+      const box = document.getElementById('govLiveTimeline');
+      box.innerHTML = allIssues.map(issue => {
+        const updates = issue.government_updates || [];
+        const loc = issue.location || issue;
+        const st = issue.current_status || issue.status || 'filed';
+        return `
+          <div class="ccard" style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">
+              <strong>Seq #${issue.seq} · ${loc.area || 'Andheri West'}, ${loc.city || 'Mumbai'} (${issue.report_type})</strong>
+              <span class="badge ${st === 'resolved' || st === 'action_taken' ? 'badge-green' : 'badge-amber'}">${st.toUpperCase()}</span>
+            </div>
+            <div style="font-size:0.8rem;color:var(--navy-muted);margin-top:0.25rem;" class="mono">
+              Report ID: ${issue.report_id}
+            </div>
+            ${updates.length ? `
+              <div class="timeline">
+                ${updates.map(u => `
+                  <div class="timeline-item">
+                    <div style="font-size:0.84rem;font-weight:800;color:var(--navy);">🏛 ${u.agency_name} — ${u.officer_designation}</div>
+                    <div style="font-size:0.82rem;font-weight:700;color:var(--teal);margin-top:0.2rem;">${u.action_taken || u.status}</div>
+                    <div style="font-size:0.83rem;margin-top:0.2rem;color:var(--navy-soft);">${u.progress_note}</div>
+                    <div class="proof-grid">
+                      ${(u.proof_urls || []).map((url, idx) =>
+                        `<button type="button" class="proof-thumb" onclick="window.openProofModal('Official Inspection Proof #${idx + 1}', '${url}', '${u.agency_name} · ${u.officer_designation}')">🖼 View Proof Attachment #${idx + 1}</button>`
+                      ).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : '<p style="font-size:0.82rem;color:var(--navy-muted);margin:0.5rem 0 0;">No updates yet — select this report on the left to post progress.</p>'}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', loadIssuesForGov);
+  </script>
+</body>
+</html>

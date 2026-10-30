@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCheck · Community Explorer — Nearby Verified Pharmacies & Local Issues</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="field" aria-hidden="true"></div>
+  <h2 class="wordmark" aria-hidden="true">MediCheck</h2>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/index.html" class="brand-logo">
+        <span class="cross-box" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#F2562B"/></svg>
+        </span>
+        <span>Medi<em>Check</em></span>
+        <span class="brand-tag">SDG 3 · India</span>
+      </a>
+
+      <div class="d-search" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Jump to medicine, area, or portal…" aria-label="Global MediCheck search" />
+        <div class="d-results"></div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="/index.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          Landing Page
+        </a>
+        <a href="/dashboard.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          App Home
+        </a>
+        <a href="/scan.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+          1. Scan &amp; Check
+        </a>
+        <a href="/community.html" class="nav-link active">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          2. Community &amp; Map
+        </a>
+        <a href="/government.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M12 3l9 5H3l9-5z"/></svg>
+          3. Government Portal
+        </a>
+        <a href="/pharmacy.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.2-3.4 8.9-8 10-4.6-1.1-8-4.8-8-10V7l8-4z"/></svg>
+          4. Pharmacy Verify
+        </a>
+        <a href="/security.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          5. Security &amp; Log
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero reveal" style="--i:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1.2rem;flex-wrap:wrap;">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>Community Transparency &amp; Phase 2 Verified Store Directory</span>
+          </div>
+          <h1>Find verified pharmacies, <em>track local issues.</em></h1>
+          <p>
+            Search any locality, city, or pincode to discover <strong>MediCheck Verified Pharmacies</strong> (audited for essential stock &amp; NPPA-compliant billing) alongside <strong>local pharmacy reports</strong> and <strong>official Government action proofs</strong>.
+          </p>
+
+          <div class="neo-toast" aria-live="polite">
+            <span class="neo-dot"></span>
+            <span class="neo-msgs">
+              <span>Privacy rule: Store names stay <b>masked</b> below 3 reports</span>
+              <span>Threshold met: <b>≥ 3 reports</b> of same type unlocks store identity</span>
+              <span>Phase 2 Badge: <b>100/100 score</b> requires stock + GST invoice proof</span>
+              <span>Government Updates: Sealed into <b>public_log</b> with proof attachments</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLACE SEARCH & FILTER STUDIO -->
+    <div class="card sky-card reveal" style="--i:1;margin-bottom:1.3rem;">
+      <form onsubmit="searchCommunity(event)">
+        <div class="grid-4" style="align-items:end;">
+          <div style="grid-column:span 2;">
+            <label for="placeInput">Search Area, Locality, City, or Pincode</label>
+            <input
+              type="text"
+              id="placeInput"
+              value=""
+              placeholder="e.g. Andheri West, Dadar, Bandra West, Mumbai, 400058 (leave blank for all)"
+            />
+          </div>
+          <div>
+            <label for="statusSelect">Filter Issue Status</label>
+            <select id="statusSelect" onchange="searchCommunity()">
+              <option value="">All Statuses</option>
+              <option value="action_taken">Action Taken by Government</option>
+              <option value="investigating">Under Investigation</option>
+              <option value="resolved">Resolved</option>
+              <option value="filed">Newly Filed</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary" style="width:100%;">Search Area →</button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem;margin-top:0.95rem;">
+          <div class="chip-row" style="margin-top:0;">
+            <button type="button" class="chip" style="--c:#0B2540" onclick="quickArea('')">All Areas (Full Feed)</button>
+            <button type="button" class="chip" style="--c:#0A7D5D" onclick="quickArea('Andheri West')">📍 Andheri West (400058)</button>
+            <button type="button" class="chip" style="--c:#2A6FB5" onclick="quickArea('Dadar')">📍 Dadar (400014)</button>
+            <button type="button" class="chip" style="--c:#F2562B" onclick="quickArea('Bandra West')">📍 Bandra West (400050)</button>
+            <button type="button" class="chip" style="--c:#6FB1E0" onclick="quickArea('Mumbai')">📍 Mumbai</button>
+          </div>
+
+          <label style="display:inline-flex;align-items:center;gap:0.45rem;margin:0;cursor:pointer;text-transform:none;font-size:0.84rem;">
+            <input type="checkbox" id="janOnlyCheck" onchange="searchCommunity()" style="width:1.05rem;height:1.05rem;" />
+            <span>Only Verified Stores with <strong>PMBI Jan Aushadhi</strong> Stock</span>
+          </label>
+        </div>
+      </form>
+    </div>
+
+    <!-- SUMMARY METRICS -->
+    <div class="grid-4 reveal" style="--i:2;margin-bottom:1.35rem;" id="summaryStats"></div>
+
+    <!-- INTERACTIVE LOCALITY & PHARMACY MAP -->
+    <section class="reveal" style="--i:2.5;margin-bottom:1.35rem;" aria-label="Interactive Locality & Pharmacy Map">
+      <div id="mcMapRoot"></div>
+    </section>
+
+    <!-- TWO-COLUMN EXPLORER: VERIFIED PHARMACIES + COMMUNITY ISSUES & GOVT PROGRESS -->
+    <div class="grid-2 reveal" style="--i:3">
+      <!-- Column 1: Nearby Verified Pharmacies -->
+      <div class="card teal-card">
+        <div class="card-title">
+          <span>Nearby <em>Verified Pharmacies</em></span>
+          <span class="badge badge-green">Phase 2 Audited Stores</span>
+        </div>
+        <p style="margin-top:0;font-size:0.86rem;color:var(--navy-soft);">
+          Stores suggested here have submitted verifiable <strong>Stock Shelf Photographs</strong> and <strong>GST Billing Invoices</strong> audited against NPPA ceiling rates and CDSCO NSQ batch lists. Click <strong>"🗺 Locate &amp; Route"</strong> to highlight on the map above.
+        </p>
+        <div id="verifiedPharmaciesBox"></div>
+      </div>
+
+      <!-- Column 2: Community Issues & Government Progress -->
+      <div class="card">
+        <div class="card-title">
+          <span>Local Pharmacy Issues &amp; <em>Govt Progress</em></span>
+          <span class="badge badge-purple">&ge; 3 Threshold Privacy</span>
+        </div>
+        <p style="margin-top:0;font-size:0.86rem;color:var(--navy-soft);">
+          Shows filed reports in the searched area alongside official <strong>Government Progress Updates &amp; Proof Images</strong>. Store names remain protected behind a peppered SHA-256 <code>pharmacy_ref</code> until at least <strong>3 reports of the same type</strong> are logged within 90 days.
+        </p>
+        <div id="communityIssuesBox"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span><strong>MediCheck Community Explorer</strong> · Connecting Patients, Verified Pharmacies &amp; Drug Inspectors</span>
+      <span><a href="/pharmacy.html">Submit Store Verification →</a> · <a href="/government.html">Officer Portal →</a></span>
+    </footer>
+  </main>
+
+  <script>
+    function quickArea(area) {
+      document.getElementById('placeInput').value = area;
+      searchCommunity();
+      if (window.neoToast) window.neoToast('Exploring area: ' + (area || 'All India'));
+    }
+
+    async function searchCommunity(e) {
+      if (e) e.preventDefault();
+      const q = document.getElementById('placeInput').value.trim();
+      const status = document.getElementById('statusSelect').value;
+      const onlyJanAushadhi = document.getElementById('janOnlyCheck').checked;
+
+      const params = new URLSearchParams();
+      if (q) params.set('q', q);
+      if (status) params.set('status', status);
+      if (onlyJanAushadhi) params.set('onlyJanAushadhi', 'true');
+
+      const resp = await fetch('/api/community?' + params.toString());
+      const data = await resp.json();
+      const issueItems = Array.isArray(data.issues) ? data.issues : (data.issues && data.issues.items ? data.issues.items : []);
+      renderSummary(data, issueItems, q);
+      if (window.updateMediCheckMap) {
+        window.updateMediCheckMap(data.verifiedPharmacies || [], issueItems, q);
+      }
+      renderVerifiedPharmacies(data.verifiedPharmacies || []);
+      renderCommunityIssues(issueItems);
+    }
+
+    function renderSummary(data, issues, q) {
+      const stores = data.verifiedPharmacies || [];
+      const withGovAction = issues.filter(i => (i.government_updates || []).length > 0).length;
+      const thresholdRevealed = issues.filter(i => i.threshold_met).length;
+
+      document.getElementById('summaryStats').innerHTML = `
+        <div class="stat-box">
+          <div class="label">Searched Area</div>
+          <div class="value" style="font-size:1.75rem;">${q || 'All Areas'}</div>
+          <div class="sub">Locality / Pincode Filter</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Verified Pharmacies</div>
+          <div class="value" style="color:var(--teal);">${stores.length}</div>
+          <div class="sub">Passed Stock + Fair-Billing Audit</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Local Issues Logged</div>
+          <div class="value" style="color:var(--orange5);">${issues.length}</div>
+          <div class="sub">${thresholdRevealed} store(s) met &ge;3 threshold</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Govt Action Proofs</div>
+          <div class="value" style="color:var(--blue7);">${withGovAction}</div>
+          <div class="sub">Issues with Officer Updates</div>
+        </div>
+      `;
+    }
+
+    function renderVerifiedPharmacies(stores) {
+      const box = document.getElementById('verifiedPharmaciesBox');
+      if (!stores.length) {
+        box.innerHTML = '<div class="alert-banner info">No verified pharmacies matched this filter. Try clicking "All Areas (Full Feed)".</div>';
+        return;
+      }
+
+      box.innerHTML = stores.map((s, sIdx) => {
+        const pinId = 'store-' + (s.id || s.licence_no || sIdx);
+        const stockThumbs = (s.stock_proof_urls || []).map((u, idx) =>
+          `<button type="button" class="proof-thumb" onclick="window.openProofModal('Stock Shelf Proof #${idx + 1} — ${s.pharmacy_name.replace(/'/g, "\\'")}', '${u}', '${s.area}, ${s.city} · Licence ${s.licence_no}')">📦 Stock Proof #${idx + 1}</button>`
+        ).join('');
+        const billThumbs = (s.billing_proof_urls || []).map((u, idx) =>
+          `<button type="button" class="proof-thumb" onclick="window.openProofModal('Fair-Billing GST Invoice #${idx + 1} — ${s.pharmacy_name.replace(/'/g, "\\'")}', '${u}', 'Audited against NPPA DPCO ceiling + 5% GST')">🧾 GST Billing Proof #${idx + 1}</button>`
+        ).join('');
+
+        return `
+          <div class="ccard" style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.9rem;">
+              <div style="flex:1;">
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.4rem;">
+                  <span class="badge badge-green">✓ VERIFIED STORE</span>
+                  ${s.jan_aushadhi_available ? '<span class="badge badge-blue">💊 Jan Aushadhi Stocked</span>' : ''}
+                </div>
+                <strong style="font-size:1.15rem;display:block;">${s.pharmacy_name}</strong>
+                <div style="font-size:0.82rem;color:var(--navy-muted);margin-top:0.15rem;">
+                  📍 <strong>${s.area}, ${s.city}</strong> (${s.state} — ${s.pincode}) · Licence: <code class="mono">${s.licence_no}</code>
+                </div>
+              </div>
+              <div class="score-ring" style="--p:${s.verification_score || 100}" title="Verification Score: ${s.verification_score}/100">
+                <span>${s.verification_score}</span>
+              </div>
+            </div>
+            <div style="font-size:0.83rem;margin-top:0.65rem;color:var(--navy-soft);">
+              ${s.address || ''} ${s.phone ? ' · 📞 ' + s.phone : ''}
+            </div>
+            <div class="pbar" style="margin-top:0.6rem;"><i data-w="${s.verification_score || 100}"></i></div>
+            <div style="font-size:0.78rem;color:#065F46;font-weight:700;margin-top:0.35rem;">
+              Audit Summary: ${s.last_review_note || s.verification_notes || 'Passed automated stock and NPPA fair-billing verification.'}
+            </div>
+            <div class="proof-grid">
+              <button type="button" class="proof-thumb" style="background:var(--sky3);" onclick="window.focusMapPin('${pinId}', true)">🗺 Locate &amp; Route on Map</button>
+              ${stockThumbs}
+              ${billThumbs}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (window.animateBars) window.animateBars(box);
+    }
+
+    function renderCommunityIssues(issues) {
+      const box = document.getElementById('communityIssuesBox');
+      if (!issues.length) {
+        box.innerHTML = '<div class="alert-banner info">No community issues found for this filter.</div>';
+        return;
+      }
+
+      box.innerHTML = issues.map((issue, iIdx) => {
+        const pinId = 'issue-' + (issue.report_id || issue.seq || iIdx);
+        const st = issue.current_status || issue.status || 'filed';
+        const loc = issue.location || issue;
+        const med = issue.medicine || issue;
+        const displayName = issue.pharmacy_name || issue.pharmacy_display_name || '🔒 Protected Pharmacy Identity (<3 reports)';
+        const pRef = issue.pharmacy_ref || '';
+
+        const statusClass =
+          st === 'resolved' || st === 'action_taken'
+            ? 'badge-green'
+            : st === 'investigating'
+            ? 'badge-amber'
+            : 'badge-red';
+
+        const updates = issue.government_updates || [];
+        const timelineHtml = updates.length
+          ? `<div class="timeline">
+              ${updates.map(u => `
+                <div class="timeline-item">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                    <strong style="font-size:0.84rem;color:var(--navy);">🏛 ${u.agency_name} (${u.officer_designation || 'Enforcement Officer'})</strong>
+                    <span class="badge badge-blue">${(u.status || 'action_taken').toUpperCase()}</span>
+                  </div>
+                  ${u.action_taken ? `<div style="font-size:0.82rem;font-weight:800;color:var(--teal);margin-top:0.3rem;">Action: ${u.action_taken}</div>` : ''}
+                  <div style="font-size:0.84rem;margin-top:0.25rem;color:var(--navy-soft);">${u.progress_note}</div>
+                  <div class="proof-grid">
+                    ${(u.proof_urls || []).map((url, idx) =>
+                      `<button type="button" class="proof-thumb" onclick="window.openProofModal('Government Inspection Proof #${idx + 1}', '${url}', '${u.agency_name} · ${u.officer_designation || ''}')">🖼 Inspect Govt Proof #${idx + 1}</button>`
+                    ).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>`
+          : `<div style="margin-top:0.65rem;font-size:0.8rem;color:var(--navy-muted);">No government progress update posted yet. <a href="/government.html?reportId=${issue.report_id}" style="font-weight:800;color:var(--orange5);">Post update as Officer →</a></div>`;
+
+        return `
+          <div class="ccard" style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+              <div>
+                <span class="badge ${statusClass}">Status: ${st.toUpperCase()}</span>
+                <span class="badge badge-slate">${issue.report_type}</span>
+              </div>
+              <div style="display:flex;gap:0.4rem;align-items:center;">
+                <span class="mono" style="font-size:0.75rem;color:var(--navy-muted);">Seq #${issue.seq} · ${new Date(issue.filed_at).toLocaleDateString()}</span>
+                <button type="button" class="proof-thumb" style="background:var(--sky3);" onclick="window.focusMapPin('${pinId}', false)">🗺 Map Pin</button>
+              </div>
+            </div>
+
+            <div style="margin-top:0.65rem;">
+              <strong style="font-size:1.05rem;">${displayName}</strong>
+              <span class="badge ${issue.threshold_met ? 'badge-red' : 'badge-purple'}" style="margin-left:0.35rem;">
+                ${issue.threshold_met ? `Threshold Met (&ge;3 reports — Name Revealed)` : `Protected (<3 reports of same type)`}
+              </span>
+            </div>
+
+            <div style="font-size:0.83rem;color:var(--navy-muted);margin-top:0.3rem;">
+              📍 <strong>${loc.area || 'Andheri West'}, ${loc.city || 'Mumbai'}</strong> (${loc.state || 'Maharashtra'} — ${loc.pincode || '400058'})
+              ${med.brand_name ? ` · Medicine: <strong>${med.brand_name}</strong> (${med.salt_normalized || ''})` : ''}
+              ${med.batch_number ? ` · Batch: <code class="mono">${med.batch_number}</code>` : ''}
+            </div>
+
+            <div style="font-size:0.74rem;color:var(--navy-muted);margin-top:0.3rem;" class="mono">
+              Report ID: ${issue.report_id} · Peppered Ref: ${pRef.slice(0, 20)}…
+            </div>
+
+            ${timelineHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('q')) document.getElementById('placeInput').value = params.get('q');
+      searchCommunity();
+    });
+  </script>
+</body>
+</html>
