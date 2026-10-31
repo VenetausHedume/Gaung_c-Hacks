@@ -1,29 +1,31 @@
-{
-  "name": "medicheck-backend",
-  "version": "1.0.0",
-  "description": "Backend/data layer and TypeScript SDK for MediCheck (India medicine price and quality checking app)",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "tsx scripts/serve.ts",
-    "serve": "tsx scripts/serve.ts",
-    "smoke-test": "tsx scripts/smoke-test.ts",
-    "import": "tsx scripts/import.ts",
-    "demo": "tsx scripts/demo-check.ts",
-    "test:gs1": "tsx scripts/test-gs1.ts",
-    "test:log": "tsx scripts/test-log.ts",
-    "test:all": "tsx scripts/test-all.ts",
-    "anchor": "tsx scripts/anchor.ts",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.45.0",
-    "papaparse": "^5.4.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/papaparse": "^5.3.14",
-    "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
-  }
+﻿{
+    "name":  "medicheck-backend",
+    "version":  "1.0.0",
+    "description":  "Backend/data layer and TypeScript SDK for MediCheck (India medicine price and quality checking app)",
+    "private":  true,
+    "type":  "module",
+    "scripts":  {
+                    "start":  "tsx scripts/serve.ts",
+                    "serve":  "tsx scripts/serve.ts",
+                    "smoke-test":  "tsx scripts/smoke-test.ts",
+                    "import":  "tsx scripts/import.ts",
+                    "demo":  "tsx scripts/demo-check.ts",
+                    "test:gs1":  "tsx scripts/test-gs1.ts",
+                    "test:log":  "tsx scripts/test-log.ts",
+                    "test:all":  "tsx scripts/test-all.ts",
+                    "anchor":  "tsx scripts/anchor.ts",
+                    "typecheck":  "tsc --noEmit",
+                    "test:portal":  "tsx scripts/test-portal.ts",
+                    "build:schema":  "node scripts/build-master-schema.mjs"
+                },
+    "dependencies":  {
+                         "@supabase/supabase-js":  "^2.45.0",
+                         "papaparse":  "^5.4.1"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^22.0.0",
+                            "@types/papaparse":  "^5.3.14",
+                            "tsx":  "^4.19.0",
+                            "typescript":  "^5.6.0"
+                        }
 }
