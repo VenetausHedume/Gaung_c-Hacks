@@ -1,577 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MediCheck · Scan, Verify, Report — Transparent Medicine Pricing, Availability & Quality in India</title>
-  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
-  <script src="/app.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediCheck — Catch overpricing. Verify your pharmacy.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Reference 1 Atmospheric Sky-Mist Field & Giant Coral-Orange Watermark -->
-  <div class="field" aria-hidden="true"></div>
-  <h2 class="wordmark" aria-hidden="true">MediCheck</h2>
 
-  <!-- Top Announcement Ribbon (Reference 2 .banner v2) -->
-  <div style="position:relative;z-index:65;background:var(--navy);color:var(--mist);padding:0.5rem 1rem;text-align:center;font-size:0.8rem;font-weight:700;border-bottom:2px solid var(--orange5);">
-    <span><strong>MediCheck · SDG 3 India:</strong> ₹10,030 Cr demanded by NPPA for overcharging · 3,012 NSQ batches flagged by CDSCO in FY 2025–26 · </span>
-    <a href="/dashboard.html" style="color:var(--sky3);text-decoration:underline;margin-left:0.35rem;">Open App Homepage (No Login Required) →</a>
-  </div>
-
-  <!-- Sticky Landing Navbar -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="/index.html" class="brand-logo">
-        <span class="cross-box" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#F2562B"/></svg>
-        </span>
-        <span>Medi<em>Check</em></span>
-        <span class="brand-tag">SDG 3 · India</span>
-      </a>
-
-      <div class="d-search" role="search">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="search" placeholder="Search medicine, locality, or feature…" aria-label="Global MediCheck search" />
-        <div class="d-results"></div>
-      </div>
-
-      <nav class="nav-links" aria-label="Landing & App Navigation">
-        <a href="/index.html" class="nav-link active">Landing</a>
-        <a href="#problem" class="nav-link">The Problem</a>
-        <a href="#solution" class="nav-link">The Solution</a>
-        <a href="/dashboard.html" class="nav-link">App Home</a>
-        <a href="/scan.html" class="nav-link">1. Scan</a>
-        <a href="/community.html" class="nav-link">2. Map &amp; Stores</a>
-        <a href="/government.html" class="nav-link">3. Govt</a>
-        <a href="/pharmacy.html" class="nav-link">4. Pharmacy</a>
-        <a href="/security.html" class="nav-link">5. Security</a>
-        <a href="/dashboard.html" class="btn btn-primary" style="padding:0.45rem 0.95rem;font-size:0.82rem;">
-          Open App →
-        </a>
-      </nav>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="barcode"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck
+    </a>
+    <div class="navlinks">
+      <a href="#problem">The problem</a>
+      <a href="#how">How it works</a>
+      <a href="#roles">For everyone</a>
+      <a href="login.html">Public reports</a>
+      <a href="login.html">Verified pharmacies</a>
     </div>
-  </header>
+    <div class="navcta">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="login.html#register" class="btn btn-primary">Report overpricing</a>
+    </div>
+  </div>
+</nav>
 
-  <main class="container">
-    <!-- =====================================================================
-     * 1. HERO SECTION (Reference 1 Typography + Reference 2 Animated Toast & Journey)
-     * ===================================================================== -->
-    <section class="hero reveal" style="--i:0;text-align:center;padding:clamp(2rem,4vw,3.2rem) clamp(1.2rem,3vw,2.5rem);">
-      <div class="hero-eyebrow" style="margin:0 auto 1rem;">
-        <span class="pulse-dot"></span>
-        <span>MediCheck · Scan, Verify, Report · SDG 3 Patient Empowerment</span>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span> Built for Indian consumers</div>
+      <h1>Every medicine has a <span>fair price.</span><br>Now you can prove it.</h1>
+      <p class="lede">Scan a barcode, snap the bill, and MediCheck checks it against the real MRP instantly. Overcharging, missing stock and expired stock get logged in public — where the pharmacy and the government both have to answer for it.</p>
+      <div class="hero-cta">
+        <a href="login.html#register" class="btn btn-primary">Check a medicine</a>
+        <a href="#how" class="btn btn-outline">See how it works</a>
       </div>
-
-      <h1 style="max-width:900px;margin:0 auto 0.75rem;font-size:clamp(3rem,6.2vw,5.1rem);">
-        Don’t guess at the pharmacy counter.<br/><em>Create evidence in one scan.</em>
-      </h1>
-
-      <p style="max-width:760px;margin:0 auto 1.35rem;font-size:clamp(1.02rem,1.35vw,1.18rem);">
-        India’s regulators have demanded <strong>₹10,029.8 crore</strong> for medicine overcharging (recovering only <strong>₹1,582.4 crore</strong>) and flagged <strong>3,012 substandard (NSQ) + 283 spurious batches</strong> in FY 2025–26 alone. MediCheck turns any patient’s phone into an instant price ceiling verifier, batch safety screener, Jan Aushadhi finder, and tamper-evident public complaint ledger.
-      </p>
-
-      <!-- Primary CTA Group (Skips Login -> Goes straight to App Homepage dashboard.html) -->
-      <div class="btn-row" style="justify-content:center;gap:0.85rem;margin-bottom:1.1rem;">
-        <a href="/dashboard.html" class="btn btn-primary" style="font-size:1rem;padding:0.85rem 1.65rem;">
-          🚀 Enter MediCheck App Homepage →
-        </a>
-        <a href="/scan.html" class="btn btn-orange" style="font-size:0.95rem;padding:0.82rem 1.4rem;">
-          📷 Scan or Check a Medicine Now
-        </a>
-        <a href="#problem" class="btn btn-outline" style="font-size:0.95rem;padding:0.82rem 1.3rem;">
-          Read the Real Data ↓
-        </a>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>1,842</b><span>reports filed</span></div>
+        <div class="hero-stat"><b>611</b><span>verified pharmacies</span></div>
+        <div class="hero-stat"><b>73%</b><span>resolved in under 2 weeks</span></div>
       </div>
-
-      <!-- Reference 2 Rotating Floating Status Toast with Real Proposal Numbers -->
-      <div class="neo-toast" aria-live="polite" style="margin:0.4rem auto 0;">
-        <span class="neo-dot"></span>
-        <span class="neo-msgs">
-          <span>NPPA Data (Mar 2026): <b>₹10,029.8 Cr</b> overcharging demanded · <b>85% unrecovered</b></span>
-          <span>CDSCO FY 2025–26: <b>1.41 lakh</b> samples tested · <b>3,012 NSQ + 283 spurious</b> batches</span>
-          <span>Supreme Court (Sept 2026): Questioned <b>₹2,700 → ₹27,000</b> cancer drug MRP markup</span>
-          <span>Oct 2026 NPPA Cap: 30% margin cap on 137 cancer drugs saves <b>₹2,500 Cr/year</b></span>
-        </span>
-      </div>
-
-      <!-- Reference 2 5-Step Animated Workflow Strip -->
-      <div class="neo-journey" style="margin-top:1.6rem;" aria-label="MediCheck 5-step patient to accountability workflow">
-        <span class="nj-step" style="--i:0"><span class="nj-dot">1</span>Scan Pack QR / EAN</span>
-        <span class="nj-line" style="--i:0"><i></i></span>
-        <span class="nj-step" style="--i:1"><span class="nj-dot">2</span>Verify NPPA Ceiling (+5% GST)</span>
-        <span class="nj-line" style="--i:1"><i></i></span>
-        <span class="nj-step" style="--i:2"><span class="nj-dot">3</span>Screen CDSCO NSQ Batch</span>
-        <span class="nj-line" style="--i:2"><i></i></span>
-        <span class="nj-step" style="--i:3"><span class="nj-dot">4</span>Compare Jan Aushadhi</span>
-        <span class="nj-line" style="--i:3"><i></i></span>
-        <span class="nj-step nj-ace" style="--i:4"><span class="nj-dot">★</span>Seal SHA-256 Public Case</span>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-     * 2. REAL HEADLINE NUMBERS STRIP (From Project Proposal Section 1 & 2)
-     * ===================================================================== -->
-    <section class="grid-4 reveal" style="--i:1;margin-bottom:2rem;" aria-label="Key Regulatory Statistics">
-      <div class="stat-box">
-        <div class="label"><span style="color:var(--orange7);">●</span> NPPA Overcharging Demanded</div>
-        <div class="value" style="color:var(--orange7);">₹10,029.8 Cr</div>
-        <div class="sub">Only <strong>₹1,582.4 Cr (~15%)</strong> recovered as of Mar 2026; <strong>₹8,447 Cr</strong> pending</div>
-      </div>
-
-      <div class="stat-box">
-        <div class="label"><span style="color:var(--orange5);">●</span> Unrecovered in Litigation</div>
-        <div class="value" style="color:var(--orange5);">~85%</div>
-        <div class="sub">Parliamentary Committee (Aug 2026): ~70% tied up in court (some &gt;20 yrs)</div>
-      </div>
-
-      <div class="stat-box">
-        <div class="label"><span style="color:var(--blue7);">●</span> CDSCO Failed Batches (FY 25–26)</div>
-        <div class="value" style="color:var(--blue7);">3,295</div>
-        <div class="sub"><strong>3,012 NSQ</strong> + <strong>283 spurious/adulterated</strong> out of 1.41 lakh samples tested</div>
-      </div>
-
-      <div class="stat-box">
-        <div class="label"><span style="color:var(--teal);">●</span> Anti-Cancer Margin Cap Savings</div>
-        <div class="value" style="color:var(--teal);">₹2,500 Cr/yr</div>
-        <div class="sub">Oct 2026 NPPA 30% trade margin cap on 137 drugs (2019 pilot cut MRPs up to 90%)</div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-     * 3. THE PROBLEM: THREE FAILURES AT THE PHARMACY COUNTER (#problem)
-     * ===================================================================== -->
-    <section id="problem" class="reveal" style="--i:2;margin-bottom:2.2rem;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:1.1rem;">
-        <div>
-          <span class="badge badge-red">Section 2 · The Problem</span>
-          <h2 style="font-family:var(--font-serif);font-weight:400;font-size:clamp(2.1rem,3.8vw,3.1rem);margin:0.35rem 0 0;line-height:0.98;">
-            Three systemic failures at the <em>pharmacy counter.</em>
-          </h2>
-        </div>
-        <p style="margin:0;max-width:480px;font-size:0.92rem;color:var(--navy-soft);font-weight:600;">
-          Patients face inflated MRPs, missing essential generics, and batch-level quality failures — while regulatory recovery takes decades and never refunds the buyer.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <!-- Failure 1: Price -->
-        <article class="ccard" style="display:flex;flex-direction:column;justify-content:space-between;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.65rem;">
-              <span class="badge badge-red">Failure 01 · Price &amp; Trade Margins</span>
-              <span class="mono" style="font-weight:800;color:var(--orange7);">100%–300% Margin</span>
-            </div>
-            <h3 style="font-family:var(--font-serif);font-size:1.85rem;font-weight:400;margin:0 0 0.5rem;">
-              Inflated MRPs &amp; <em>₹2,700 → ₹27,000</em> Markups
-            </h3>
-            <p style="font-size:0.9rem;line-height:1.55;color:var(--navy-soft);margin:0 0 0.85rem;">
-              In <strong>September 2026</strong>, the Supreme Court questioned how a cancer medicine bought by retailers for <strong>₹2,700</strong> could carry a printed MRP of <strong>₹27,000</strong>. Wholesale price audits revealed retail profits of <strong>100% to 300%</strong> even on reputed brands, because there is no nationwide rule capping retail margins on all drugs at 16%.
-            </p>
-          </div>
-          <div style="background:var(--mist);border:1.5px solid var(--navy);border-radius:1rem;padding:0.8rem;font-size:0.8rem;">
-            <strong style="color:var(--teal);">Proof It Is Fixable:</strong> A 2019 pilot on <strong>42 anti-cancer drugs</strong> cut MRPs by up to <strong>90% across 526 brands</strong>, and in <strong>Oct 2026</strong> NPPA capped trade margins on <strong>137 anti-cancer drugs at 30%</strong> (saving <strong>₹2,500 Cr/yr</strong>).<br/>
-            <span style="color:var(--navy-muted);display:block;margin-top:0.3rem;"><em>Balanced Counter-View:</em> Government filings state that only ~<strong>11%</strong> of the non-scheduled market has trade margins above 30%.</span>
-          </div>
-        </article>
-
-        <!-- Failure 2: Quality -->
-        <article class="ccard" style="display:flex;flex-direction:column;justify-content:space-between;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.65rem;">
-              <span class="badge badge-amber">Failure 02 · Substandard Batches</span>
-              <span class="mono" style="font-weight:800;color:var(--amber);">3,012 NSQ / Yr</span>
-            </div>
-            <h3 style="font-family:var(--font-serif);font-size:1.85rem;font-weight:400;margin:0 0 0.5rem;">
-              Failed Batches on <em>Retail Shelves</em>
-            </h3>
-            <p style="font-size:0.9rem;line-height:1.55;color:var(--navy-soft);margin:0 0 0.85rem;">
-              In <strong>FY 2025–26</strong>, CDSCO tested <strong>1.41 lakh</strong> drug samples and flagged <strong>3,012 Not-of-Standard-Quality (NSQ)</strong> and <strong>283 spurious/adulterated</strong> samples. In <strong>Jan–Mar 2026</strong> alone, <strong>576 samples</strong> failed; <strong>March 2026</strong> had <strong>168</strong> failures, and <strong>September 2026</strong> flagged <strong>330 NSQ + 1 spurious</strong> batch.
-            </p>
-          </div>
-          <div style="background:var(--mist);border:1.5px solid var(--navy);border-radius:1rem;padding:0.8rem;font-size:0.8rem;">
-            <strong style="color:var(--blue7);">Why Batch-Level Checking Matters:</strong> CDSCO explicitly notes that NSQ findings apply to <strong>specific batch numbers</strong> (e.g. dissolution or assay failure), not entire brands — yet patients have no way to check their strip’s batch number at purchase.
-          </div>
-        </article>
-
-        <!-- Failure 3: Availability & Slow Enforcement -->
-        <article class="ccard" style="display:flex;flex-direction:column;justify-content:space-between;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.65rem;">
-              <span class="badge badge-purple">Failure 03 · Stockouts &amp; Enforcement</span>
-              <span class="mono" style="font-weight:800;color:#5B21B6;">Only 58 Complaints</span>
-            </div>
-            <h3 style="font-family:var(--font-serif);font-size:1.85rem;font-weight:400;margin:0 0 0.5rem;">
-              Missing Generics &amp; <em>20-Year Litigation</em>
-            </h3>
-            <p style="font-size:0.9rem;line-height:1.55;color:var(--navy-soft);margin:0 0 0.85rem;">
-              Field checks across <strong>Haryana, Ludhiana Civil Hospital, Delhi (Lok Nayak), Handwara (J&amp;K), and Bengaluru</strong> documented routine stockouts at Jan Aushadhi &amp; AMRIT counters due to monthly supply cycles. Meanwhile, the official portal <em>Pharma Jan Samadhan</em> recorded only <strong>58 complaints</strong> in 2017–18 (42 on shortages).
-            </p>
-          </div>
-          <div style="background:var(--mist);border:1.5px solid var(--navy);border-radius:1rem;padding:0.8rem;font-size:0.8rem;">
-            <strong style="color:var(--orange7);">Parliamentary Committee Finding (Aug 2026):</strong> <strong>85%</strong> of NPPA’s ₹10,029.8 Cr overcharging demand is unrecovered (~<strong>70%</strong> stuck in court, some &gt;20 years), and recovered funds are <strong>never returned to the overcharged patient</strong>.
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-     * 4. REFERENCE 2 VISUAL COMPARISON STAGE (#compare)
-     *    "Scattered & Blind at the Counter" vs "MediCheck: Evidence in One Scan"
-     * ===================================================================== -->
-    <section id="compare" class="reveal" style="--i:3;margin-bottom:2.2rem;">
-      <div style="text-align:center;max-width:720px;margin:0 auto 1rem;">
-        <span class="badge badge-blue">Section 2.4 · Why Existing Tools Do Not Close The Gap</span>
-        <h2 style="font-family:var(--font-serif);font-weight:400;font-size:clamp(2.1rem,3.8vw,3.2rem);margin:0.4rem 0;">
-          One place for <em>price, quality &amp; proof.</em>
-        </h2>
-        <p style="margin:0;color:var(--navy-soft);font-size:0.95rem;font-weight:500;">
-          <em>Pharma Sahi Daam</em> checks ceiling prices but doesn’t screen batches or log complaints. CDSCO posts monthly PDFs nobody reads at the counter. E-pharmacies are marketplaces, not accountability tools.
-        </p>
-      </div>
-
-      <div class="compare-stage">
-        <!-- Left: Scattered / Cluttered Reality (Reference 2 .neo-clutter) -->
-        <div class="clutter-card">
-          <div>
-            <span class="badge badge-red">Without MediCheck · Fragmented &amp; Invisible</span>
-            <h3 style="font-family:var(--font-serif);font-size:2rem;font-weight:400;margin:0.55rem 0 0.2rem;color:#FFFFFF;">
-              Scattered PDFs, <em>silent portals.</em>
-            </h3>
-            <p style="margin:0;font-size:0.84rem;color:rgba(244,249,253,0.72);">
-              Patients cannot cross-check DPCO schedules, 5% GST formulas, and 80-page CDSCO NSQ PDFs while standing at a chemist counter.
-            </p>
-          </div>
-
-          <div class="clutter-tags" aria-hidden="true">
-            <span class="clutter-tag" style="left:4%;top:6%;--r:-6deg;--d:0s;">CDSCO_NSQ_Sept2026_330batches.pdf</span>
-            <span class="clutter-tag" style="left:52%;top:4%;--r:5deg;--d:0.4s;">Is ₹27.00 above DPCO ceiling?</span>
-            <span class="clutter-tag" style="left:14%;top:32%;--r:4deg;--d:0.8s;">Pharma Jan Samadhan (58 complaints)</span>
-            <span class="clutter-tag" style="left:48%;top:36%;--r:-5deg;--d:1.2s;">Jan Aushadhi shelf empty</span>
-            <span class="clutter-tag" style="left:6%;top:60%;--r:-3deg;--d:0.3s;">₹8,447 Cr stuck in court &gt;20 yrs</span>
-            <span class="clutter-tag" style="left:46%;top:64%;--r:6deg;--d:0.9s;">No GST cash memo given</span>
-            <span class="clutter-tag" style="left:22%;top:82%;--r:-4deg;--d:1.5s;">What happened to my complaint?</span>
-          </div>
-
-          <div style="font-size:0.78rem;color:#FFD6C9;font-weight:700;">
-            ✗ Zero batch screening at purchase · ✗ Zero public follow-up timeline
-          </div>
-        </div>
-
-        <!-- Right: Unified MediCheck Solution Stage (Reference 2 .flow_220-wpm) -->
-        <div class="solution-stage-card">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
-              <span class="badge badge-green">With MediCheck · Instant Evidence &amp; Public Accountability</span>
-              <span class="badge badge-blue">Top 300 Brands QR Ready (Aug 2023 / 2026)</span>
-            </div>
-            <h3 style="font-family:var(--font-serif);font-size:2.2rem;font-weight:400;margin:0.55rem 0 0.25rem;color:#FFFFFF;">
-              Scan once. <em>Verify everything.</em>
-            </h3>
-            <p style="margin:0;font-size:0.9rem;color:rgba(244,249,253,0.86);">
-              Leverages India’s mandatory GS1 barcode/QR foundation (top 300 brands since Aug 2023; vaccines, antibiotics, cancer drugs &amp; narcotics in 2026) to verify price, batch quality, and generic savings in under 1 second.
-            </p>
-          </div>
-
-          <div class="grid-2" style="gap:0.75rem;margin:1rem 0;">
-            <div style="background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.28);border-radius:1rem;padding:0.8rem;">
-              <strong style="color:var(--sky3);font-size:0.84rem;display:block;">1. Statutory Price + Batch Check</strong>
-              <span style="font-size:0.78rem;color:rgba(244,249,253,0.85);">Compares unit MRP against <code>NPPA Ceiling × 1.05</code> (5% GST), screens batch against CDSCO’s 3,295 flagged rows, and lists Jan Aushadhi substitutes.</span>
-            </div>
-            <div style="background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.28);border-radius:1rem;padding:0.8rem;">
-              <strong style="color:var(--sky3);font-size:0.84rem;display:block;">2. Tamper-Evident Public Case Files</strong>
-              <span style="font-size:0.78rem;color:rgba(244,249,253,0.85);">Seals reports into an immutable SHA-256 chain with peppered privacy (revealing store names at <code>&ge;3</code> reports) and tracks Government officer proof images.</span>
-            </div>
-          </div>
-
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
-            <span style="font-size:0.8rem;font-weight:700;color:var(--sky3);">✓ Phase 2 Verified Pharmacies · ✓ OpenTimestamps Bitcoin Anchor</span>
-            <a href="/dashboard.html" class="btn btn-orange" style="padding:0.55rem 1.15rem;font-size:0.84rem;">
-              Open Full App Homepage →
-            </a>
-          </div>
+    </div>
+    <div class="hero-art">
+      <div class="scan-chip-float">₹120 MRP vs ₹168 billed</div>
+      <div class="frame">
+        <img src="https://images.unsplash.com/photo-1573883431205-98b5f10aaedb?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Medicine strips and tablets, representing a pharmacy counter">
+        <div class="scan-chip">
+          <span class="barcode"><span style="height:50%"></span><span style="height:100%"></span><span style="height:30%"></span><span style="height:70%"></span><span style="height:45%"></span></span>
+          <span class="tag"><span class="d"></span>Price mismatch found</span>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</header>
 
-    <!-- =====================================================================
-     * 5. THE SOLUTION: INTERACTIVE 5-SLIDE FEATURE SHOWCASE (#solution)
-     * ===================================================================== -->
-    <section id="solution" class="neo-subjects reveal" style="--i:4" aria-label="MediCheck 5 Core Modules">
-      <div class="ns-top">
-        <div>
-          <span class="badge badge-green">Section 3 · The Complete MediCheck Solution</span>
-          <h2 style="margin-top:0.35rem;">Five modules, <em>one unified platform.</em></h2>
-        </div>
-        <div class="ns-dots" role="tablist">
-          <button type="button" class="ns-dot on" style="--sw:#2A6FB5">01. GS1 &amp; Price Check</button>
-          <button type="button" class="ns-dot" style="--sw:#F2562B">02. CDSCO Batch Screen</button>
-          <button type="button" class="ns-dot" style="--sw:#0A7D5D">03. Community &amp; Stores</button>
-          <button type="button" class="ns-dot" style="--sw:#D97706">04. Government Portal</button>
-          <button type="button" class="ns-dot" style="--sw:#5B21B6">05. SHA-256 Public Log</button>
-        </div>
+<section id="problem" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">The problem</div>
+      <h2>Pharmacy retail in India runs mostly on trust — and that trust gets broken quietly.</h2>
+      <p>None of this gets reported, because there's never been anywhere to report it to.</p>
+    </div>
+    <div class="problems">
+      <div class="problem">
+        <div class="num">01</div>
+        <h3>Sold above MRP</h3>
+        <p>Retailers quietly mark up essential medicines, counting on buyers not to check the printed price.</p>
       </div>
-
-      <div class="ns-stage" tabindex="0">
-        <button type="button" class="ns-arr prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button type="button" class="ns-arr next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-
-        <div class="ns-track">
-          <!-- Slide 1 -->
-          <article class="ns-slide s-scan is-active">
-            <div class="ns-copy">
-              <span class="ns-eyebrow">Module 01 / 05 · Patient Scanner Studio</span>
-              <h3 class="ns-title">GS1 DataMatrix &amp; <em>NPPA Ceiling (+5% GST)</em></h3>
-              <p class="ns-desc">
-                Offline parser extracts GTIN-14, Expiry (including day-<code>00</code> end-of-month), and Batch number, then checks <code>unit_price</code> against the statutory NPPA ceiling + 5% GST and lists PMBI Jan Aushadhi equivalents.
-              </p>
-              <div class="btn-row">
-                <a href="/scan.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">Open Scanner Studio →</a>
-                <a href="/dashboard.html" class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.82rem;">App Homepage</a>
-              </div>
-            </div>
-            <div class="ns-art" aria-hidden="true">
-              <svg viewBox="0 0 240 180">
-                <rect x="28" y="22" width="184" height="136" rx="18" fill="#FFFFFF" stroke="#0B2540" stroke-width="4"/>
-                <g class="floaty">
-                  <rect x="52" y="46" width="12" height="68" fill="#0B2540"/>
-                  <rect x="72" y="46" width="6" height="68" fill="#0B2540"/>
-                  <rect x="86" y="46" width="16" height="68" fill="#0B2540"/>
-                  <rect x="110" y="46" width="8" height="68" fill="#0B2540"/>
-                  <rect x="126" y="46" width="18" height="68" fill="#2A6FB5"/>
-                  <rect x="152" y="46" width="8" height="68" fill="#0B2540"/>
-                  <rect x="168" y="46" width="16" height="68" fill="#0B2540"/>
-                </g>
-                <line x1="38" y1="82" x2="202" y2="82" stroke="#F2562B" stroke-width="4" class="wave"/>
-                <rect x="52" y="124" width="136" height="20" rx="10" fill="#BFE0F5" stroke="#0B2540" stroke-width="2.5"/>
-                <text x="120" y="138" text-anchor="middle" font-size="10" font-weight="800" fill="#0B2540">(01)09900000000011(10)TST1234</text>
-              </svg>
-            </div>
-          </article>
-
-          <!-- Slide 2 -->
-          <article class="ns-slide s-price">
-            <div class="ns-copy">
-              <span class="ns-eyebrow">Module 02 / 05 · Batch-Specific Quality Screening</span>
-              <h3 class="ns-title">CDSCO NSQ &amp; <em>Spurious Batch Alerts</em></h3>
-              <p class="ns-desc">
-                Cross-checks normalised batch numbers (stripping spaces/hyphens) against CDSCO monthly failure lists (3,012 NSQ + 283 spurious in FY 2025–26) and warns if a manufacturer+salt had recent failures.
-              </p>
-              <div class="btn-row">
-                <a href="/scan.html?q=SampleMol+650&batch=TST1234" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">Test Batch TST1234 Alert →</a>
-              </div>
-            </div>
-            <div class="ns-art" aria-hidden="true">
-              <svg viewBox="0 0 240 180">
-                <rect x="26" y="24" width="188" height="132" rx="18" fill="#FFFFFF" stroke="#0B2540" stroke-width="4"/>
-                <g class="floaty">
-                  <rect x="46" y="88" width="42" height="46" rx="8" fill="#0A7D5D" stroke="#0B2540" stroke-width="3"/>
-                  <text x="67" y="116" text-anchor="middle" font-size="12" font-weight="800" fill="#FFF">₹1.89</text>
-                  <rect x="102" y="52" width="42" height="82" rx="8" fill="#F2562B" stroke="#0B2540" stroke-width="3"/>
-                  <text x="123" y="96" text-anchor="middle" font-size="12" font-weight="800" fill="#FFF">₹2.70</text>
-                  <circle cx="176" cy="76" r="22" fill="#FFE2DA" stroke="#0B2540" stroke-width="3" class="pulse"/>
-                  <text x="176" y="80" text-anchor="middle" font-size="11" font-weight="800" fill="#C93A12">NSQ!</text>
-                </g>
-              </svg>
-            </div>
-          </article>
-
-          <!-- Slide 3 -->
-          <article class="ns-slide s-comm">
-            <div class="ns-copy">
-              <span class="ns-eyebrow">Module 03 / 05 · Community Area Explorer</span>
-              <h3 class="ns-title">Local Issues &amp; <em>Nearby Verified Stores</em></h3>
-              <p class="ns-desc">
-                Search any locality (`Andheri West`, `Dadar`, `Bandra West`, `Mumbai`) to find Phase 2 Verified Pharmacies alongside local pharmacy reports and official Government inspection proofs.
-              </p>
-              <div class="btn-row">
-                <a href="/community.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">Explore Community Page →</a>
-              </div>
-            </div>
-            <div class="ns-art" aria-hidden="true">
-              <svg viewBox="0 0 240 180">
-                <circle cx="120" cy="90" r="58" fill="#FFFFFF" stroke="#0B2540" stroke-width="4"/>
-                <g class="spin1">
-                  <circle cx="120" cy="32" r="8" fill="#0A7D5D" stroke="#0B2540" stroke-width="2.5"/>
-                  <circle cx="178" cy="90" r="8" fill="#2A6FB5" stroke="#0B2540" stroke-width="2.5"/>
-                  <circle cx="120" cy="148" r="8" fill="#F2562B" stroke="#0B2540" stroke-width="2.5"/>
-                  <circle cx="62" cy="90" r="8" fill="#6FB1E0" stroke="#0B2540" stroke-width="2.5"/>
-                </g>
-                <path d="M120 54l28 14v20c0 19-12 33-28 38-16-5-28-19-28-38V68l28-14z" fill="#DFF6EE" stroke="#0B2540" stroke-width="3.5" class="floaty2"/>
-                <path d="M108 90l8 8 16-16" fill="none" stroke="#0A7D5D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </article>
-
-          <!-- Slide 4 -->
-          <article class="ns-slide s-log">
-            <div class="ns-copy">
-              <span class="ns-eyebrow">Module 04 / 05 · Regulatory Accountability</span>
-              <h3 class="ns-title">Government Officer <em>Progress &amp; Proof Portal</em></h3>
-              <p class="ns-desc">
-                State FDA &amp; NPPA officers post official enforcement updates (`acknowledged`, `investigating`, `action_taken`, `resolved`) and attach seizure memos or lab reports that seal into `public_log`.
-              </p>
-              <div class="btn-row">
-                <a href="/government.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">Open Officer Portal →</a>
-                <a href="/pharmacy.html" class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.82rem;">Phase 2 Pharmacy Verify →</a>
-              </div>
-            </div>
-            <div class="ns-art" aria-hidden="true">
-              <svg viewBox="0 0 240 180">
-                <rect x="36" y="28" width="168" height="124" rx="16" fill="#FFFFFF" stroke="#0B2540" stroke-width="4" class="floaty"/>
-                <path d="M120 46l54 24H66l54-24z" fill="#BFE0F5" stroke="#0B2540" stroke-width="3"/>
-                <rect x="78" y="76" width="12" height="42" fill="#0B2540"/>
-                <rect x="114" y="76" width="12" height="42" fill="#0B2540"/>
-                <rect x="150" y="76" width="12" height="42" fill="#0B2540"/>
-                <rect x="62" y="122" width="116" height="14" rx="6" fill="#0A7D5D" stroke="#0B2540" stroke-width="2.5"/>
-              </svg>
-            </div>
-          </article>
-
-          <!-- Slide 5 -->
-          <article class="ns-slide s-scan">
-            <div class="ns-copy">
-              <span class="ns-eyebrow">Module 05 / 05 · Cryptographic Ledger</span>
-              <h3 class="ns-title">SHA-256 Chain &amp; <em>Bitcoin OpenTimestamps</em></h3>
-              <p class="ns-desc">
-                Reports are sealed with a secret server-side pepper (`pharmacy_ref`), protecting store names until <code>&ge; 3</code> reports of the same type occur, and anchored to Bitcoin via OpenTimestamps.
-              </p>
-              <div class="btn-row">
-                <a href="/security.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">Inspect Security &amp; Log →</a>
-              </div>
-            </div>
-            <div class="ns-art" aria-hidden="true">
-              <svg viewBox="0 0 240 180">
-                <rect x="30" y="32" width="76" height="52" rx="10" fill="#FFFFFF" stroke="#0B2540" stroke-width="3.5" class="floaty"/>
-                <text x="68" y="56" text-anchor="middle" font-size="10" font-weight="800" fill="#0B2540">Block #1</text>
-                <text x="68" y="71" text-anchor="middle" font-size="9" font-family="monospace" fill="#F2562B">089b4dc8…</text>
-                <rect x="134" y="32" width="76" height="52" rx="10" fill="#FFFFFF" stroke="#0B2540" stroke-width="3.5" class="floaty2"/>
-                <text x="172" y="56" text-anchor="middle" font-size="10" font-weight="800" fill="#0B2540">Block #2</text>
-                <text x="172" y="71" text-anchor="middle" font-size="9" font-family="monospace" fill="#0A7D5D">02a596c0…</text>
-                <line x1="106" y1="58" x2="134" y2="58" stroke="#0B2540" stroke-width="3.5" class="wave"/>
-                <rect x="58" y="108" width="124" height="44" rx="12" fill="#0B2540" stroke="#0B2540" stroke-width="3"/>
-                <text x="120" y="128" text-anchor="middle" font-size="10" font-weight="800" fill="#BFE0F5">MERKLE ROOT ANCHORED</text>
-                <text x="120" y="142" text-anchor="middle" font-size="9" font-family="monospace" fill="#F2562B">b4c398619c182424…</text>
-              </svg>
-            </div>
-          </article>
-        </div>
+      <div class="problem">
+        <div class="num">02</div>
+        <h3>Stock that should exist, doesn't</h3>
+        <p>Scheduled and essential medicines go missing from shelves with no record of why, or for how long.</p>
       </div>
-    </section>
-
-    <!-- =====================================================================
-     * 6. REAL REGULATORY DATA & EVIDENCE TABLES (#evidence)
-     * ===================================================================== -->
-    <section id="evidence" class="grid-2 reveal" style="--i:5;margin-bottom:2.2rem;">
-      <!-- Table 1: CDSCO Quality Testing Data -->
-      <div class="card">
-        <div class="card-title">
-          <span>CDSCO Quality Failures <em>(Real Data)</em></span>
-          <span class="badge badge-amber">Section 2.2 · CDSCO Alerts</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Reporting Period</th>
-                <th>Samples Flagged by CDSCO</th>
-                <th>Key Takeaway</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Full Year 2025–26</strong></td>
-                <td><strong>3,012 NSQ</strong> + <strong>283 Spurious/Adulterated</strong></td>
-                <td>Out of <strong>1.41 lakh</strong> total samples tested nationwide</td>
-              </tr>
-              <tr>
-                <td><strong>Jan – Mar 2026 (Q1)</strong></td>
-                <td><strong>576</strong> NSQ / Spurious samples</td>
-                <td>High quarterly incidence across routine formulations</td>
-              </tr>
-              <tr>
-                <td><strong>March 2026</strong></td>
-                <td><strong>168</strong> NSQ or Spurious batches</td>
-                <td>Monthly batch-level recall alert published</td>
-              </tr>
-              <tr>
-                <td><strong>September 2026</strong></td>
-                <td><strong>330 NSQ</strong> + <strong>1 Spurious</strong> batch</td>
-                <td>Applies to specific batch numbers, not whole brands</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="problem">
+        <div class="num">03</div>
+        <h3>Expired stock still sold</h3>
+        <p>Without public tracking, expired batches stay on shelves until a customer happens to notice.</p>
       </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Table 2: NPPA Overcharging & Enforcement Gap -->
-      <div class="card sky-card">
-        <div class="card-title">
-          <span>NPPA Overcharging &amp; <em>Enforcement Gap</em></span>
-          <span class="badge badge-red">Mar &amp; Aug 2026 Reports</span>
-        </div>
-
-        <div style="margin-bottom:0.85rem;">
-          <div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:800;">
-            <span>Total Overcharging Demanded (as of Mar 2026)</span>
-            <span class="mono">₹10,029.8 Crore (100%)</span>
-          </div>
-          <div class="pbar warn"><i data-w="100"></i></div>
-        </div>
-
-        <div style="margin-bottom:0.85rem;">
-          <div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:800;">
-            <span>Unrecovered / Outstanding (~70% in Litigation)</span>
-            <span class="mono" style="color:var(--orange7);">₹8,447.4 Crore (84.2%)</span>
-          </div>
-          <div class="pbar warn"><i data-w="85"></i></div>
-        </div>
-
-        <div style="margin-bottom:0.95rem;">
-          <div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:800;">
-            <span>Actually Recovered by Regulator</span>
-            <span class="mono" style="color:var(--teal);">₹1,582.4 Crore (15.8%)</span>
-          </div>
-          <div class="pbar"><i data-w="16"></i></div>
-        </div>
-
-        <div style="background:var(--paper);border:1.5px solid var(--navy);border-radius:1rem;padding:0.8rem;font-size:0.82rem;">
-          <strong>Why MediCheck Exists:</strong> Even when NPPA recovers funds years later, the money goes to the treasury — <strong>not back to the overcharged patient</strong>. MediCheck stops overcharging <em>before</em> payment at the counter.
-        </div>
+<section id="how" class="section-mist reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">How it works</div>
+      <h2>Three steps, and the record is public.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">STEP 01</div>
+        <h3>Scan and submit</h3>
+        <p>Scan the medicine's barcode, then enter or photograph the price you were billed. MediCheck checks it against the real MRP on record.</p>
       </div>
-    </section>
-
-    <!-- =====================================================================
-     * 7. FINAL CTA BANNER (Skips Login -> Launches App Homepage dashboard.html)
-     * ===================================================================== -->
-    <section class="card orange-card reveal" style="--i:6;text-align:center;padding:2.2rem 1.5rem;">
-      <span class="badge badge-green">Ready for Live Demo · All 24 End-to-End Checks Passing</span>
-      <h2 style="font-family:var(--font-serif);font-weight:400;font-size:clamp(2.2rem,4vw,3.3rem);margin:0.5rem 0 0.4rem;">
-        Ready to explore the <em>complete MediCheck platform?</em>
-      </h2>
-      <p style="max-width:660px;margin:0 auto 1.25rem;color:var(--navy-soft);font-weight:600;">
-        Jump straight into the all-in-one App Homepage (no login wall) to test the live GS1 &amp; Medicine Checker, Community Area Explorer, Nearby Verified Pharmacies, Government Officer Proof Portal, and SHA-256 Public Log.
-      </p>
-      <div class="btn-row" style="justify-content:center;gap:0.8rem;">
-        <a href="/dashboard.html" class="btn btn-primary" style="font-size:1rem;padding:0.85rem 1.7rem;">
-          🚀 Enter App Homepage (All Features) →
-        </a>
-        <a href="/scan.html" class="btn btn-outline">1. Scan &amp; Check</a>
-        <a href="/community.html" class="btn btn-outline">2. Community &amp; Stores</a>
-        <a href="/government.html" class="btn btn-outline">3. Government Portal</a>
-        <a href="/pharmacy.html" class="btn btn-outline">4. Pharmacy Verify</a>
-        <a href="/security.html" class="btn btn-outline">5. Security &amp; Log</a>
+      <div class="step">
+        <div class="n">STEP 02</div>
+        <h3>A mismatch becomes a report</h3>
+        <p>If the price, stock or expiry doesn't check out, a report is filed with your bill photo attached — visible to anyone who looks up that pharmacy.</p>
       </div>
-    </section>
+      <div class="step">
+        <div class="n">STEP 03</div>
+        <h3>Government and pharmacy respond, in public</h3>
+        <p>The local authority posts progress on the case. The pharmacy can clear its name by keeping its billing and stock records open to verification.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="site-footer">
-      <span><strong>MediCheck: Scan, Verify, Report</strong> · Proposal &amp; System Design (31 Oct 2026)</span>
-      <span><a href="/dashboard.html" style="font-weight:800;color:var(--orange5);">Open App Homepage →</a></span>
-    </footer>
-  </main>
+<section id="roles" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Built for three sides of the same problem</div>
+      <h2>Everyone with a stake gets an account built for them.</h2>
+    </div>
+    <div class="roles">
+      <div class="role citizen">
+        <span class="tag">Citizen</span>
+        <h3>Check before you pay</h3>
+        <p>Scan any medicine, compare the bill against the real price, and file a report in under a minute if something's off.</p>
+        <ul>
+          <li>Barcode and bill-photo price checks</li>
+          <li>Search verified pharmacies near any address</li>
+          <li>Follow reports through to resolution</li>
+        </ul>
+      </div>
+      <div class="role pharmacy">
+        <span class="tag">Pharmacy</span>
+        <h3>Prove your billing is clean</h3>
+        <p>Upload your stock and billing records regularly. Once they match what customers report, your pharmacy becomes verified.</p>
+        <ul>
+          <li>Respond directly to reports filed against you</li>
+          <li>Build a public verification track record</li>
+          <li>Accounts set up by call, to keep out fake listings</li>
+        </ul>
+      </div>
+      <div class="role gov">
+        <span class="tag">Government</span>
+        <h3>See the problems, act on them in public</h3>
+        <p>Every open report in your jurisdiction, in one place — with the pressure of a public timeline to act on it.</p>
+        <ul>
+          <li>Case queue sorted by area and severity</li>
+          <li>Post progress updates and photo evidence</li>
+          <li>Accounts set up by call, to keep out fake listings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-mist reveal">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:48px;">
+      <div class="kicker">Why it holds up</div>
+      <h2>Nothing you report disappears into a form.</h2>
+      <p>Every report stays visible, every pharmacy's history is public, and the government's response is timestamped — not promised.</p>
+    </div>
+    <div class="trust">
+      <div class="trust-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>Your bill, kept on record</h3><p>Photo evidence is attached to every report and stays attached through resolution.</p></div>
+      <div class="trust-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 10 12 4l9 6"/><path d="M4 10v9h16v-9"/><path d="M9 21v-6h6v6"/></svg></div><h3>Routed to the right office</h3><p>Reports go straight to the local health authority for that pharmacy's jurisdiction.</p></div>
+      <div class="trust-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></div><h3>No report left unanswered</h3><p>Open cases stay visible on the pharmacy's public page until they're marked resolved.</p></div>
+      <div class="trust-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M6 2h12v19l-3-2-3 2-3-2-3 2V2Z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></div><h3>Verification isn't a badge for sale</h3><p>Pharmacies earn it by matching their own stock and billing records against real reports.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:48px;">
+      <div class="kicker">What people are filing</div>
+      <h2>Small catches, added up.</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote-text">Scanned a strip of Dolo at a new pharmacy near my office — ₹9 over MRP. Filed it in under a minute, bill photo and all.</p>
+        <div class="quote-who"><div class="av">RK</div><div><b>Ritika K.</b><span>Koramangala, Bengaluru</span></div></div>
+      </div>
+      <div class="quote-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote-text">My local chemist kept running out of my mother's BP medicine with no explanation. Reporting it got a restock confirmed within a week.</p>
+        <div class="quote-who"><div class="av">SN</div><div><b>Suresh N.</b><span>Andheri, Mumbai</span></div></div>
+      </div>
+      <div class="quote-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote-text">We got flagged once for a billing mismatch that turned out to be a software glitch. Uploading our records cleared it and got us verified.</p>
+        <div class="quote-who"><div class="av">VM</div><div><b>Vivek M.</b><span>Owner, Shree Krishna Medicals</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-mist reveal">
+  <div class="wrap">
+    <div class="section-head" style="margin:0 auto 48px;text-align:center;">
+      <div class="kicker" style="text-align:center;">Questions</div>
+      <h2>Before you file a report</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do I need the physical medicine strip to scan?<span class="x">+</span></div>
+        <div class="faq-a"><p>Yes — the barcode on the strip or box is what's checked against the registered MRP. A photo of the barcode works if you've already left the counter.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What happens after I submit a report?<span class="x">+</span></div>
+        <div class="faq-a"><p>It's published immediately with your bill photo, and routed to the health authority for that pharmacy's area. You can track progress from your dashboard.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can a pharmacy see who filed a report?<span class="x">+</span></div>
+        <div class="faq-a"><p>No. Pharmacies see the report, the bill and the mismatch — never your name or contact details.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do pharmacies become verified?<span class="x">+</span></div>
+        <div class="faq-a"><p>By regularly uploading their stock and billing records. Once those records match what citizens are reporting on the ground, the pharmacy is marked verified.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2>Found a price that doesn't add up?</h2>
+        <p>It takes less time to report than it took to notice.</p>
+      </div>
+      <a href="login.html#register" class="btn btn-primary">Create a free account</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <a href="index.html" class="brand">
+        <span class="barcode"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+        MediCheck
+      </a>
+      <p style="margin-top:14px;max-width:28ch;font-size:.88rem;">A public record of pharmacy pricing, stock and accountability.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>PRODUCT</h4>
+        <a href="#how">How it works</a>
+        <a href="login.html">Public reports</a>
+        <a href="login.html">Verified pharmacies</a>
+      </div>
+      <div class="foot-col">
+        <h4>ACCOUNTS</h4>
+        <a href="login.html">Citizen login</a>
+        <a href="login.html#register">Register</a>
+        <a href="#roles">Pharmacy / Government</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 MediCheck. A citizen accountability platform.</span>
+    <span>Made for every pharmacy counter in India.</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>

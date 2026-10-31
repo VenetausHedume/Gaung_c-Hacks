@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add a report — MediCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="font-size:1.15rem;">
+      <span class="barcode" style="height:20px;"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck
+    </a>
+    <div class="app-links">
+      <a href="home.html">Home</a>
+      <a href="scan.html">Scan</a>
+      <a href="report.html" class="active">Report</a>
+      <a href="area.html">Area</a>
+    </div>
+    <div class="app-user">
+      <a href="login.html" class="btn btn-ghost btn-sm">Log out</a>
+      <div class="avatar">AM</div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-shell">
+  <div class="app-head">
+    <div class="wrap">
+      <div>
+        <h1>Add a report</h1>
+        <p>File what you've found — overpriced, out of stock, or expired. It's published with your bill photo, publicly, right away.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:36px;padding-bottom:64px;">
+    <div style="max-width:560px;margin:0 auto;">
+
+      <div class="notice" id="scan-banner" style="display:none;">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/></svg></span>
+        <span><b>Pulled in from your recent scan.</b> Check the details below before submitting.</span>
+      </div>
+
+      <div class="panel" style="padding:32px;">
+        <form onsubmit="event.preventDefault(); submitReport();">
+          <div class="field">
+            <label for="issue-type">What's the issue?</label>
+            <select id="issue-type">
+              <option value="overpriced">Sold above MRP</option>
+              <option value="stock">Essential stock unavailable</option>
+              <option value="expired">Expired stock sold</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="medicine">Medicine name</label>
+            <input type="text" id="medicine" placeholder="e.g. Dolo 650mg, 15 tablets" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="mrp">Registered MRP</label>
+              <input type="text" id="mrp" placeholder="₹">
+            </div>
+            <div class="field">
+              <label for="billed">Amount billed</label>
+              <input type="text" id="billed" placeholder="₹">
+            </div>
+          </div>
+          <div class="field">
+            <label for="pharmacy">Pharmacy name</label>
+            <input type="text" id="pharmacy" placeholder="e.g. Sundar Medicals" required>
+          </div>
+          <div class="field">
+            <label for="address">Pharmacy address</label>
+            <input type="text" id="address" placeholder="Street, area, city" required>
+          </div>
+          <div class="field">
+            <label>Photo of the bill</label>
+            <div class="upload-box">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M6 2h12v19l-3-2-3 2-3-2-3 2V2Z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></div>
+              <b>Upload bill photo</b>
+              <span>Required — this is what gets published alongside your report</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="notes">Anything else worth noting? (optional)</label>
+            <textarea class="field-textarea" id="notes" placeholder="e.g. this is the second time at this pharmacy"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Publish report</button>
+          <p style="text-align:center;margin-top:14px;font-size:.8rem;">Your name is never shown to the pharmacy. Only the bill and the issue are public.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var fromScan = new URLSearchParams(window.location.search).get('from') === 'scan';
+  var data = sessionStorage.getItem('mc_scan');
+  if(fromScan && data){
+    data = JSON.parse(data);
+    document.getElementById('scan-banner').style.display = 'flex';
+    document.getElementById('medicine').value = data.medicine || '';
+    document.getElementById('mrp').value = data.mrp ? '₹'+data.mrp : '';
+    document.getElementById('billed').value = data.billed ? '₹'+data.billed : '';
+    document.getElementById('pharmacy').value = data.pharmacy || '';
+    document.getElementById('issue-type').value = 'overpriced';
+  }
+})();
+function submitReport(){
+  alert('Report published. You can track it from your Home dashboard.');
+  sessionStorage.removeItem('mc_scan');
+  window.location.href = 'home.html';
+}
+</script>
+<script src="app.js"></script>
+</body>
+</html>

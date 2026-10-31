@@ -547,51 +547,226 @@ async function main(): Promise<void> {
     return `Non-compliant store rejected (${badVer.review_note}) & excluded from suggestions`;
   });
 
-  await runCheck('Presentation Multi-Page Server: all 5 HTML pages & JSON APIs respond 200 OK', async () => {
+  await runCheck('New Frontend Multi-Page Server: all 11 HTML pages, style.css, app.js & No-Map verification', async () => {
     const server = createPresentationServer();
     await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', () => resolve()));
     const addr = server.address() as { port: number };
     const base = `http://127.0.0.1:${addr.port}`;
 
     try {
-      const pages = ['/index.html', '/dashboard.html', '/scan.html', '/community.html', '/government.html', '/pharmacy.html', '/security.html'];
+      const pages = [
+        '/index.html',
+        '/login.html',
+        '/home.html',
+        '/scan.html',
+        '/report.html',
+        '/area.html',
+        '/pharmacy-home.html',
+        '/pharmacy-verify.html',
+        '/pharmacy-reports.html',
+        '/gov-home.html',
+        '/gov-case.html',
+      ];
       for (const pg of pages) {
         const r = await fetch(`${base}${pg}`);
         assert(r.status === 200, `Expected 200 for ${pg}, got ${r.status}`);
         const html = await r.text();
-        assert(html.includes('MediCheck') && html.includes('class="field"') && html.includes('class="wordmark"'), `Page ${pg} missing unified MediCheck design tokens`);
-        assert(html.includes('class="topbar"') && html.includes('/dashboard.html') && html.includes('/scan.html') && html.includes('/community.html') && html.includes('/government.html') && html.includes('/pharmacy.html') && html.includes('/security.html'), `Page ${pg} missing full topbar navigation links`);
+        assert(html.includes('MediCheck') && html.includes('style.css') && html.includes('app.js'), `Page ${pg} missing MediCheck title, style.css, or app.js`);
+        assert(!html.includes('leaflet') && !html.includes('mcMapRoot'), `Page ${pg} must not contain any interactive map component`);
       }
 
-      // Verify Landing Page (/index.html) contains real proposal statistics (Rs 10,029.8 Cr, 3,012 NSQ, 283 spurious)
-      const landingHtml = await (await fetch(`${base}/index.html`)).text();
-      assert(landingHtml.includes('10,029.8') && landingHtml.includes('3,012') && landingHtml.includes('/dashboard.html'), 'Landing page missing real numbers or direct link to /dashboard.html');
+      const areaHtml = await (await fetch(`${base}/area.html`)).text();
+      assert(areaHtml.includes('Address only — no map'), 'area.html must explicitly state "Address only — no map"');
 
-      // Verify App Homepage (/dashboard.html) & Community (/community.html) have topbar, sidebar, and interactive Map
-      const dashHtml = await (await fetch(`${base}/dashboard.html`)).text();
-      assert(dashHtml.includes('class="d-shell"') && dashHtml.includes('class="d-side"') && dashHtml.includes('id="mcMapRoot"'), 'App homepage missing .d-shell sidebar or interactive map');
-      const commHtml = await (await fetch(`${base}/community.html`)).text();
-      assert(commHtml.includes('id="mcMapRoot"'), 'Community page missing interactive map #mcMapRoot');
-
-      const appJs = await (await fetch(`${base}/app.js`)).text();
-      assert(appJs.includes('window.initMediCheckMap') && appJs.includes('window.updateMediCheckMap') && appJs.includes('window.focusMapPin') && appJs.includes('window.locateUserOnMap'), 'app.js missing interactive map functions');
-
-      const assets = ['/styles.css', '/app.js', '/icon.svg'];
+      const assets = ['/style.css', '/app.js'];
       for (const asset of assets) {
         const r = await fetch(`${base}${asset}`);
         assert(r.status === 200, `Expected 200 for asset ${asset}, got ${r.status}`);
       }
 
-      const apiCheck = await (await fetch(`${base}/api/check?q=TestFever%20500&batch=TST1234`)).json() as { check?: { price?: { ceiling_status?: string } } };
+      const appJs = await (await fetch(`${base}/app.js`)).text();
+      assert(!appJs.includes('L.map') && !appJs.includes('initMediCheckMap'), 'app.js must not contain any interactive map code');
+
+      return `Verified all 11 pages (${pages.join(', ')}), style.css, app.js, and confirmed interactive map is completely removed`;
+    } finally {
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+    }
+  });
+
+  await runCheck('Full-Stack Integration APIs: Auth, Citizen Report, Area Search, Pharmacy Portal & Gov Case', async () => {
+    const server = createPresentationServer();
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', () => resolve()));
+    const addr = server.address() as { port: number };
+    const base = `http://127.0.0.1:${addr.port}`;
+
+    try {
+      // 1. Auth Login & Citizen Registration & Org Verification Call Request
+      const loginRes = await (
+        await fetch(`${base}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role: 'citizen', identifier: 'ananya@example.com' }),
+        })
+      ).json() as { authenticated?: boolean; redirect_page?: string };
+      assert(loginRes.authenticated === true && loginRes.redirect_page === 'home.html', '/api/auth/login failed');
+
+      const regRes = await (
+        await fetch(`${base}/api/auth/register-citizen`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full_name: 'Rohan Sharma', phone: '+91 98450 99999', email: 'rohan@example.com' }),
+        })
+      ).json() as { authenticated?: boolean; display_name?: string };
+      assert(regRes.authenticated === true && regRes.display_name === 'Rohan Sharma', '/api/auth/register-citizen failed');
+
+      const orgRes = await (
+        await fetch(`${base}/api/auth/request-org-call`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            role: 'pharmacy',
+            org_name: 'Sundar Medicals',
+            contact_person: 'R. Sundar — Proprietor',
+            phone: '+91 80 2553 0101',
+            area: 'Koramangala, Bengaluru',
+          }),
+        })
+      ).json() as { requested?: boolean; status?: string };
+      assert(orgRes.requested === true && orgRes.status === 'call_scheduled_within_2_working_days', '/api/auth/request-org-call failed');
+
+      // 2. Barcode & Medicine Check
+      const apiCheck = await (await fetch(`${base}/api/check?q=TestFever%20500&batch=TST1234`)).json() as {
+        check?: { price?: { ceiling_status?: string } };
+      };
       assert(apiCheck.check?.price?.ceiling_status === 'above', '/api/check failed');
 
-      const apiComm = await (await fetch(`${base}/api/community?q=Mumbai`)).json() as { verifiedPharmacies?: unknown[]; issues?: { items?: unknown[] } };
-      assert((apiComm.verifiedPharmacies ?? []).length >= 2 && (apiComm.issues?.items ?? []).length >= 3, '/api/community failed');
+      // 3. Proof Upload & Citizen Report Filing
+      const upRes = await (
+        await fetch(`${base}/api/upload-proof`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: 'dolo-bill.jpg', folder: 'citizen-bills' }),
+        })
+      ).json() as { uploaded?: boolean; url?: string };
+      assert(upRes.uploaded === true && typeof upRes.url === 'string', '/api/upload-proof failed');
 
-      const apiSec = await (await fetch(`${base}/api/security/overview`)).json() as { chain?: { valid?: boolean }; tamperDemo?: { tamper_detected?: boolean } };
+      const repRes = await (
+        await fetch(`${base}/api/reports`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            issue_type: 'overpriced',
+            medicine: 'Dolo 650mg, 15 tablets',
+            mrp: 31,
+            billed: 49,
+            pharmacy: 'Sundar Medicals',
+            address: '12, 5th Block, Koramangala, Bengaluru 560095',
+            notes: 'Billed ₹49 instead of ₹31 MRP',
+            bill_photo_url: upRes.url,
+          }),
+        })
+      ).json() as { submitted?: boolean; reportId?: string; overcharge?: number };
+      assert(repRes.submitted === true && repRes.overcharge === 18 && typeof repRes.reportId === 'string', '/api/reports failed');
+
+      // 4. Community / Area Search (Koramangala & Mumbai)
+      const korComm = await (await fetch(`${base}/api/community?q=Koramangala`)).json() as {
+        verifiedPharmacies?: Array<{ pharmacy_name: string }>;
+      };
+      assert((korComm.verifiedPharmacies ?? []).some((p) => p.pharmacy_name === 'Sundar Medicals'), 'Expected Koramangala verified pharmacies in /api/community');
+
+      const mumComm = await (await fetch(`${base}/api/community?q=Mumbai`)).json() as {
+        verifiedPharmacies?: unknown[];
+        issues?: { items?: unknown[] };
+      };
+      assert((mumComm.verifiedPharmacies ?? []).length >= 2 && (mumComm.issues?.items ?? []).length >= 3, '/api/community?q=Mumbai failed');
+
+      // 5. Pharmacy Portal: Dashboard, Price Fix, Report Response & Verification Proof
+      const pharmDash = await (await fetch(`${base}/api/pharmacy/dashboard`)).json() as {
+        pharmacy_name?: string;
+        price_items?: unknown[];
+        reports_against_pharmacy?: unknown[];
+      };
+      assert(
+        pharmDash.pharmacy_name === 'Sundar Medicals' &&
+          (pharmDash.price_items ?? []).length >= 5 &&
+          (pharmDash.reports_against_pharmacy ?? []).length >= 4,
+        '/api/pharmacy/dashboard failed'
+      );
+
+      const fixRes = await (
+        await fetch(`${base}/api/pharmacy/price-fix`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ item_id: 'price-item-1', action: 'mark_corrected' }),
+        })
+      ).json() as { updated_item?: { status?: string } };
+      assert(fixRes.updated_item?.status === 'matched', '/api/pharmacy/price-fix failed');
+
+      const respRes = await (
+        await fetch(`${base}/api/pharmacy/respond`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            report_id: repRes.reportId,
+            pharmacy_name: 'Sundar Medicals',
+            response_text: 'Price corrected in POS system and refund offered.',
+            proof_url: 'https://example.com/proof/corrected-pos.jpg',
+          }),
+        })
+      ).json() as { responded?: boolean; updated_status?: string };
+      assert(respRes.responded === true && respRes.updated_status === 'in_progress', '/api/pharmacy/respond failed');
+
+      const pVerRes = await (
+        await fetch(`${base}/api/pharmacy/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pharmacy_name: 'Sundar Medicals',
+            licence_no: 'KA-BLR-KOR-001',
+            area: 'Koramangala',
+            city: 'Bengaluru',
+            state: 'Karnataka',
+            pincode: '560095',
+            period: '1–31 October 2026',
+            items_scanned: 42,
+            stock_proof_urls: ['https://example.com/proof/oct-stock.jpg'],
+            billing_proof_urls: ['https://example.com/proof/oct-billing.csv'],
+          }),
+        })
+      ).json() as { verification?: { is_verified?: boolean } };
+      assert(pVerRes.verification?.is_verified === true, '/api/pharmacy/verify failed');
+
+      // 6. Government Case Detail & Progress Update
+      const govCaseBefore = await (await fetch(`${base}/api/gov/case?id=${encodeURIComponent(repRes.reportId!)}`)).json() as {
+        timeline?: Array<{ title: string }>;
+      };
+      assert(
+        (govCaseBefore.timeline ?? []).some((t) => t.title.includes('Pharmacy responded')),
+        'Expected pharmacy response in government case timeline'
+      );
+
+      const govProgRes = await (
+        await fetch(`${base}/api/government/progress`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            report_id: '6bcfcc70-3965-413f-9441-f605b5c4aa89',
+            status: 'Resolved',
+            progress_note: 'Inspector verified corrected MRP labels at Sundar Medicals.',
+            proof_urls: ['https://example.com/proof/bbmp-inspection.jpg'],
+          }),
+        })
+      ).json() as { status?: string };
+      assert(govProgRes.status === 'resolved', '/api/government/progress failed');
+
+      // 7. Security & Tamper-Evident Log Overview
+      const apiSec = await (await fetch(`${base}/api/security/overview`)).json() as {
+        chain?: { valid?: boolean };
+        tamperDemo?: { tamper_detected?: boolean };
+      };
       assert(apiSec.chain?.valid === true && apiSec.tamperDemo?.tamper_detected === true, '/api/security/overview failed');
 
-      return `Verified all 5 pages (${pages.join(', ')}) and live JSON APIs (/api/check, /api/community, /api/security/overview)`;
+      return 'All 14 JSON API endpoints (auth, scan, report, area, pharmacy, gov, security) verified end-to-end';
     } finally {
       await new Promise<void>((resolve) => server.close(() => resolve()));
     }

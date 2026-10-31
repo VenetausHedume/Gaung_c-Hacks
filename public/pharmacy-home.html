@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacy dashboard — MediCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="font-size:1.15rem;">
+      <span class="barcode" style="height:20px;"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck <span style="font-size:.7rem;font-weight:700;color:var(--orange-deep);background:#fdece0;padding:3px 9px;border-radius:12px;margin-left:4px;">PHARMACY</span>
+    </a>
+    <div class="app-links">
+      <a href="pharmacy-home.html" class="active">Home</a>
+      <a href="pharmacy-verify.html">Get verified</a>
+      <a href="pharmacy-reports.html">Reports</a>
+    </div>
+    <div class="app-user">
+      <a href="login.html" class="btn btn-ghost btn-sm">Log out</a>
+      <div class="avatar" style="background:var(--orange-deep);">SM</div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-shell">
+  <div class="app-head">
+    <div class="wrap">
+      <div>
+        <h1>Sundar Medicals</h1>
+        <p>12, 5th Block, Koramangala, Bengaluru 560095</p>
+      </div>
+      <span class="pill pill-verified" style="font-size:.85rem;padding:9px 18px;"><span class="d"></span>Verified pharmacy</span>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:36px;">
+    <div class="two-col" style="grid-template-columns:.8fr 1.2fr;">
+      <div class="side-stack">
+        <div class="stat-card">
+          <div class="val">Verified</div>
+          <div class="lbl">Status — last confirmed 3 months ago</div>
+          <a href="pharmacy-verify.html" class="btn btn-outline btn-block btn-sm" style="margin-top:14px;">Upload latest records</a>
+        </div>
+        <div class="stat-card">
+          <div class="val">1</div>
+          <div class="lbl">Open report against you</div>
+          <a href="pharmacy-reports.html" class="btn btn-ink btn-block btn-sm" style="margin-top:14px;">View reports</a>
+        </div>
+        <div class="stat-card">
+          <div class="val">96%</div>
+          <div class="lbl">Billing match rate, last 90 days</div>
+          <div class="stat-row"><span>Prices matching MRP</span><span>58 / 60</span></div>
+          <div class="stat-row"><span>Stock confirmed</span><span>Up to date</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Prices that need organising</h2>
+          <span style="font-size:.82rem;color:var(--ink-soft);">Checked against registered MRP</span>
+        </div>
+        <div class="price-row">
+          <div><b>Paracetamol 650mg, 15 tablets</b><div class="sub">MRP ₹31.00 · your listed price ₹49.00</div></div>
+          <div>₹49.00</div>
+          <div>₹31.00 MRP</div>
+          <span class="pill pill-open"><span class="d"></span>Mismatch</span>
+        </div>
+        <div class="price-row">
+          <div><b>Azithromycin 500mg, 3 tablets</b><div class="sub">MRP ₹118.00 · your listed price ₹118.00</div></div>
+          <div>₹118.00</div>
+          <div>₹118.00 MRP</div>
+          <span class="pill pill-verified"><span class="d"></span>Matches</span>
+        </div>
+        <div class="price-row">
+          <div><b>Amoxicillin 500mg, 10 capsules</b><div class="sub">MRP ₹68.00 · your listed price ₹68.00</div></div>
+          <div>₹68.00</div>
+          <div>₹68.00 MRP</div>
+          <span class="pill pill-verified"><span class="d"></span>Matches</span>
+        </div>
+        <div class="price-row">
+          <div><b>Cetirizine 10mg, 10 tablets</b><div class="sub">MRP ₹14.00 · not yet listed by you</div></div>
+          <div>—</div>
+          <div>₹14.00 MRP</div>
+          <span class="pill pill-pending"><span class="d"></span>Not listed</span>
+        </div>
+        <div style="padding:18px 26px;">
+          <a href="pharmacy-verify.html" class="btn btn-primary btn-sm">Update prices &amp; stock →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

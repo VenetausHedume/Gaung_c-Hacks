@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — MediCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="font-size:1.15rem;">
+      <span class="barcode" style="height:20px;"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck
+    </a>
+    <div class="app-links">
+      <a href="home.html" class="active">Home</a>
+      <a href="scan.html">Scan</a>
+      <a href="report.html">Report</a>
+      <a href="area.html">Area</a>
+    </div>
+    <div class="app-user">
+      <a href="login.html" class="btn btn-ghost btn-sm">Log out</a>
+      <div class="avatar">AM</div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-shell">
+  <div class="app-head">
+    <div class="wrap">
+      <div>
+        <h1>Welcome back, Aarav</h1>
+        <p>Koramangala, Bengaluru — here's what's happening around you.</p>
+      </div>
+      <a href="scan.html" class="btn btn-primary">+ Scan a medicine</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="quick-actions">
+      <a class="qa featured" href="scan.html">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.17L4 3a1 1 0 0 0-1 1l.17 5.59a2 2 0 0 0 .66 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg></div>
+        <h3>Scan &amp; check a price</h3>
+        <p>Scan a barcode or upload a bill photo to check it against the real MRP.</p>
+        <span class="go">→</span>
+      </a>
+      <a class="qa" href="report.html">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h3>Add a report</h3>
+        <p>Already know what's wrong? File a report directly, no scan needed.</p>
+        <span class="go">→</span>
+      </a>
+      <a class="qa" href="area.html">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Search your area</h3>
+        <p>See reported issues and verified pharmacies near you, or anywhere else.</p>
+        <span class="go">→</span>
+      </a>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Recent reports near Koramangala</h2>
+          <a href="area.html" class="btn btn-ghost btn-sm">View all →</a>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-thumb">₹</div>
+          <div class="l-main"><b>Paracetamol 650mg — sold above MRP</b><span>Sundar Medicals, 5th Block</span></div>
+          <div class="l-meta"><b>₹18 over MRP</b>Filed 2 days ago</div>
+          <div class="l-meta"><b>Govt. responding</b>BBMP Health Dept.</div>
+          <span class="pill pill-progress"><span class="d"></span>In progress</span>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="l-main"><b>Azithromycin 500 — expired batch sold</b><span>City Care Pharmacy, 80ft Rd</span></div>
+          <div class="l-meta"><b>Batch exp. 03/2026</b>Filed 6 days ago</div>
+          <div class="l-meta"><b>Under review</b>BBMP Health Dept.</div>
+          <span class="pill pill-open"><span class="d"></span>Open</span>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
+          <div class="l-main"><b>Insulin — essential stock unavailable</b><span>Wellness Plus, Jyoti Nagar</span></div>
+          <div class="l-meta"><b>Reported twice</b>Filed 9 days ago</div>
+          <div class="l-meta"><b>Restocked</b>Confirmed by govt.</div>
+          <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
+        </div>
+      </div>
+
+      <div class="side-stack">
+        <div class="stat-card">
+          <div class="val">3</div>
+          <div class="lbl">Reports you've filed</div>
+          <div class="stat-row"><span>Open</span><span>1</span></div>
+          <div class="stat-row"><span>In progress</span><span>1</span></div>
+          <div class="stat-row"><span>Resolved</span><span>1</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="val">4</div>
+          <div class="lbl">Verified pharmacies within 2 km</div>
+          <a href="area.html#pharmacies" class="btn btn-outline btn-block btn-sm" style="margin-top:14px;">See them on the list</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

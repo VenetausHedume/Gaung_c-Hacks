@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government dashboard — MediCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="font-size:1.15rem;">
+      <span class="barcode" style="height:20px;"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck <span style="font-size:.7rem;font-weight:700;color:var(--ok);background:#e9f3ec;padding:3px 9px;border-radius:12px;margin-left:4px;">GOVERNMENT</span>
+    </a>
+    <div class="app-links">
+      <a href="gov-home.html" class="active">Area overview</a>
+    </div>
+    <div class="app-user">
+      <a href="login.html" class="btn btn-ghost btn-sm">Log out</a>
+      <div class="avatar" style="background:var(--ok);">BBMP</div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-shell">
+  <div class="app-head">
+    <div class="wrap">
+      <div>
+        <h1>Area overview</h1>
+        <p>BBMP Health Department — search any area to see open problems and verified pharmacies there.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:36px;">
+    <div class="search-bar">
+      <input type="text" placeholder="Search by area" value="Koramangala, Bengaluru">
+      <button class="btn btn-ink">Search area</button>
+    </div>
+
+    <div class="quick-actions" style="grid-template-columns:repeat(4,1fr);margin-bottom:40px;">
+      <div class="stat-card"><div class="val">24</div><div class="lbl">Total reports in area</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--orange-deep);">9</div><div class="lbl">Open, unactioned</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--blue);">6</div><div class="lbl">In progress</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--ok);">9</div><div class="lbl">Resolved this quarter</div></div>
+    </div>
+
+    <div class="tabs" data-tabgroup="gov">
+      <button class="tab-btn active" onclick="switchTab('gov','gpane-issues',this)">Problems (24)</button>
+      <button class="tab-btn" onclick="switchTab('gov','gpane-pharmacies',this)">Verified pharmacies (7)</button>
+    </div>
+
+    <div class="tab-pane active" data-tabgroup="gov" id="gpane-issues">
+      <div class="filter-row">
+        <span class="chip active">All</span>
+        <span class="chip">Open</span>
+        <span class="chip">In progress</span>
+        <span class="chip">Resolved</span>
+      </div>
+      <div class="panel" style="margin-bottom:60px;">
+        <div class="panel-head">
+          <h2>24 reports in Koramangala, Bengaluru</h2>
+          <span style="font-size:.82rem;color:var(--ink-soft);">Click a case to respond</span>
+        </div>
+        <a class="ledger-row" href="gov-case.html" style="color:inherit;">
+          <div class="ledger-thumb">₹</div>
+          <div class="l-main"><b>Paracetamol 650mg — sold above MRP</b><span>Sundar Medicals, 5th Block</span></div>
+          <div class="l-meta"><b>₹18 over MRP</b>Filed 2 days ago · bill attached</div>
+          <div class="l-meta"><b>Pharmacy responded</b>1 day ago</div>
+          <span class="pill pill-progress"><span class="d"></span>In progress</span>
+        </a>
+        <a class="ledger-row" href="gov-case.html" style="color:inherit;">
+          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="l-main"><b>Azithromycin 500 — expired batch sold</b><span>City Care Pharmacy, 80ft Rd</span></div>
+          <div class="l-meta"><b>Batch exp. 03/2026</b>Filed 6 days ago · bill attached</div>
+          <div class="l-meta"><b>Awaiting your review</b></div>
+          <span class="pill pill-open"><span class="d"></span>Open</span>
+        </a>
+        <a class="ledger-row" href="gov-case.html" style="color:inherit;">
+          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
+          <div class="l-main"><b>Amoxicillin 500 — out of stock, no sign</b><span>Sundar Medicals, 5th Block</span></div>
+          <div class="l-meta"><b>No restock notice</b>Filed 13 days ago</div>
+          <div class="l-meta"><b>Awaiting your review</b></div>
+          <span class="pill pill-open"><span class="d"></span>Open</span>
+        </a>
+        <a class="ledger-row" href="gov-case.html" style="color:inherit;">
+          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
+          <div class="l-main"><b>Insulin — essential stock unavailable</b><span>Wellness Plus, Jyoti Nagar</span></div>
+          <div class="l-meta"><b>Reported twice</b>Filed 9 days ago</div>
+          <div class="l-meta"><b>Restocked</b>Closed by you</div>
+          <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="tab-pane" data-tabgroup="gov" id="gpane-pharmacies">
+      <div class="panel" style="margin-bottom:60px;">
+        <div class="panel-head">
+          <h2>7 pharmacies in Koramangala, Bengaluru</h2>
+        </div>
+        <div class="pharm-row">
+          <div class="pharm-mark">✓</div>
+          <div class="pharm-main"><b>Sundar Medicals</b><span>12, 5th Block, Koramangala, Bengaluru 560095</span></div>
+          <div class="pharm-stat"><b>Verified</b>2 open reports</div>
+          <span class="pill pill-verified"><span class="d"></span>Verified</span>
+        </div>
+        <div class="pharm-row">
+          <div class="pharm-mark">✓</div>
+          <div class="pharm-main"><b>City Care Pharmacy</b><span>44, 80 Feet Road, Koramangala, Bengaluru 560095</span></div>
+          <div class="pharm-stat"><b>Verified</b>1 open report</div>
+          <span class="pill pill-verified"><span class="d"></span>Verified</span>
+        </div>
+        <div class="pharm-row">
+          <div class="pharm-mark">—</div>
+          <div class="pharm-main"><b>Metro Life Pharmacy</b><span>27, Hosur Road, Koramangala, Bengaluru 560029</span></div>
+          <div class="pharm-stat"><b>Verification pending</b>Records under review</div>
+          <span class="pill pill-pending"><span class="d"></span>Pending</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

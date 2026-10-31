@@ -536,6 +536,20 @@ export interface MediCheckClient {
   ) => Promise<Record<string, unknown>>;
   /** Suggest verified pharmacies in a user's area, city, state, or pincode. */
   getVerifiedPharmacies: (filters?: VerifiedPharmacyFilters) => Promise<PharmacyProfile[]>;
+  /** Role-based login for Citizen, Pharmacy, and Government portals. */
+  loginUser: (input: LoginUserInput) => Promise<AuthSessionResult>;
+  /** Citizen self-registration. */
+  registerCitizen: (input: RegisterCitizenInput) => Promise<AuthSessionResult>;
+  /** Pharmacy / Government verification-call onboarding request. */
+  requestOrgVerificationCall: (input: OrgCallRequestInput) => Promise<OrgCallRequestResult>;
+  /** Pharmacy Portal: respond to an open citizen report with explanation and optional proof photo. */
+  submitPharmacyResponse: (input: PharmacyReportResponseInput) => Promise<PharmacyReportResponseResult>;
+  /** Pharmacy Portal: get pharmacy dashboard (status, match rate, price items to organise, reports, history). */
+  getPharmacyDashboard: (pharmacyName?: string) => Promise<PharmacyDashboardResult>;
+  /** Pharmacy Portal: mark a price item corrected or update stock status. */
+  updatePharmacyPriceItem: (input: UpdatePharmacyPriceItemInput) => Promise<PharmacyPriceItem>;
+  /** Government Portal: get full case detail including billed vs MRP, pharmacy record, and 3-party timeline. */
+  getGovernmentCaseDetail: (reportId?: string) => Promise<GovernmentCaseDetail>;
 }
 
 /**
@@ -577,6 +591,13 @@ export function createMediCheckClient(
     reviewPharmacyVerification: (submissionId, decision, reviewNote, governmentAccountId) =>
       reviewPharmacyVerification(supabase, submissionId, decision, reviewNote, governmentAccountId),
     getVerifiedPharmacies: (filters) => getVerifiedPharmacies(supabase, filters),
+    loginUser: (input) => loginUser(supabase, input),
+    registerCitizen: (input) => registerCitizen(supabase, input),
+    requestOrgVerificationCall: (input) => requestOrgVerificationCall(supabase, input),
+    submitPharmacyResponse: (input) => submitPharmacyResponse(supabase, input),
+    getPharmacyDashboard: (pharmacyName) => getPharmacyDashboard(supabase, pharmacyName),
+    updatePharmacyPriceItem: (input) => updatePharmacyPriceItem(supabase, input),
+    getGovernmentCaseDetail: (reportId) => getGovernmentCaseDetail(supabase, reportId),
   };
 }
 
@@ -1050,6 +1071,110 @@ const FALLBACK_PHARMACIES = new Map<string, PharmacyProfile>([
       billing_proof_urls: ['https://example.com/sample-proofs/dadar-gst-bill-coolpara.jpg'],
       last_review_note:
         'Verified: stock proof and billing proof matched NPPA ceiling, MRP, and CDSCO batch quality checks.',
+      notes: 'SAMPLE - NOT REAL DATA',
+    },
+  ],
+  [
+    '88888888-8888-4888-8888-888888888803',
+    {
+      id: '88888888-8888-4888-8888-888888888803',
+      owner_user_id: null,
+      pharmacy_name: 'Sundar Medicals',
+      licence_no: 'KA-BLR-KOR-001',
+      address: '12, 5th Block, Koramangala, Bengaluru 560095',
+      area: 'Koramangala',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560095',
+      phone: '080-25530101',
+      jan_aushadhi_available: true,
+      essential_medicines_stocked: 48,
+      is_verified: true,
+      verification_status: 'verified',
+      verified_at: '2026-07-30T18:00:00.000Z',
+      verified_until: '2027-01-30T18:00:00.000Z',
+      verification_score: 96.0,
+      stock_proof_urls: ['https://example.com/sample-proofs/sundar-stock-register.jpg'],
+      billing_proof_urls: ['https://example.com/sample-proofs/sundar-billing-export.jpg'],
+      last_review_note: 'Verified · stock & bills matched (3 months ago).',
+      notes: 'SAMPLE - NOT REAL DATA',
+    },
+  ],
+  [
+    '88888888-8888-4888-8888-888888888804',
+    {
+      id: '88888888-8888-4888-8888-888888888804',
+      owner_user_id: null,
+      pharmacy_name: 'City Care Pharmacy',
+      licence_no: 'KA-BLR-KOR-002',
+      address: '44, 80 Feet Road, Koramangala, Bengaluru 560095',
+      area: 'Koramangala',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560095',
+      phone: '080-25530202',
+      jan_aushadhi_available: false,
+      essential_medicines_stocked: 36,
+      is_verified: true,
+      verification_status: 'verified',
+      verified_at: '2026-09-30T18:00:00.000Z',
+      verified_until: '2027-03-30T18:00:00.000Z',
+      verification_score: 94.0,
+      stock_proof_urls: ['https://example.com/sample-proofs/citycare-stock.jpg'],
+      billing_proof_urls: ['https://example.com/sample-proofs/citycare-bills.jpg'],
+      last_review_note: 'Verified · stock & bills matched (1 month ago).',
+      notes: 'SAMPLE - NOT REAL DATA',
+    },
+  ],
+  [
+    '88888888-8888-4888-8888-888888888805',
+    {
+      id: '88888888-8888-4888-8888-888888888805',
+      owner_user_id: null,
+      pharmacy_name: 'Jan Aushadhi Kendra — Koramangala',
+      licence_no: 'KA-BLR-KOR-003',
+      address: '8, 1st Main, 7th Block, Koramangala, Bengaluru 560095',
+      area: 'Koramangala',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560095',
+      phone: '080-25530303',
+      jan_aushadhi_available: true,
+      essential_medicines_stocked: 65,
+      is_verified: true,
+      verification_status: 'verified',
+      verified_at: '2026-10-15T18:00:00.000Z',
+      verified_until: '2027-04-15T18:00:00.000Z',
+      verification_score: 99.0,
+      stock_proof_urls: ['https://example.com/sample-proofs/janaushadhi-kor-stock.jpg'],
+      billing_proof_urls: ['https://example.com/sample-proofs/janaushadhi-kor-bills.jpg'],
+      last_review_note: 'Verified · govt. generic outlet (2 weeks ago).',
+      notes: 'SAMPLE - NOT REAL DATA',
+    },
+  ],
+  [
+    '88888888-8888-4888-8888-888888888806',
+    {
+      id: '88888888-8888-4888-8888-888888888806',
+      owner_user_id: null,
+      pharmacy_name: 'Anand Drug House',
+      licence_no: 'KA-BLR-KOR-004',
+      address: '19, Sony World Signal, Koramangala, Bengaluru 560034',
+      area: 'Koramangala',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560034',
+      phone: '080-25530404',
+      jan_aushadhi_available: false,
+      essential_medicines_stocked: 30,
+      is_verified: true,
+      verification_status: 'verified',
+      verified_at: '2026-08-30T18:00:00.000Z',
+      verified_until: '2027-02-28T18:00:00.000Z',
+      verification_score: 92.5,
+      stock_proof_urls: ['https://example.com/sample-proofs/anand-stock.jpg'],
+      billing_proof_urls: ['https://example.com/sample-proofs/anand-bills.jpg'],
+      last_review_note: 'Verified · stock & bills matched (2 months ago).',
       notes: 'SAMPLE - NOT REAL DATA',
     },
   ],
@@ -1762,5 +1887,705 @@ function normalizePharmacyProfile(row: Record<string, unknown>): PharmacyProfile
     ...(row as unknown as PharmacyProfile),
     essential_medicines_stocked: Number(row.essential_medicines_stocked ?? 0),
     verification_score: Number(row.verification_score ?? 0),
+  };
+}
+
+// =============================================================================
+// Role-Based Auth, Org Call Onboarding, Pharmacy Portal & Government Case Detail
+// =============================================================================
+
+export type UserPortalRole = 'citizen' | 'pharmacy' | 'gov';
+
+export interface LoginUserInput {
+  role: UserPortalRole;
+  identifier: string;
+  password?: string;
+}
+
+export interface RegisterCitizenInput {
+  full_name: string;
+  phone: string;
+  email?: string | null;
+  password?: string;
+}
+
+export interface AuthSessionResult {
+  authenticated: true;
+  user_id: string;
+  role: UserPortalRole;
+  display_name: string;
+  identifier: string;
+  area: string;
+  redirect_page: 'home.html' | 'pharmacy-home.html' | 'gov-home.html';
+  created_at: string;
+}
+
+export interface OrgCallRequestInput {
+  role: 'pharmacy' | 'gov';
+  org_name: string;
+  contact_person: string;
+  phone: string;
+  area: string;
+}
+
+export interface OrgCallRequestResult {
+  requested: true;
+  request_id: string;
+  role: 'pharmacy' | 'gov';
+  org_name: string;
+  contact_person: string;
+  phone: string;
+  area: string;
+  status: 'call_scheduled_within_2_working_days';
+  message: string;
+  created_at: string;
+}
+
+export interface PharmacyReportResponseInput {
+  report_id?: string;
+  pharmacy_name?: string;
+  response_text: string;
+  proof_urls?: string[];
+}
+
+export interface PharmacyReportResponseResult {
+  responded: true;
+  response_id: string;
+  report_id: string;
+  pharmacy_name: string;
+  response_text: string;
+  proof_urls: string[];
+  updated_status: 'in_progress';
+  responded_at: string;
+}
+
+export interface PharmacyPriceItem {
+  id: string;
+  medicine_title: string;
+  manufacturer_subtitle: string;
+  your_price_label: string;
+  your_price_sub: string;
+  reference_label: string;
+  reference_sub: string;
+  status: 'above_mrp' | 'stock_gap' | 'matched';
+  action_label: 'Mark corrected' | 'Update stock' | null;
+}
+
+export interface PharmacyDashboardResult {
+  pharmacy_name: string;
+  address: string;
+  verification_status: 'Verified' | 'Pending';
+  last_verified_note: string;
+  open_reports_count: number;
+  billing_match_rate: number;
+  price_items: PharmacyPriceItem[];
+  submission_history: Array<{
+    id: string;
+    period_label: string;
+    reviewed_label: string;
+    status: 'Matched' | 'Pending';
+    items_scanned: number;
+  }>;
+  reports_against_pharmacy: Array<{
+    report_id: string;
+    title: string;
+    filed_label: string;
+    issue_type: 'overpriced' | 'stock' | 'expired';
+    meta_primary: string;
+    meta_secondary: string;
+    gov_label: string;
+    gov_dept: string;
+    status: 'open' | 'in_progress' | 'resolved';
+    pharmacy_response: string | null;
+  }>;
+}
+
+export interface UpdatePharmacyPriceItemInput {
+  item_id: string;
+  action: 'mark_corrected' | 'update_stock';
+}
+
+export interface GovernmentCaseDetail {
+  report_id: string;
+  title: string;
+  pharmacy_name: string;
+  pharmacy_address: string;
+  status: 'open' | 'in_progress' | 'resolved' | 'escalated';
+  billed_amount: number;
+  mrp_amount: number;
+  overcharged_by: number;
+  filed_label: string;
+  bill_photo_label: string;
+  bill_photo_url: string | null;
+  pharmacy_verified: boolean;
+  pharmacy_other_open_reports: number;
+  timeline: Array<{
+    step_num: string;
+    title: string;
+    meta: string;
+    body: string | null;
+    resolved?: boolean;
+    proof_urls?: string[];
+  }>;
+}
+
+const CITIZEN_ACCOUNTS = new Map<string, RegisterCitizenInput & { user_id: string; created_at: string }>([
+  [
+    'ananya@example.com',
+    {
+      user_id: 'cit-001',
+      full_name: 'Ananya',
+      phone: '+91 98450 12345',
+      email: 'ananya@example.com',
+      created_at: '2026-09-01T10:00:00.000Z',
+    },
+  ],
+]);
+
+const ORG_CALL_REQUESTS: OrgCallRequestResult[] = [];
+
+const PHARMACY_PRICE_ITEMS: PharmacyPriceItem[] = [
+  {
+    id: 'price-item-1',
+    medicine_title: 'Paracetamol 650mg · 15 tablets',
+    manufacturer_subtitle: 'Micro Labs',
+    your_price_label: 'Your price: ₹49.00',
+    your_price_sub: '1 citizen report',
+    reference_label: 'Registered MRP: ₹31.00',
+    reference_sub: 'Over by ₹18',
+    status: 'above_mrp',
+    action_label: 'Mark corrected',
+  },
+  {
+    id: 'price-item-2',
+    medicine_title: 'Amoxicillin 500mg · 10 capsules',
+    manufacturer_subtitle: 'Cipla',
+    your_price_label: 'Reported out of stock',
+    your_price_sub: '13 days ago',
+    reference_label: 'Registered MRP: ₹68.00',
+    reference_sub: 'Essential list',
+    status: 'stock_gap',
+    action_label: 'Update stock',
+  },
+  {
+    id: 'price-item-3',
+    medicine_title: 'Metformin 500mg · 20 tablets',
+    manufacturer_subtitle: 'USV',
+    your_price_label: 'Your price: ₹38.00',
+    your_price_sub: 'Matches MRP',
+    reference_label: 'Registered MRP: ₹38.00',
+    reference_sub: 'In stock (42)',
+    status: 'matched',
+    action_label: null,
+  },
+  {
+    id: 'price-item-4',
+    medicine_title: 'Amlodipine 5mg · 15 tablets',
+    manufacturer_subtitle: 'Sun Pharma',
+    your_price_label: 'Your price: ₹29.00',
+    your_price_sub: 'Matches MRP',
+    reference_label: 'Registered MRP: ₹29.00',
+    reference_sub: 'In stock (31)',
+    status: 'matched',
+    action_label: null,
+  },
+  {
+    id: 'price-item-5',
+    medicine_title: 'Pantoprazole 40mg · 15 tablets',
+    manufacturer_subtitle: 'Alkem',
+    your_price_label: 'Your price: ₹115.00',
+    your_price_sub: 'Matches MRP',
+    reference_label: 'Registered MRP: ₹115.00',
+    reference_sub: 'In stock (19)',
+    status: 'matched',
+    action_label: null,
+  },
+];
+
+const PHARMACY_SUBMISSION_HISTORY: PharmacyDashboardResult['submission_history'] = [
+  {
+    id: 'sub-hist-1',
+    period_label: 'Jul 2026 records',
+    reviewed_label: 'Reviewed 3 months ago',
+    status: 'Matched',
+    items_scanned: 48,
+  },
+  {
+    id: 'sub-hist-2',
+    period_label: 'Apr 2026 records',
+    reviewed_label: 'Reviewed 6 months ago',
+    status: 'Matched',
+    items_scanned: 45,
+  },
+];
+
+const PHARMACY_REPORTS_STATE: PharmacyDashboardResult['reports_against_pharmacy'] = [
+  {
+    report_id: 'bf57bf87-d7d7-4fbd-a155-fe7199af3899',
+    title: 'Amoxicillin 500 — out of stock, no sign',
+    filed_label: 'Filed 13 days ago',
+    issue_type: 'stock',
+    meta_primary: 'No restock notice',
+    meta_secondary: 'No response from you yet',
+    gov_label: 'Pending reply',
+    gov_dept: 'BBMP Health Dept.',
+    status: 'open',
+    pharmacy_response: null,
+  },
+  {
+    report_id: '6bcfcc70-3965-413f-9441-f605b5c4aa89',
+    title: 'Paracetamol 650mg — sold above MRP',
+    filed_label: 'Filed 2 days ago · bill attached',
+    issue_type: 'overpriced',
+    meta_primary: '₹18 over MRP',
+    meta_secondary: 'You responded 1 day ago',
+    gov_label: 'Govt. reviewing',
+    gov_dept: 'BBMP Health Dept.',
+    status: 'in_progress',
+    pharmacy_response:
+      'Billing system had an outdated price list. Corrected and reprinted labels same day.',
+  },
+  {
+    report_id: 'c6ba5250-66ff-4038-95cb-878208bf6945',
+    title: 'Dolo 650 — sold above MRP',
+    filed_label: 'Filed 2 months ago · bill attached',
+    issue_type: 'overpriced',
+    meta_primary: '₹9 over MRP',
+    meta_secondary: 'Fine paid, price corrected',
+    gov_label: 'Closed',
+    gov_dept: 'BBMP Health Dept.',
+    status: 'resolved',
+    pharmacy_response: 'Fine paid and price corrected to registered MRP.',
+  },
+  {
+    report_id: 'kor-rep-004',
+    title: 'Cetirizine — near-expiry sold',
+    filed_label: 'Filed 4 months ago',
+    issue_type: 'expired',
+    meta_primary: 'Batch pulled',
+    meta_secondary: 'Confirmed by you & govt.',
+    gov_label: 'Closed',
+    gov_dept: 'BBMP Health Dept.',
+    status: 'resolved',
+    pharmacy_response: 'Batch pulled from shelves and returned to distributor.',
+  },
+];
+
+const GOV_CASES_STATE = new Map<string, GovernmentCaseDetail>([
+  [
+    '6bcfcc70-3965-413f-9441-f605b5c4aa89',
+    {
+      report_id: '6bcfcc70-3965-413f-9441-f605b5c4aa89',
+      title: 'Paracetamol 650mg — sold above MRP',
+      pharmacy_name: 'Sundar Medicals',
+      pharmacy_address: 'Sundar Medicals, 12, 5th Block, Koramangala, Bengaluru 560095',
+      status: 'in_progress',
+      billed_amount: 49.0,
+      mrp_amount: 31.0,
+      overcharged_by: 18.0,
+      filed_label: '2 days ago',
+      bill_photo_label: 'attached bill.jpg',
+      bill_photo_url: null,
+      pharmacy_verified: true,
+      pharmacy_other_open_reports: 1,
+      timeline: [
+        {
+          step_num: '1',
+          title: 'Report filed',
+          meta: '2 days ago · citizen submission',
+          body: 'Billed ₹49 against a registered MRP of ₹31, with a bill photo attached.',
+        },
+        {
+          step_num: '2',
+          title: 'Pharmacy responded',
+          meta: '1 day ago · Sundar Medicals',
+          body: '"Billing system had an outdated price list. Corrected and reprinted labels same day."',
+        },
+      ],
+    },
+  ],
+  [
+    'bf57bf87-d7d7-4fbd-a155-fe7199af3899',
+    {
+      report_id: 'bf57bf87-d7d7-4fbd-a155-fe7199af3899',
+      title: 'Amoxicillin 500 — out of stock, no sign',
+      pharmacy_name: 'Sundar Medicals',
+      pharmacy_address: 'Sundar Medicals, 12, 5th Block, Koramangala, Bengaluru 560095',
+      status: 'open',
+      billed_amount: 68.0,
+      mrp_amount: 68.0,
+      overcharged_by: 0,
+      filed_label: '13 days ago',
+      bill_photo_label: 'attached stock-photo.jpg',
+      bill_photo_url: null,
+      pharmacy_verified: true,
+      pharmacy_other_open_reports: 1,
+      timeline: [
+        {
+          step_num: '1',
+          title: 'Report filed',
+          meta: '13 days ago · citizen submission',
+          body: 'Essential antibiotic Amoxicillin 500mg unavailable with no restock notice posted.',
+        },
+      ],
+    },
+  ],
+  [
+    'c6ba5250-66ff-4038-95cb-878208bf6945',
+    {
+      report_id: 'c6ba5250-66ff-4038-95cb-878208bf6945',
+      title: 'Azithromycin 500 — expired batch sold',
+      pharmacy_name: 'City Care Pharmacy',
+      pharmacy_address: 'City Care Pharmacy, 44, 80 Feet Road, Koramangala, Bengaluru 560095',
+      status: 'open',
+      billed_amount: 118.0,
+      mrp_amount: 118.0,
+      overcharged_by: 0,
+      filed_label: '6 days ago',
+      bill_photo_label: 'attached batch-03-2026.jpg',
+      bill_photo_url: null,
+      pharmacy_verified: true,
+      pharmacy_other_open_reports: 0,
+      timeline: [
+        {
+          step_num: '1',
+          title: 'Report filed',
+          meta: '6 days ago · citizen submission',
+          body: 'Strip sold from batch expiring 03/2026; bill and strip photo attached.',
+        },
+      ],
+    },
+  ],
+]);
+
+export function recordPharmacySubmissionHistory(period: string, itemsScanned: number): void {
+  PHARMACY_SUBMISSION_HISTORY.unshift({
+    id: `sub-hist-${Date.now()}`,
+    period_label: period.trim() || 'Current period records',
+    reviewed_label: 'Submitted just now · Matched',
+    status: 'Matched',
+    items_scanned: itemsScanned,
+  });
+}
+
+export function recordCitizenCaseForPortals(input: {
+  report_id: string;
+  issue_type: 'overpriced' | 'stock' | 'expired';
+  medicine: string;
+  mrp: number;
+  billed: number;
+  pharmacy: string;
+  address: string;
+  notes?: string;
+  bill_photo_url?: string | null;
+}): void {
+  const over = Math.max(0, Number((input.billed - input.mrp).toFixed(2)));
+  const issueLabel =
+    input.issue_type === 'overpriced'
+      ? 'sold above MRP'
+      : input.issue_type === 'stock'
+      ? 'essential stock unavailable'
+      : 'expired stock sold';
+  const title = `${input.medicine} — ${issueLabel}`;
+
+  PHARMACY_REPORTS_STATE.unshift({
+    report_id: input.report_id,
+    title,
+    filed_label: 'Filed just now · bill attached',
+    issue_type: input.issue_type,
+    meta_primary:
+      input.issue_type === 'overpriced' && over > 0
+        ? `₹${over} over MRP`
+        : input.issue_type === 'stock'
+        ? 'No restock notice'
+        : 'Batch reported',
+    meta_secondary: 'No response from you yet',
+    gov_label: 'Pending reply',
+    gov_dept: 'BBMP Health Dept.',
+    status: 'open',
+    pharmacy_response: null,
+  });
+
+  GOV_CASES_STATE.set(input.report_id, {
+    report_id: input.report_id,
+    title,
+    pharmacy_name: input.pharmacy,
+    pharmacy_address: `${input.pharmacy}, ${input.address}`,
+    status: 'open',
+    billed_amount: input.billed,
+    mrp_amount: input.mrp,
+    overcharged_by: over,
+    filed_label: 'Just now',
+    bill_photo_label: input.bill_photo_url ? input.bill_photo_url.split('/').pop() ?? 'bill.jpg' : 'attached bill.jpg',
+    bill_photo_url: input.bill_photo_url ?? null,
+    pharmacy_verified: true,
+    pharmacy_other_open_reports: PHARMACY_REPORTS_STATE.filter((r) => r.status === 'open').length,
+    timeline: [
+      {
+        step_num: '1',
+        title: 'Report filed',
+        meta: 'Just now · citizen submission',
+        body:
+          input.notes?.trim() ||
+          `Billed ₹${input.billed.toFixed(2)} against a registered MRP of ₹${input.mrp.toFixed(2)}, with a bill photo attached.`,
+      },
+    ],
+  });
+}
+
+export async function loginUser(
+  _supabase: SupabaseClient,
+  input: LoginUserInput
+): Promise<AuthSessionResult> {
+  const role: UserPortalRole =
+    input.role === 'pharmacy' || input.role === 'gov' ? input.role : 'citizen';
+  const id = input.identifier.trim() || (role === 'citizen' ? 'ananya@example.com' : role === 'pharmacy' ? 'sundar@medicals.in' : 'bbmp@karnataka.gov.in');
+  const existingCitizen = CITIZEN_ACCOUNTS.get(id.toLowerCase());
+
+  const displayName =
+    role === 'citizen'
+      ? existingCitizen?.full_name ?? (id.includes('@') ? id.split('@')[0] : 'Ananya')
+      : role === 'pharmacy'
+      ? 'Sundar Medicals'
+      : 'BBMP Health Department';
+
+  const redirectPage =
+    role === 'pharmacy'
+      ? 'pharmacy-home.html'
+      : role === 'gov'
+      ? 'gov-home.html'
+      : 'home.html';
+
+  return {
+    authenticated: true,
+    user_id: existingCitizen?.user_id ?? `${role}-${Date.now()}`,
+    role,
+    display_name: displayName,
+    identifier: id,
+    area: 'Koramangala, Bengaluru',
+    redirect_page: redirectPage,
+    created_at: new Date().toISOString(),
+  };
+}
+
+export async function registerCitizen(
+  _supabase: SupabaseClient,
+  input: RegisterCitizenInput
+): Promise<AuthSessionResult> {
+  const fullName = input.full_name.trim() || 'Ananya';
+  const phone = input.phone.trim() || '+91 98450 12345';
+  const email = input.email?.trim() || null;
+  const key = (email ?? phone).toLowerCase();
+  const userId = `cit-${Date.now()}`;
+  const nowIso = new Date().toISOString();
+
+  CITIZEN_ACCOUNTS.set(key, {
+    user_id: userId,
+    full_name: fullName,
+    phone,
+    email,
+    password: input.password,
+    created_at: nowIso,
+  });
+
+  return {
+    authenticated: true,
+    user_id: userId,
+    role: 'citizen',
+    display_name: fullName,
+    identifier: email ?? phone,
+    area: 'Koramangala, Bengaluru',
+    redirect_page: 'home.html',
+    created_at: nowIso,
+  };
+}
+
+export async function requestOrgVerificationCall(
+  _supabase: SupabaseClient,
+  input: OrgCallRequestInput
+): Promise<OrgCallRequestResult> {
+  const orgName = input.org_name.trim();
+  const contactPerson = input.contact_person.trim();
+  const phone = input.phone.trim();
+  const area = input.area.trim() || 'Koramangala, Bengaluru';
+
+  if (!orgName) throw new Error('Organisation or department name is required.');
+  if (!contactPerson) throw new Error('Contact person and role is required.');
+  if (!phone) throw new Error('Official phone number is required.');
+
+  const result: OrgCallRequestResult = {
+    requested: true,
+    request_id: `org-req-${Date.now()}`,
+    role: input.role === 'gov' ? 'gov' : 'pharmacy',
+    org_name: orgName,
+    contact_person: contactPerson,
+    phone,
+    area,
+    status: 'call_scheduled_within_2_working_days',
+    message: `Thank you. Our verification team will call ${contactPerson} at ${phone} within 2 working days to verify ${orgName} (${area}).`,
+    created_at: new Date().toISOString(),
+  };
+
+  ORG_CALL_REQUESTS.push(result);
+  return result;
+}
+
+export async function submitPharmacyResponse(
+  _supabase: SupabaseClient,
+  input: PharmacyReportResponseInput
+): Promise<PharmacyReportResponseResult> {
+  const text = input.response_text.trim();
+  if (!text) {
+    throw new Error('Pharmacy response text is required.');
+  }
+
+  const targetReport =
+    (input.report_id
+      ? PHARMACY_REPORTS_STATE.find((r) => r.report_id === input.report_id)
+      : undefined) ??
+    PHARMACY_REPORTS_STATE.find((r) => r.status === 'open') ??
+    PHARMACY_REPORTS_STATE[0];
+
+  const reportId = input.report_id || targetReport?.report_id || 'bf57bf87-d7d7-4fbd-a155-fe7199af3899';
+  const pharmacyName = input.pharmacy_name?.trim() || 'Sundar Medicals';
+  const proofUrls = input.proof_urls ?? [];
+  const nowIso = new Date().toISOString();
+
+  if (targetReport) {
+    targetReport.status = 'in_progress';
+    targetReport.meta_secondary = 'You responded just now';
+    targetReport.gov_label = 'Govt. reviewing';
+    targetReport.pharmacy_response = text;
+  }
+
+  const govCase = GOV_CASES_STATE.get(reportId);
+  if (govCase) {
+    govCase.status = 'in_progress';
+    const nextStepNum = String(govCase.timeline.length + 1);
+    govCase.timeline.push({
+      step_num: nextStepNum,
+      title: 'Pharmacy responded',
+      meta: `Just now · ${pharmacyName}`,
+      body: `"${text}"`,
+      proof_urls: proofUrls,
+    });
+  }
+
+  return {
+    responded: true,
+    response_id: `pharm-resp-${Date.now()}`,
+    report_id: reportId,
+    pharmacy_name: pharmacyName,
+    response_text: text,
+    proof_urls: proofUrls,
+    updated_status: 'in_progress',
+    responded_at: nowIso,
+  };
+}
+
+export async function getPharmacyDashboard(
+  _supabase: SupabaseClient,
+  pharmacyName = 'Sundar Medicals'
+): Promise<PharmacyDashboardResult> {
+  const openCount = PHARMACY_REPORTS_STATE.filter((r) => r.status !== 'resolved').length;
+  const matchedCount = PHARMACY_PRICE_ITEMS.filter((i) => i.status === 'matched').length;
+  const matchRate = Math.min(
+    100,
+    Math.round(92 + (matchedCount / Math.max(1, PHARMACY_PRICE_ITEMS.length)) * 8)
+  );
+
+  return {
+    pharmacy_name: pharmacyName,
+    address: '12, 5th Block, Koramangala, Bengaluru 560095',
+    verification_status: 'Verified',
+    last_verified_note: 'Last stock & billing submission: 3 months ago',
+    open_reports_count: openCount,
+    billing_match_rate: matchRate,
+    price_items: PHARMACY_PRICE_ITEMS,
+    submission_history: PHARMACY_SUBMISSION_HISTORY,
+    reports_against_pharmacy: PHARMACY_REPORTS_STATE,
+  };
+}
+
+export async function updatePharmacyPriceItem(
+  _supabase: SupabaseClient,
+  input: UpdatePharmacyPriceItemInput
+): Promise<PharmacyPriceItem> {
+  const item =
+    PHARMACY_PRICE_ITEMS.find((p) => p.id === input.item_id) ?? PHARMACY_PRICE_ITEMS[0];
+  if (!item) {
+    throw new Error(`Price item ${input.item_id} not found.`);
+  }
+
+  if (input.action === 'mark_corrected') {
+    const mrpMatch = item.reference_label.match(/₹[\d.]+/);
+    const mrpStr = mrpMatch ? mrpMatch[0] : '₹31.00';
+    item.your_price_label = `Your price: ${mrpStr}`;
+    item.your_price_sub = 'Corrected to MRP';
+    item.reference_sub = 'Matches MRP';
+    item.status = 'matched';
+    item.action_label = null;
+  } else {
+    item.your_price_label = 'Your price: ₹68.00';
+    item.your_price_sub = 'Restocked today';
+    item.reference_sub = 'In stock (24)';
+    item.status = 'matched';
+    item.action_label = null;
+  }
+
+  return item;
+}
+
+export async function getGovernmentCaseDetail(
+  supabase: SupabaseClient,
+  reportId = '6bcfcc70-3965-413f-9441-f605b5c4aa89'
+): Promise<GovernmentCaseDetail> {
+  const base =
+    GOV_CASES_STATE.get(reportId) ??
+    GOV_CASES_STATE.get('6bcfcc70-3965-413f-9441-f605b5c4aa89')!;
+
+  // Merge any sealed government progress updates for this reportId
+  const memUpdates = FALLBACK_GOV_UPDATES.get(base.report_id) ?? [];
+  const receipt = await getReceipt(supabase, base.report_id).catch(() => null);
+
+  const timeline = [...base.timeline];
+  for (const u of memUpdates) {
+    const stepText = `${u.agency_name} (${u.status.replace('_', ' ')})`;
+    if (!timeline.some((t) => t.body === u.progress_note)) {
+      timeline.push({
+        step_num: u.status === 'resolved' ? '✓' : String(timeline.length + 1),
+        title: stepText,
+        meta: 'Just now · official government update',
+        body: u.progress_note,
+        resolved: u.status === 'resolved',
+        proof_urls: u.proof_urls,
+      });
+    }
+    if (u.status === 'resolved') {
+      base.status = 'resolved';
+    } else if (u.action_taken === 'Escalated') {
+      base.status = 'escalated';
+    } else {
+      base.status = 'in_progress';
+    }
+  }
+
+  if (receipt && receipt.authority_response && memUpdates.length === 0) {
+    const ar = receipt.authority_response;
+    if (!timeline.some((t) => t.body === ar.progress_note)) {
+      timeline.push({
+        step_num: ar.status === 'resolved' ? '✓' : String(timeline.length + 1),
+        title: `${ar.agency_name} (${ar.status.replace('_', ' ')})`,
+        meta: 'Sealed in public log',
+        body: ar.progress_note,
+        resolved: ar.status === 'resolved',
+        proof_urls: ar.proof_urls,
+      });
+    }
+  }
+
+  return {
+    ...base,
+    timeline,
   };
 }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — MediCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-side">
+    <a href="index.html" class="auth-brand">
+      <span class="barcode on-dark"><span style="height:60%"></span><span style="height:100%"></span><span style="height:40%"></span><span style="height:80%"></span></span>
+      MediCheck
+    </a>
+    <div class="auth-quote">
+      <h2>A price check that becomes public record.</h2>
+      <p>Every report filed stays visible until the pharmacy and the local authority resolve it — in front of everyone, not just you.</p>
+    </div>
+    <div class="auth-ledger">
+      <div class="row"><span>Reports filed this week</span><b>214</b></div>
+      <div class="row"><span>Verified pharmacies</span><b>611</b></div>
+      <div class="row"><span>Resolved within 14 days</span><b>73%</b></div>
+    </div>
+  </div>
+
+  <div class="auth-main">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="showPane('login')">Log in</button>
+        <button class="auth-tab" id="tab-register" onclick="showPane('register')">Register</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="pane active" id="pane-login">
+        <h3 style="font-size:1.4rem;margin-bottom:6px;">Welcome back</h3>
+        <p style="margin-bottom:22px;font-size:.92rem;">Log in to check prices and track your reports.</p>
+        <div class="role-pick" id="login-role-pick">
+          <div class="role-opt active" id="lrole-citizen" onclick="pickLoginRole('citizen')">Citizen</div>
+          <div class="role-opt" id="lrole-pharmacy" onclick="pickLoginRole('pharmacy')">Pharmacy</div>
+          <div class="role-opt" id="lrole-gov" onclick="pickLoginRole('gov')">Government</div>
+        </div>
+        <form onsubmit="event.preventDefault(); goToDashboard();">
+          <div class="field">
+            <label for="login-email">Email or phone number</label>
+            <input type="text" id="login-email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="login-pass">Password</label>
+            <input type="password" id="login-pass" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+        <p class="auth-foot">New to MediCheck? <a href="#register" onclick="showPane('register')">Create an account</a></p>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="pane" id="pane-register">
+        <h3 style="font-size:1.4rem;margin-bottom:6px;">Create your account</h3>
+        <p style="margin-bottom:20px;font-size:.92rem;">Choose the account that matches who you are.</p>
+
+        <div class="role-pick">
+          <div class="role-opt active" id="role-citizen" onclick="pickRole('citizen')">
+            Citizen
+            <span class="sub">Self-register</span>
+          </div>
+          <div class="role-opt" id="role-pharmacy" onclick="pickRole('pharmacy')">
+            Pharmacy
+            <span class="sub">Verified by call</span>
+          </div>
+          <div class="role-opt" id="role-gov" onclick="pickRole('gov')">
+            Government
+            <span class="sub">Verified by call</span>
+          </div>
+        </div>
+
+        <!-- Citizen form -->
+        <div id="form-citizen">
+          <form onsubmit="event.preventDefault(); window.location.href='home.html';">
+            <div class="field">
+              <label for="r-name">Full name</label>
+              <input type="text" id="r-name" placeholder="Aarav Mehta" required>
+            </div>
+            <div class="field">
+              <label for="r-phone">Phone number</label>
+              <input type="tel" id="r-phone" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="field">
+              <label for="r-email">Email</label>
+              <input type="email" id="r-email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="r-pass">Create password</label>
+              <input type="password" id="r-pass" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create account</button>
+          </form>
+        </div>
+
+        <!-- Pharmacy / Government notice -->
+        <div id="form-org" style="display:none;">
+          <div class="notice">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/></svg></span>
+            <span><b>Pharmacy and government accounts are set up by phone.</b> This keeps fake listings off MediCheck. Leave your details below and a MediCheck team member will call to verify and activate your account.</span>
+          </div>
+          <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Request received — we\'ll call you shortly';">
+            <div class="field">
+              <label for="o-org">Organisation name</label>
+              <input type="text" id="o-org" placeholder="e.g. Sundar Medicals, or BBMP Health Dept." required>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="o-contact">Contact person</label>
+                <input type="text" id="o-contact" required>
+              </div>
+              <div class="field">
+                <label for="o-phone">Phone number</label>
+                <input type="tel" id="o-phone" placeholder="+91 ..." required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="o-area">Area / jurisdiction</label>
+              <input type="text" id="o-area" placeholder="e.g. Koramangala, Bengaluru" required>
+            </div>
+            <button type="submit" class="btn btn-ink btn-block">Request a verification call</button>
+          </form>
+        </div>
+
+        <p class="auth-foot">Already have an account? <a href="#login" onclick="showPane('login')">Log in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPane(name){
+  document.getElementById('pane-login').classList.toggle('active', name==='login');
+  document.getElementById('pane-register').classList.toggle('active', name==='register');
+  document.getElementById('tab-login').classList.toggle('active', name==='login');
+  document.getElementById('tab-register').classList.toggle('active', name==='register');
+}
+var loginRole = 'citizen';
+function pickLoginRole(role){
+  loginRole = role;
+  ['citizen','pharmacy','gov'].forEach(r=>{
+    document.getElementById('lrole-'+r).classList.toggle('active', r===role);
+  });
+}
+function goToDashboard(){
+  var dest = {citizen:'home.html', pharmacy:'pharmacy-home.html', gov:'gov-home.html'}[loginRole];
+  window.location.href = dest;
+}
+function pickRole(role){
+  ['citizen','pharmacy','gov'].forEach(r=>{
+    document.getElementById('role-'+r).classList.toggle('active', r===role);
+  });
+  document.getElementById('form-citizen').style.display = role==='citizen' ? 'block' : 'none';
+  document.getElementById('form-org').style.display = role==='citizen' ? 'none' : 'block';
+}
+if(window.location.hash === '#register'){ showPane('register'); }
+</script>
+<script src="app.js"></script>
+</body>
+</html>
