@@ -1,4 +1,4 @@
-﻿{
+{
     "name":  "medicheck-backend",
     "version":  "1.0.0",
     "description":  "Backend/data layer and TypeScript SDK for MediCheck (India medicine price and quality checking app)",
