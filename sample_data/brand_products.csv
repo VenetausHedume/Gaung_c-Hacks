@@ -6,3 +6,15 @@ GlucoTest 500,Demo Pharma,metformin,500 mg,tablet,10,tablets,12.00,1.20,sample,2
 AcidAway 40,Sample Labs,pantoprazole,40 mg,tablet,10,tablets,120.00,12.00,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA
 ClavoTest 625,Demo Pharma,amoxicillin + clavulanic acid,500 mg + 125 mg,tablet,10,tablets,190.00,19.00,sample,2026-10-01,scheduled,SAMPLE - NOT REAL DATA
 AllerClear 10,Sample Labs,cetirizine,10 mg,tablet,10,tablets,35.00,3.50,sample,2026-10-01,non_scheduled,SAMPLE - NOT REAL DATA
+Dolo 650,Micro Labs Ltd.,paracetamol,650 mg,tablet,15,tablets,32.28,2.15,NPPA Pharma Sahi Daam / PharmEasy MRP listing,2026-10-13,scheduled,Actual medicine pack MRP for 15 tablets
+Pan 40,Alkem Laboratories Ltd.,pantoprazole,40 mg,tablet,15,tablets,192.80,12.85,PharmEasy MRP listing,2026-10-05,scheduled,Actual medicine pack MRP for 15 tablets
+Telma 40,Glenmark Pharmaceuticals Ltd.,telmisartan,40 mg,tablet,15,tablets,108.36,7.22,Tata 1mg MRP listing,2026-09-11,scheduled,Actual medicine pack MRP for 15 tablets
+Glycomet 500,USV Pvt. Ltd.,metformin,500 mg,tablet,10,tablets,19.59,1.96,NPPA Pharma Sahi Daam MRP listing,2026-10-06,scheduled,Actual medicine pack MRP for 10 tablets
+Azithral 500,Alembic Pharmaceuticals Ltd.,azithromycin,500 mg,tablet,3,tablets,131.27,43.76,PharmEasy MRP listing,2026-04-28,scheduled,Actual medicine pack MRP for 3 tablets
+Amlong 5,Micro Labs Ltd.,amlodipine,5 mg,tablet,15,tablets,48.55,3.24,NPPA Pharma Sahi Daam MRP listing,2026-10-26,scheduled,Actual medicine pack MRP for 15 tablets
+Allegra 120,Sanofi India Ltd.,fexofenadine,120 mg,tablet,10,tablets,272.99,27.30,PharmEasy MRP listing,2026-10-05,non_scheduled,Actual medicine pack MRP for 10 tablets
+Atorva 10,Zydus Healthcare Ltd.,atorvastatin,10 mg,tablet,15,tablets,80.14,5.34,NPPA Pharma Sahi Daam MRP listing,2026-10-06,scheduled,Actual medicine pack MRP for 15 tablets
+Thyronorm 100,Abbott India Ltd.,levothyroxine,100 mcg,tablet,100,tablets,177.36,1.77,PharmEasy MRP listing,2026-04-28,scheduled,Actual medicine bottle MRP for 100 tablets
+Augmentin 625 Duo,GlaxoSmithKline Pharmaceuticals Ltd.,amoxicillin + clavulanic acid,500 mg + 125 mg,tablet,10,tablets,201.71,20.17,NPPA Pharma Sahi Daam MRP listing,2026-10-15,scheduled,Actual medicine pack MRP for 10 tablets
+Crocin Advance 500,Haleon India Pvt. Ltd.,paracetamol,500 mg,tablet,20,tablets,20.00,1.00,NPPA Pharma Sahi Daam MRP listing,2026-10-15,scheduled,Actual medicine pack MRP for 20 tablets
+Ecosprin 75,USV Pvt. Ltd.,aspirin,75 mg,tablet,14,tablets,5.49,0.39,NPPA Pharma Sahi Daam MRP listing,2026-10-15,scheduled,Actual medicine pack MRP for 14 tablets

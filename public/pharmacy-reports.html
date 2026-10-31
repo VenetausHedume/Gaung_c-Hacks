@@ -39,60 +39,35 @@
   </div>
 
   <div class="wrap" style="padding-top:36px;padding-bottom:64px;">
-    <div class="filter-row">
-      <span class="chip active">All (4)</span>
-      <span class="chip">Open (1)</span>
-      <span class="chip">In progress (1)</span>
-      <span class="chip">Resolved (2)</span>
+    <div class="filter-row" id="pharm-reports-chips">
+      <span class="chip active" id="pchip-all">All (0)</span>
+      <span class="chip" id="pchip-open">Open (0)</span>
+      <span class="chip" id="pchip-progress">In progress (0)</span>
+      <span class="chip" id="pchip-resolved">Resolved (0)</span>
     </div>
 
-    <div class="panel">
-      <div class="ledger-row">
-        <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
-        <div class="l-main"><b>Amoxicillin 500 — out of stock, no sign</b><span>Filed 13 days ago</span></div>
-        <div class="l-meta"><b>No restock notice</b>No response from you yet</div>
-        <div class="l-meta"><b>Pending reply</b>BBMP Health Dept.</div>
-        <span class="pill pill-open"><span class="d"></span>Open</span>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb">₹</div>
-        <div class="l-main"><b>Paracetamol 650mg — sold above MRP</b><span>Filed 2 days ago · bill attached</span></div>
-        <div class="l-meta"><b>₹18 over MRP</b>You responded 1 day ago</div>
-        <div class="l-meta"><b>Govt. reviewing</b>BBMP Health Dept.</div>
-        <span class="pill pill-progress"><span class="d"></span>In progress</span>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb">₹</div>
-        <div class="l-main"><b>Dolo 650 — sold above MRP</b><span>Filed 2 months ago · bill attached</span></div>
-        <div class="l-meta"><b>₹9 over MRP</b>Fine paid, price corrected</div>
-        <div class="l-meta"><b>Closed</b>BBMP Health Dept.</div>
-        <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-        <div class="l-main"><b>Cetirizine — near-expiry sold</b><span>Filed 4 months ago</span></div>
-        <div class="l-meta"><b>Batch pulled</b>Confirmed by you &amp; govt.</div>
-        <div class="l-meta"><b>Closed</b>BBMP Health Dept.</div>
-        <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
+    <div class="panel" id="pharm-reports-list">
+      <div class="ledger-row" id="pharm-reports-empty" style="grid-template-columns:1fr;text-align:center;padding:36px 26px;">
+        <div class="l-main"><b>No reports filed against your pharmacy yet</b><span>When a citizen submits a report naming your pharmacy, it will appear here so you can respond and upload proof.</span></div>
       </div>
     </div>
 
-    <div class="panel" style="margin-top:24px;padding:28px;">
+    <div class="panel" id="pharm-respond-panel" style="margin-top:24px;padding:28px;">
       <h2 style="font-size:1.05rem;margin-bottom:14px;">Respond to the open report</h2>
-      <p style="font-size:.9rem;margin-bottom:18px;">Amoxicillin 500 — out of stock, no sign · filed 13 days ago</p>
+      <p id="pharm-respond-target" style="font-size:.9rem;margin-bottom:18px;">No open report selected yet — file a citizen report first to respond here.</p>
       <div class="field">
         <label for="resp">Your response</label>
-        <textarea class="field-textarea" id="resp" placeholder="Explain the gap, and when stock will be restored"></textarea>
+        <textarea class="field-textarea" id="resp" placeholder="Explain the price or stock issue, and what corrective action you have taken"></textarea>
       </div>
       <div class="field">
         <label>Proof (optional)</label>
         <div class="upload-box">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/></svg></div>
           <b>Upload a photo</b>
-          <span>e.g. restocked shelf, supplier invoice</span>
+          <span>e.g. corrected price label, restocked shelf, supplier invoice</span>
         </div>
       </div>
-      <button class="btn btn-primary" onclick="alert('Response sent. The government reviewer and the public report page are both updated.')">Send response</button>
+      <button class="btn btn-primary" id="pharm-send-response-btn">Send response</button>
     </div>
   </div>
 </div>

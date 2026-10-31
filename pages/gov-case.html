@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case — Paracetamol overpricing — MediCheck</title>
+<title>Case detail — MediCheck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -31,10 +31,10 @@
     <div class="wrap">
       <div>
         <a href="gov-home.html" style="font-size:.84rem;color:var(--ink-soft);">← Back to area overview</a>
-        <h1 style="margin-top:8px;">Paracetamol 650mg — sold above MRP</h1>
-        <p>Sundar Medicals, 12, 5th Block, Koramangala, Bengaluru 560095</p>
+        <h1 id="gov-case-title" style="margin-top:8px;">No case selected yet</h1>
+        <p id="gov-case-addr">Submit a citizen report first, then click the case from Area overview.</p>
       </div>
-      <span class="pill pill-progress" style="font-size:.85rem;padding:9px 18px;"><span class="d"></span>In progress</span>
+      <span class="pill pill-open" id="gov-case-pill" style="font-size:.85rem;padding:9px 18px;"><span class="d"></span>Open</span>
     </div>
   </div>
 
@@ -44,20 +44,20 @@
       <div class="side-stack">
         <div class="stat-card">
           <div class="lbl">Billed</div>
-          <div class="val" style="color:var(--orange-deep);">₹49.00</div>
-          <div class="stat-row"><span>Registered MRP</span><span>₹31.00</span></div>
-          <div class="stat-row"><span>Overcharged by</span><span>₹18.00</span></div>
-          <div class="stat-row"><span>Filed</span><span>2 days ago</span></div>
+          <div class="val" id="gov-case-billed" style="color:var(--orange-deep);">₹0.00</div>
+          <div class="stat-row"><span>Registered MRP</span><span id="gov-case-mrp">₹0.00</span></div>
+          <div class="stat-row"><span>Overcharged by</span><span id="gov-case-overcharge">₹0.00</span></div>
+          <div class="stat-row"><span>Filed</span><span id="gov-case-filed">—</span></div>
         </div>
         <div class="stat-card">
           <div class="lbl">Bill photo</div>
-          <div style="margin-top:10px;height:140px;border-radius:var(--radius-sm);background:var(--mist);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;">attached bill.jpg</div>
+          <div id="gov-case-bill-box" style="margin-top:10px;height:140px;border-radius:var(--radius-sm);background:var(--mist);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;">attached bill.jpg</div>
         </div>
         <div class="stat-card">
           <div class="lbl">Pharmacy</div>
-          <div style="font-weight:800;font-family:var(--serif-display);color:var(--blue-deep);margin-top:4px;">Sundar Medicals</div>
-          <div class="stat-row"><span>Status</span><span>Verified</span></div>
-          <div class="stat-row"><span>Other open reports</span><span>1</span></div>
+          <div id="gov-case-pharm-name" style="font-weight:800;font-family:var(--serif-display);color:var(--blue-deep);margin-top:4px;">Sundar Medicals</div>
+          <div class="stat-row"><span>Status</span><span id="gov-case-pharm-status">Unverified</span></div>
+          <div class="stat-row"><span>Open reports</span><span id="gov-case-pharm-open">1</span></div>
           <a href="pharmacy-reports.html" class="btn btn-outline btn-block btn-sm" style="margin-top:12px;">View pharmacy's full record</a>
         </div>
       </div>
@@ -66,28 +66,13 @@
         <div class="panel" style="margin-bottom:24px;">
           <div class="panel-head"><h2>Case timeline</h2></div>
           <div style="padding:26px;">
-            <div class="timeline">
+            <div class="timeline" id="gov-case-timeline">
               <div class="tl-item">
                 <div class="tl-dot">1</div>
                 <div class="tl-body">
-                  <b>Report filed</b>
-                  <span>2 days ago · citizen submission</span>
-                  <p>Billed ₹49 against a registered MRP of ₹31, with a bill photo attached.</p>
-                </div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-dot">2</div>
-                <div class="tl-body">
-                  <b>Pharmacy responded</b>
-                  <span>1 day ago · Sundar Medicals</span>
-                  <p>"Billing system had an outdated price list. Corrected and reprinted labels same day."</p>
-                </div>
-              </div>
-              <div class="tl-item resolved">
-                <div class="tl-dot">✓</div>
-                <div class="tl-body">
-                  <b>Awaiting your progress update</b>
-                  <span>Add one below to keep the public record current</span>
+                  <b>Awaiting citizen report</b>
+                  <span>No report selected</span>
+                  <p>Once a report is filed and clicked from the area overview, its complete timeline appears here.</p>
                 </div>
               </div>
             </div>
@@ -100,9 +85,9 @@
             <div class="field">
               <label for="status">Update case status</label>
               <select id="status">
-                <option>In progress</option>
-                <option>Resolved</option>
-                <option>Escalated</option>
+                <option value="In progress">In progress</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Escalated">Escalated</option>
               </select>
             </div>
             <div class="field">
@@ -112,12 +97,12 @@
             <div class="field">
               <label>Photo evidence (optional)</label>
               <div class="upload-box">
-                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2-3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/></svg></div>
                 <b>Upload a photo</b>
                 <span>e.g. corrected price label, inspection note</span>
               </div>
             </div>
-            <button class="btn btn-primary" onclick="alert('Progress update posted. This is now visible on the public report page.')">Post update publicly</button>
+            <button class="btn btn-primary" id="gov-post-update-btn">Post update publicly</button>
           </div>
         </div>
       </div>

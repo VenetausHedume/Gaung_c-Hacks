@@ -76,8 +76,11 @@
             <input type="text" id="pharmacy" placeholder="e.g. Sundar Medicals" required>
           </div>
           <div class="field">
-            <label for="address">Pharmacy address</label>
-            <input type="text" id="address" placeholder="Street, area, city" required>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <label for="address" style="margin-bottom:0;">Pharmacy address</label>
+              <button type="button" class="btn btn-ghost btn-sm" id="report-locate-btn" style="padding:4px 10px;font-size:.78rem;">📍 Locate me</button>
+            </div>
+            <input type="text" id="address" placeholder="Search street, area, city or landmark..." autocomplete="off" required>
           </div>
           <div class="field">
             <label>Photo of the bill</label>

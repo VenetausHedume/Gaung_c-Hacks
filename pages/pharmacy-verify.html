@@ -81,22 +81,17 @@
 
       <div class="side-stack">
         <div class="stat-card">
-          <div class="val">Verified</div>
+          <div class="val" id="pverify-status-val" style="color:var(--ink-soft);">Not verified</div>
           <div class="lbl">Current status</div>
-          <div class="stat-row"><span>Last submitted</span><span>3 months ago</span></div>
-          <div class="stat-row"><span>Next check due</span><span>in 9 days</span></div>
+          <div class="stat-row"><span>Last submitted</span><span id="pverify-last-sub">Never</span></div>
+          <div class="stat-row"><span>Next check due</span><span id="pverify-next-due">Submit records below</span></div>
         </div>
         <div class="panel">
           <div class="panel-head"><h2 style="font-size:.95rem;">Submission history</h2></div>
-          <div class="ledger-row" style="grid-template-columns:auto 1fr auto;">
-            <div class="ledger-thumb">✓</div>
-            <div class="l-main"><b>Jul 2026 records</b><span>Reviewed 3 months ago</span></div>
-            <span class="pill pill-verified"><span class="d"></span>Matched</span>
-          </div>
-          <div class="ledger-row" style="grid-template-columns:auto 1fr auto;">
-            <div class="ledger-thumb">✓</div>
-            <div class="l-main"><b>Apr 2026 records</b><span>Reviewed 6 months ago</span></div>
-            <span class="pill pill-verified"><span class="d"></span>Matched</span>
+          <div id="pverify-history-list">
+            <div class="ledger-row" style="grid-template-columns:1fr;text-align:center;padding:24px;">
+              <div class="l-main"><b>No submissions yet</b><span>Your verified stock &amp; billing submissions will appear here.</span></div>
+            </div>
           </div>
         </div>
       </div>

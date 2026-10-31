@@ -1,4 +1,4 @@
-/**
+﻿/**
  * MediCheck Multi-Page Presentation & API Server (`scripts/serve.ts`)
  *
  * Serves the MediCheck frontend pages from `pages/` and exposes JSON API endpoints
@@ -25,10 +25,12 @@ import {
   createMediCheckClient,
   recordCitizenCaseForPortals,
   recordPharmacySubmissionHistory,
+  resetDemoState,
   type ReportInput,
   type ReportType,
   type UserPortalRole,
 } from '../src/lib/medicheck.js';
+import { handlePortalRequest, makeSealer } from '../src/lib/portal.js';
 import { buildReportText } from '../src/lib/reportText.js';
 import { buildReceiptText } from '../src/lib/receiptText.js';
 
@@ -93,6 +95,30 @@ export function createPresentationServer(): http.Server {
       // -----------------------------------------------------------------------
       // JSON API Routes (backed by src/lib/medicheck.ts + live Supabase)
       // -----------------------------------------------------------------------
+      // Shared portal backend (accounts, case state, verification workflow, area search, uploads)
+      {
+        const portalBody = req.method === 'POST' ? await readJsonBody(req) : {};
+        const portalRes = await handlePortalRequest(
+          {
+            method: req.method ?? 'GET',
+            pathname,
+            query: url.searchParams,
+            body: portalBody,
+            authorization: (req.headers['authorization'] as string | undefined) ?? null,
+          },
+          { sealReport: makeSealer(sdk) }
+        );
+        if (portalRes) {
+          if (portalRes.binary) {
+            res.writeHead(portalRes.status, { 'Content-Type': portalRes.contentType ?? 'application/octet-stream', 'Cache-Control': 'private, max-age=3600' });
+            res.end(portalRes.binary);
+          } else {
+            sendJson(res, portalRes.status, portalRes.json);
+          }
+          return;
+        }
+      }
+
       if (pathname === '/api/check' && req.method === 'GET') {
         const query = url.searchParams.get('q') ?? 'TestFever 500';
         const batch = url.searchParams.get('batch') ?? null;
@@ -407,11 +433,15 @@ export function createPresentationServer(): http.Server {
           jan_aushadhi_stocked: Boolean(body.jan_aushadhi_available ?? true),
         });
 
-        if (body.period) {
-          recordPharmacySubmissionHistory(String(body.period), Math.max(1, itemsScanned));
-        }
+        recordPharmacySubmissionHistory(String(body.period || 'Current period records'), Math.max(1, itemsScanned));
 
         sendJson(res, 200, { pharmacy, verification });
+        return;
+      }
+
+      if (pathname === '/api/demo/reset' && req.method === 'POST') {
+        resetDemoState();
+        sendJson(res, 200, { reset: true });
         return;
       }
 
@@ -537,3 +567,4 @@ if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
     console.log('====================================================================');
   });
 }
+

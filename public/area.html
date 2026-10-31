@@ -40,14 +40,15 @@
   </div>
 
   <div class="wrap" style="padding-top:36px;padding-bottom:64px;">
-    <div class="search-bar">
-      <input type="text" id="area-search" placeholder="Search by area, e.g. Koramangala, Bengaluru" value="Koramangala, Bengaluru">
-      <button class="btn btn-ink">Search area</button>
+    <div class="search-bar" style="position:relative;">
+      <input type="text" id="area-search" placeholder="Search any location, street, or pincode (e.g. Koramangala, Bengaluru)" value="Koramangala, Bengaluru" autocomplete="off">
+      <button type="button" class="btn btn-outline" id="area-locate-btn" title="Use my current location">📍 Locate me</button>
+      <button type="button" class="btn btn-ink" id="area-search-btn">Search area</button>
     </div>
 
     <div class="tabs" data-tabgroup="area">
-      <button class="tab-btn active" onclick="switchTab('area','pane-issues',this)">Issues (24)</button>
-      <button class="tab-btn" onclick="switchTab('area','pane-pharmacies',this)">Verified pharmacies (7)</button>
+      <button class="tab-btn active" id="area-tab-issues" onclick="switchTab('area','pane-issues',this)">Issues (0)</button>
+      <button class="tab-btn" id="area-tab-pharmacies" onclick="switchTab('area','pane-pharmacies',this)">Verified pharmacies (0)</button>
     </div>
 
     <!-- ISSUES -->
@@ -61,43 +62,13 @@
       </div>
       <div class="panel">
         <div class="panel-head">
-          <h2>24 reports in Koramangala, Bengaluru</h2>
+          <h2 id="area-issues-heading">0 reports in Koramangala, Bengaluru</h2>
           <span style="font-size:.82rem;color:var(--ink-soft);">Sorted by most recent</span>
         </div>
-        <div class="ledger-row">
-          <div class="ledger-thumb">₹</div>
-          <div class="l-main"><b>Paracetamol 650mg — sold above MRP</b><span>Sundar Medicals, 5th Block</span></div>
-          <div class="l-meta"><b>₹18 over MRP</b>Filed 2 days ago · bill attached</div>
-          <div class="l-meta"><b>Govt. responding</b>BBMP Health Dept.</div>
-          <span class="pill pill-progress"><span class="d"></span>In progress</span>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-          <div class="l-main"><b>Azithromycin 500 — expired batch sold</b><span>City Care Pharmacy, 80ft Rd</span></div>
-          <div class="l-meta"><b>Batch exp. 03/2026</b>Filed 6 days ago · bill attached</div>
-          <div class="l-meta"><b>Under review</b>BBMP Health Dept.</div>
-          <span class="pill pill-open"><span class="d"></span>Open</span>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
-          <div class="l-main"><b>Insulin — essential stock unavailable</b><span>Wellness Plus, Jyoti Nagar</span></div>
-          <div class="l-meta"><b>Reported twice</b>Filed 9 days ago</div>
-          <div class="l-meta"><b>Restocked</b>Confirmed by govt.</div>
-          <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-thumb">₹</div>
-          <div class="l-main"><b>Dolo 650 — sold above MRP</b><span>City Care Pharmacy, 80ft Rd</span></div>
-          <div class="l-meta"><b>₹9 over MRP</b>Filed 11 days ago · bill attached</div>
-          <div class="l-meta"><b>Fine issued</b>BBMP Health Dept.</div>
-          <span class="pill pill-resolved"><span class="d"></span>Resolved</span>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
-          <div class="l-main"><b>Amoxicillin 500 — out of stock, no sign</b><span>Sundar Medicals, 5th Block</span></div>
-          <div class="l-meta"><b>No restock notice</b>Filed 13 days ago</div>
-          <div class="l-meta"><b>Pending reply</b>BBMP Health Dept.</div>
-          <span class="pill pill-open"><span class="d"></span>Open</span>
+        <div id="area-issues-list">
+          <div class="ledger-row" id="area-issues-empty" style="grid-template-columns:1fr;text-align:center;padding:36px 26px;">
+            <div class="l-main"><b>No issues reported in this area yet</b><span>Scan a medicine barcode or file a report to add the first entry for this area.</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -110,38 +81,13 @@
       </div>
       <div class="panel">
         <div class="panel-head">
-          <h2>7 pharmacies near Koramangala, Bengaluru</h2>
+          <h2 id="area-pharmacies-heading">0 verified pharmacies near Koramangala, Bengaluru</h2>
           <span style="font-size:.82rem;color:var(--ink-soft);">Address only — no map</span>
         </div>
-        <div class="pharm-row">
-          <div class="pharm-mark">✓</div>
-          <div class="pharm-main"><b>Sundar Medicals</b><span>12, 5th Block, Koramangala, Bengaluru 560095</span></div>
-          <div class="pharm-stat"><b>Verified 3 months ago</b>Last billing match: this week</div>
-          <span class="pill pill-verified"><span class="d"></span>Verified</span>
-        </div>
-        <div class="pharm-row">
-          <div class="pharm-mark">✓</div>
-          <div class="pharm-main"><b>City Care Pharmacy</b><span>44, 80 Feet Road, Koramangala, Bengaluru 560095</span></div>
-          <div class="pharm-stat"><b>Verified 1 month ago</b>1 open report</div>
-          <span class="pill pill-verified"><span class="d"></span>Verified</span>
-        </div>
-        <div class="pharm-row">
-          <div class="pharm-mark">✓</div>
-          <div class="pharm-main"><b>Wellness Plus</b><span>9, Jyoti Nagar Main Road, Koramangala, Bengaluru 560047</span></div>
-          <div class="pharm-stat"><b>Verified 8 months ago</b>Clean record</div>
-          <span class="pill pill-verified"><span class="d"></span>Verified</span>
-        </div>
-        <div class="pharm-row">
-          <div class="pharm-mark">—</div>
-          <div class="pharm-main"><b>Metro Life Pharmacy</b><span>27, Hosur Road, Koramangala, Bengaluru 560029</span></div>
-          <div class="pharm-stat"><b>Verification pending</b>Records under review</div>
-          <span class="pill pill-pending"><span class="d"></span>Pending</span>
-        </div>
-        <div class="pharm-row">
-          <div class="pharm-mark">✓</div>
-          <div class="pharm-main"><b>Shree Krishna Medicals</b><span>3, 4th Block, Koramangala, Bengaluru 560034</span></div>
-          <div class="pharm-stat"><b>Verified 5 months ago</b>Clean record</div>
-          <span class="pill pill-verified"><span class="d"></span>Verified</span>
+        <div id="area-pharmacies-list">
+          <div class="pharm-row" id="area-pharmacies-empty" style="grid-template-columns:1fr;text-align:center;padding:36px 26px;">
+            <div class="pharm-main"><b>No verified pharmacies in this area yet</b><span>Pharmacies appear here once they submit stock barcode scans and billing records for verification.</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,7 +97,7 @@
 <script src="app.js"></script>
 <script>
 if(window.location.hash === '#pharmacies'){
-  switchTab('area','pane-pharmacies', document.querySelectorAll('[data-tabgroup="area"].tab-btn')[1]);
+  switchTab('area','pane-pharmacies', document.querySelectorAll('[data-tabgroup="area"] .tab-btn')[1]);
 }
 </script>
 </body>

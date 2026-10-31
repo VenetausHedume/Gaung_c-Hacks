@@ -1,13 +1,15 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
+﻿import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createHash } from 'node:crypto';
 import {
   createMediCheckClient,
   recordCitizenCaseForPortals,
   recordPharmacySubmissionHistory,
+  resetDemoState,
   type ReportInput,
   type ReportType,
   type UserPortalRole,
 } from '../src/lib/medicheck.js';
+import { handlePortalRequest, makeSealer } from '../src/lib/portal.js';
 import { buildReportText } from '../src/lib/reportText.js';
 import { buildReceiptText } from '../src/lib/receiptText.js';
 
@@ -72,6 +74,30 @@ export default async function handler(
     const rawUrl = req.url ?? '/';
     const parsedUrl = new URL(rawUrl, 'http://localhost');
     const pathname = parsedUrl.pathname;
+
+      // Shared portal backend (accounts, case state, verification workflow, area search, uploads)
+      {
+        const portalBody = req.method === 'POST' ? await readJsonBody(req) : {};
+        const portalRes = await handlePortalRequest(
+          {
+            method: req.method ?? 'GET',
+            pathname,
+            query: parsedUrl.searchParams,
+            body: portalBody,
+            authorization: (req.headers['authorization'] as string | undefined) ?? null,
+          },
+          { sealReport: makeSealer(sdk) }
+        );
+        if (portalRes) {
+          if (portalRes.binary) {
+            res.writeHead(portalRes.status, { 'Content-Type': portalRes.contentType ?? 'application/octet-stream', 'Cache-Control': 'private, max-age=3600' });
+            res.end(portalRes.binary);
+          } else {
+            sendJson(res, portalRes.status, portalRes.json);
+          }
+          return;
+        }
+      }
 
     if (pathname === '/api/check' && req.method === 'GET') {
       const query = parsedUrl.searchParams.get('q') ?? 'TestFever 500';
@@ -387,11 +413,15 @@ export default async function handler(
         jan_aushadhi_stocked: Boolean(body.jan_aushadhi_available ?? true),
       });
 
-      if (body.period) {
-        recordPharmacySubmissionHistory(String(body.period), Math.max(1, itemsScanned));
-      }
+      recordPharmacySubmissionHistory(String(body.period || 'Current period records'), Math.max(1, itemsScanned));
 
       sendJson(res, 200, { pharmacy, verification });
+      return;
+    }
+
+    if (pathname === '/api/demo/reset' && req.method === 'POST') {
+      resetDemoState();
+      sendJson(res, 200, { reset: true });
       return;
     }
 
@@ -461,3 +491,4 @@ export default async function handler(
     sendJson(res, 500, { error: msg });
   }
 }
+
